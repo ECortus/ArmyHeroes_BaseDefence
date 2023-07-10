@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 1036376469860513701}
   - component: {fileID: 1036376469860513702}
   - component: {fileID: 1036376469860513703}
+  - component: {fileID: 1844059206884905657}
   - component: {fileID: 1036376469860513696}
   - component: {fileID: 1036376469860513700}
   - component: {fileID: -7141062068176901674}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: ExperienceBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,6 +87,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &1844059206884905657
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036376469860513697}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &1036376469860513696
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -113,7 +127,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &-7141062068176901674
 MonoBehaviour:
@@ -127,6 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d311b9cd2886ab44bc252fa5c5742f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceToPlayer: 4
+  distanceToPlayer: 2
   speed: 4
   rb: {fileID: 1036376469860513700}

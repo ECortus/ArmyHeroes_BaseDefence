@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class Soldier : HumanoidController
 {
+    public static readonly int _Shooting = Animator.StringToHash("Shooting");
+    
     public override void On()
     {
         gameObject.SetActive(true);
+    }
+
+    public override void Death()
+    {
+        Active = false;
+        gameObject.SetActive(false);
     }
 
     public override void Off()

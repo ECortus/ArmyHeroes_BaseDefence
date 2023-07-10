@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RecourceBall : MonoBehaviour
+public class ResourceBall : MonoBehaviour
 {
-    public float recourceAmount { get; set; }
+    public float resourceAmount { get; set; }
     [SerializeField] private float distanceToPlayer, speed;
 
     [Space]
@@ -12,10 +12,13 @@ public class RecourceBall : MonoBehaviour
 
     bool move = false;
     Transform target => Player.Instance.Transform;
-    float defaultY = 0.75f;
 
-    public void On()
+    public bool Active => gameObject.activeSelf;
+
+    public void On(Vector3 pos = new Vector3())
     {
+        if(pos != new Vector3()) transform.position = pos;
+
         move = false;
         gameObject.SetActive(true);
     }
@@ -27,7 +30,7 @@ public class RecourceBall : MonoBehaviour
 
     public void SetRecource(float amount)
     {
-        recourceAmount = amount;
+        resourceAmount = amount;
     }
 
     public void Force(Vector3 direction, float force)
@@ -47,12 +50,6 @@ public class RecourceBall : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, target.position, speed * Time.deltaTime);
             return;
         }
-
-        transform.position = new Vector3(
-            transform.position.x, 
-            transform.position.y < defaultY ? defaultY : transform.position.y, 
-            transform.position.z
-        );
 
         if(Vector3.Distance(transform.position, target.position) < distanceToPlayer)
         {

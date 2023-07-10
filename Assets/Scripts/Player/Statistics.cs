@@ -36,18 +36,18 @@ public static class Statistics
         }
     }
 
-    public static int Money
+    public static int Gold
     {
         get
         {
-            int amount = PlayerPrefs.GetInt(DataManager.MoneyKey, 0);
+            int amount = PlayerPrefs.GetInt(DataManager.GoldKey, 0);
             return amount;
         }
 
         set
         {
             int amount = value;
-            PlayerPrefs.SetInt(DataManager.MoneyKey, value);
+            PlayerPrefs.SetInt(DataManager.GoldKey, value);
             PlayerPrefs.Save();
         }
     }

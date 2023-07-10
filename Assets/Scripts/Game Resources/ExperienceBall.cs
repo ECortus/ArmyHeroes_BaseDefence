@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExperienceBall : RecourceBall
+public class ExperienceBall : ResourceBall
 {
     public override void AddRecourceToPlayer()
     {
-        Experience.Plus(recourceAmount);
+        Experience.Plus(resourceAmount);
         base.AddRecourceToPlayer();
     }
 }

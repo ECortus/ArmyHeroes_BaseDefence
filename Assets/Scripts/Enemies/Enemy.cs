@@ -18,12 +18,18 @@ public class Enemy : HumanoidController
         gameObject.SetActive(true);
     }
 
+    public override void Death()
+    {
+        Active = false;
+        gameObject.SetActive(false);
+    }
+
     public override void Off()
     {
         gameObject.SetActive(false);
     }
 
-    void Update()
+    protected override void Update()
     {
         if(target != MainTarget)
         {
@@ -31,9 +37,10 @@ public class Enemy : HumanoidController
                 (target.position - transform.position).magnitude)
             {
                 SetTarget(MainTarget);
-                return;
             }
         }
+
+        base.Update();
     }
 
     protected override void UpdateDirection()

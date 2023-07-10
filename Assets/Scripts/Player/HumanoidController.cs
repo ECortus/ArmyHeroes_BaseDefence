@@ -11,7 +11,6 @@ public class HumanoidController : MonoBehaviour
     public NavMeshAgent Agent;
     public Rigidbody rb;
 
-    public bool Died { get; set; }
     public bool takeControl { get; set; }
 
     private Transform _target;
@@ -54,9 +53,10 @@ public class HumanoidController : MonoBehaviour
     public bool Active = true;
 
     public virtual void On() { }
+    public virtual void Death() { }
     public virtual void Off() { }
 
-    private void FixedUpdate()
+    protected virtual void Update()
     {
         if(Active)
         {

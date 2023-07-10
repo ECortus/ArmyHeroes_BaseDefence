@@ -43,13 +43,13 @@ public class AmmoPool : MonoBehaviour
             ammo = Instantiate(obj, pos, rot);
             ammo.On(pos, rot);
 
-            AddBullet(type, ammo);
+            AddAmmo(type, ammo);
         }
 
         return ammo;
     }
 
-    public void AddBullet(AmmoType type, Ammo bllt)
+    public void AddAmmo(AmmoType type, Ammo bllt)
     {
         switch(type)
         {

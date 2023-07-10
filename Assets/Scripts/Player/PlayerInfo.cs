@@ -50,6 +50,8 @@ public class PlayerInfo : Info
     {
         await UniTask.Delay(0);
         Progress++;
+
+        Debug.Log("new level");
     }
 
     public void ResetProgress()

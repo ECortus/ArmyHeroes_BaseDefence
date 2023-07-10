@@ -8,10 +8,10 @@ public static class DataManager
     public static string LevelIndexKey = "LevelIndex";
 
     public static string ProgressKey = "PlayerProgress";
-    public static string ExperienceKey = "Money";
-    public static string MoneyKey = "Money";
-    public static string CrystalKey = "Money";
-    public static string TokenKey = "Money";
+    public static string ExperienceKey = "Experience";
+    public static string GoldKey = "Gold";
+    public static string CrystalKey = "Crystal";
+    public static string TokenKey = "Token";
 
     public static void Save()
     {

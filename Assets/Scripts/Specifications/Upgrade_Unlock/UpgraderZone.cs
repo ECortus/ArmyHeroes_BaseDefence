@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
-public class Upgrader : MonoBehaviour
+public class UpgraderZone : MonoBehaviour
 {
     private string Tags = "Player";
 
-    protected virtual string PreName { get; }
-    protected virtual int MaxProgress { get; }
-    protected virtual int DefaultCost { get; }
-    protected virtual int UpCostPerProgress { get; }
+    [Header("Info: ")]
+    [SerializeField] private string PreName;
+    [SerializeField] private int MinProgress;
+    [SerializeField] private int MaxProgress;
+    [SerializeField] private int DefaultCost;
+    [SerializeField] private int UpCostPerProgress;
 
     protected virtual bool ConditionToAllowInter { get; }
     protected virtual void RecourceUse(int amount) { }
@@ -24,6 +27,7 @@ public class Upgrader : MonoBehaviour
     public int Cost => DefaultCost + UpCostPerProgress * Progress;
 
     [Header("Info zone:")]
+    [SerializeField] private Slider amountSlider;
     [SerializeField] private TextMeshProUGUI amountText;
     Coroutine coroutine;
 
@@ -44,7 +48,7 @@ public class Upgrader : MonoBehaviour
     {
         get
         {
-            return PlayerPrefs.GetInt(SaveName, 0);
+            return PlayerPrefs.GetInt(SaveName, MinProgress);
         }
         set
         {
@@ -58,24 +62,38 @@ public class Upgrader : MonoBehaviour
         Refresh();
     }
 
+    public void Reset()
+    {
+        Progress = MinProgress;
+        Refresh();
+    }
+
     public void Refresh()
     {
         if(Progress != MaxProgress)
         {
             if(RequireAmount == 0) RequireAmount = Cost;
-            RefreshText();
+            RefreshOutInfo();
         }
         else
         {
+            StopReduce();
+
             amountText.text = $"--/--";
+            amountSlider.value = amountSlider.maxValue;
+
             this.enabled = false;
 
-            gameObject.SetActive(false);
+            /* gameObject.SetActive(false); */
         }
     }
 
-    void RefreshText()
+    void RefreshOutInfo()
     {
+        amountSlider.minValue = 0f;
+        amountSlider.maxValue = Cost;
+        amountSlider.value = Cost - RequireAmount;
+
         amountText.text = $"{Cost - RequireAmount}/{Cost}";
     }
 
@@ -86,8 +104,11 @@ public class Upgrader : MonoBehaviour
 
     void StopReduce()
     {
-        if(coroutine != null) StopCoroutine(coroutine);
-        coroutine = null;
+        if(coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
     }
 
     IEnumerator ReduceRequiredAmount()
@@ -99,29 +120,32 @@ public class Upgrader : MonoBehaviour
         while(true)
         {
             if(!ConditionToAllowInter) break;
-            
-            amount = 1;
 
             RecourceUse(amount);
             RequireAmount -= amount;
 
-            RefreshText();
+            RefreshOutInfo();
 
             if(RequireAmount <= 0)
             {
                 Complete();
                 Refresh();
-                break;
+                iter = 0;
+
+                /* StopReduce();
+                break; */
             }
 
             yield return new WaitForSeconds(0.075f / (1f + iter / 4f));
             iter++;
-        }        
+        }
+
+        StopReduce();        
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnTriggerStay(Collider col)
     {
-        if(!ConditionToAllowInter || !this.enabled) return;
+        if(!this.enabled) return;
 
         if(col.tag == Tags)
         {

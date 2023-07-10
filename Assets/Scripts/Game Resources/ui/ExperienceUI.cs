@@ -10,7 +10,7 @@ public class ExperienceUI : MonoBehaviour
 
     private float recource { get => Statistics.Experience; }
     [SerializeField] private Slider slider;
-    private float maxValue /* => PlayerInfo.Instance.MaxExperience */;
+    private float maxValue => PlayerInfo.Instance.MaxExperience;
 
     void Start()
     {

@@ -53,7 +53,7 @@ public class Detector : MonoBehaviour
             {
                 distanceToData = Vector3.Distance(data.transform.position, transform.position);
 
-                if(data.Died || distanceToData > detectRange)
+                if(!data.Active || distanceToData > detectRange)
                 {
                     Reset();
                     continue;

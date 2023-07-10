@@ -9,6 +9,8 @@ public class Player : HumanoidController
     public static Player Instance { get; set; }
     public Transform Transform { get { return transform; } }
 
+    public static readonly int _Shooting = Animator.StringToHash("Shooting");
+
     private FloatingJoystick joyStick => GameManager.Instance.Joystick;
 
     private void Awake()
@@ -20,6 +22,12 @@ public class Player : HumanoidController
     {
         gameObject.SetActive(true);
         joyStick.Reset();
+    }
+
+    public override void Death()
+    {
+        Active = false;
+        gameObject.SetActive(false);
     }
 
     public override void Off()

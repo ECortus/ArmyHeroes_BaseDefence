@@ -21,6 +21,8 @@ public class Info : MonoBehaviour
     public virtual float MaxHealth => InputMaxHealth * (1f + ups.PlusHealth / 100f);
     public virtual float Damage => InputDamage * (1f + ups.PlusDamage / 100f);
 
+    public bool Died { get; set; }
+
     float _health;
     public float Health
     {

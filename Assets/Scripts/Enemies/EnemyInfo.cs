@@ -7,7 +7,7 @@ public class EnemyInfo : Info
     [Header("Info: ")]
     [SerializeField] private float health;
     [SerializeField] private float damage;
-    public HumanoidController controller;
+    [SerializeField] private HumanoidController controller;
 
     public override float InputMaxHealth => health;
     public override float InputDamage => damage;
@@ -25,8 +25,8 @@ public class EnemyInfo : Info
 
     public override void Death()
     {
-        controller.Died = true;
-        transform.parent.gameObject.SetActive(false);
+        Died = true;
+        controller.Death();
 
         base.Death();
     }
