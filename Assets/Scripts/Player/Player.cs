@@ -9,6 +9,7 @@ public class Player : HumanoidController
     public static Player Instance { get; set; }
     public Transform Transform { get { return transform; } }
 
+    public static readonly int _Speed = Animator.StringToHash("Speed");
     public static readonly int _Shooting = Animator.StringToHash("Shooting");
 
     private FloatingJoystick joyStick => GameManager.Instance.Joystick;
@@ -18,21 +19,26 @@ public class Player : HumanoidController
         Instance = this;
     }
 
-    public override void On()
+    public override void On(Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
     {
         gameObject.SetActive(true);
         joyStick.Reset();
+
+        base.On();
     }
 
     public override void Death()
     {
-        Active = false;
         gameObject.SetActive(false);
+
+        base.Death();
     }
 
     public override void Off()
     {
         gameObject.SetActive(false);
+
+        base.Off();
     }
 
     protected override void UpdateDirection()
@@ -46,6 +52,11 @@ public class Player : HumanoidController
         {
             direction = Vector3.zero;
         }
+    }
+
+    protected override void Move()
+    {
+        MoveByDirection();
     }
 
     protected override void UpdateAnimator()

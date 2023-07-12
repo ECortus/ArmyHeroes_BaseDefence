@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoldierUnlock : UpgraderZone
+public class HumanUnlock : UpgraderZone
 {
     [Space]
-    [SerializeField] private Soldier soldier;
+    [SerializeField] private HumanoidController human;
     [SerializeField] private List<Transform> spawnDots = new List<Transform>();
 
     protected override bool ConditionToAllowInter 
@@ -28,6 +28,12 @@ public class SoldierUnlock : UpgraderZone
         Spawn();
     }
 
+    protected override void OnEnable()
+    {
+        SpawnOnStart();
+        base.OnEnable();
+    }
+
     void SpawnOnStart()
     {
         for(int i = 0; i < Progress; i++)
@@ -43,6 +49,7 @@ public class SoldierUnlock : UpgraderZone
             0f, Random.Range(0f, 360f), 0f
         );
 
-        Soldier sold = Instantiate(soldier, pos, rot);
+        HumanoidController hmn = Instantiate(human);
+        hmn.On(pos, rot);
     }
 }

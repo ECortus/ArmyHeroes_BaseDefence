@@ -14,7 +14,7 @@ public class PlayerInfo : Info
     [SerializeField] private float DefaultMaxExp = 100f, ExpRequirePerProgress = 50f;
 
     public override float InputMaxHealth => health;
-    public override float InputDamage => weapon.Damage;
+    public override float InputInteractMod => weapon.Damage;
     public float MaxExperience => DefaultMaxExp + Progress * ExpRequirePerProgress;
 
     void Start()
@@ -31,6 +31,11 @@ public class PlayerInfo : Info
     public override void Death()
     {
         base.Death();
+    }
+
+    public override void Interact(Info nf)
+    {
+        if(nf != null) nf.GetHit(InteractMod);
     }
 
     public int Progress

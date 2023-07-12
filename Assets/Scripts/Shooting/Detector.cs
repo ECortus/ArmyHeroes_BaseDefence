@@ -2,15 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class Detector : MonoBehaviour
 {
-    [SerializeField] private float detectRange;
-    [SerializeField] private LayerMask enemiesMask;
+    public float detectRange;
+    private DetectorPool Pool => DetectorPool.Instance;
 
-    [HideInInspector] public HumanoidController data;
+    public DetectType PriorityTypes;
+    public DetectType DetectTypes;
+/* 
+    public LayerMask priorityMask;
+    public LayerMask enemiesMask; */
 
-    HumanoidController previous;
+    [HideInInspector] public Info data;
+    public virtual HumanoidController humanController { get; set; }
+    [SerializeField] private bool CheckCollisionWithTarget = false;
+    public bool InColWithTargetMask { get; set; }
+
+    Info previous;
     float distanceToData;
     Coroutine coroutine;
 
@@ -53,7 +63,7 @@ public class Detector : MonoBehaviour
             {
                 distanceToData = Vector3.Distance(data.transform.position, transform.position);
 
-                if(!data.Active || distanceToData > detectRange)
+                if(data.Died || !data.Active || distanceToData > detectRange)
                 {
                     Reset();
                     continue;
@@ -88,15 +98,65 @@ public class Detector : MonoBehaviour
 
     }
 
-    bool SomeoneAround(float dstnc, out HumanoidController data)
+    bool SomeoneAround(float dstnc, out Info data)
     {
-        HumanoidController unit = null;
+        Info unit = null;
 
-        List<Collider> cols = Physics.OverlapSphere(transform.position, dstnc, enemiesMask).ToList();
-        if(cols.Count > 0)
+        /* List<Collider> cols = Physics.OverlapSphere(transform.position, detectRange, priorityMask).ToList();
+
+        if(cols.Count == 0)
         {
-            cols = cols.OrderBy(x  => Vector3.Distance(transform.position, x.transform.position)).ToList();
-            unit = cols[0].GetComponent<HumanoidController>();
+            cols = Physics.OverlapSphere(transform.position, dstnc, enemiesMask).ToList();
+        } */
+
+        List<Transform> priorityCols = Pool.RequirePools(PriorityTypes);
+        List<Transform> detectCols = Pool.RequirePools(DetectTypes);
+
+        int count = priorityCols.Count + detectCols.Count;
+
+        List<Transform> valid = new List<Transform>();
+        
+        valid.AddRange(priorityCols);
+
+        foreach(Transform pr in detectCols)
+        {
+            if(!valid.Contains(pr))
+            {
+                valid.Add(pr);
+            }
+        }
+
+        if(valid.Contains(transform))
+        {
+            valid.Remove(transform);
+        }
+
+        detectCols.Clear();
+        bool priorityInRange = false;
+
+        foreach(Transform col in valid)
+        {
+            if(priorityCols.Contains(col) || priorityInRange)
+            {
+                if(Vector3.Distance(transform.position, col.position) <= detectRange)
+                {
+                    priorityInRange = true;
+                    detectCols.Add(col);
+                }
+            }
+            else
+            {
+                if(Vector3.Distance(transform.position, col.position) <= dstnc)
+                {
+                    detectCols.Add(col);
+                }
+            }
+        }
+
+        if(detectCols.Count > 0)
+        {
+            detectCols = detectCols.OrderBy(x  => Vector3.Distance(transform.position, x.transform.position)).ToList();
+            unit = detectCols[0].GetComponentInChildren<Info>();
         }
 
         data = unit;
@@ -109,5 +169,36 @@ public class Detector : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, detectRange);
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if(!CheckCollisionWithTarget) return;
+
+        GameObject go = col.gameObject;
+
+        if(humanController.info.DetectType == DetectTypes)
+        {
+            if(go.GetComponentInChildren<Info>() == data)
+            {
+                InColWithTargetMask = true;
+            }
+            else
+            {
+                InColWithTargetMask = false;
+            }
+        }
+    }
+
+    void OnCollisionExit(Collision col)
+    {
+        if(!CheckCollisionWithTarget) return;
+
+        GameObject go = col.gameObject;
+
+        if(humanController.info.DetectType == DetectTypes)
+        {
+            InColWithTargetMask = false;
+        }
     }
 }

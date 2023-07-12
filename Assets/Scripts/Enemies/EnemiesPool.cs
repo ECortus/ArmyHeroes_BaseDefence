@@ -7,6 +7,8 @@ public class EnemiesPool : MonoBehaviour
     public static EnemiesPool Instance;
     void Awake() => Instance = this;
 
+    private List<Enemy> Enemy00Pool = new List<Enemy>();
+
     public Enemy Insert(EnemyType type, Enemy enemy, Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
     {
         Enemy enm = null;
@@ -14,6 +16,9 @@ public class EnemiesPool : MonoBehaviour
 
         switch(type)
         {
+            case EnemyType.Enemy00:
+                list = Enemy00Pool;
+                break;
             default:
                 break;
         }
@@ -24,10 +29,10 @@ public class EnemiesPool : MonoBehaviour
             {
                 if(nm == null) continue;
 
-                if(!nm.Active)
+                if(nm.Died)
                 {
                     enm = nm;
-                    enm.On();
+                    enm.On(pos, rot);
                     break;
                 }
             }
@@ -35,21 +40,46 @@ public class EnemiesPool : MonoBehaviour
         
         if(enm == null)
         {
-            enm = Instantiate(enemy, pos, Quaternion.identity);
-            enm.On();
+            enm = Instantiate(enemy);
+            enm.On(pos, rot);
 
-            AddRecource(type, enm);
+            AddEnemy(type, enm);
         }
 
         return enm;
     }
 
-    public void AddRecource(EnemyType type, Enemy nm)
+    public void AddEnemy(EnemyType type, Enemy nm)
     {
         switch(type)
         {
+            case EnemyType.Enemy00:
+                Enemy00Pool.Add(nm);
+                break;
             default:
                 break;
+        }
+    }
+
+    public bool AllDied
+    {
+        get
+        {
+            bool allDied = true;
+            List<Enemy> enemies = new List<Enemy>();
+
+            enemies.AddRange(Enemy00Pool);
+            
+            foreach(Enemy enemy in enemies)
+            {
+                if(!enemy.Died)
+                {
+                    allDied = false;
+                    break;
+                }
+            }
+
+            return allDied;
         }
     }
 
@@ -62,5 +92,5 @@ public class EnemiesPool : MonoBehaviour
 [System.Serializable]
 public enum EnemyType
 {
-    Default
+    Default, Enemy00
 }

@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class Info : MonoBehaviour
 {
+    public DetectType DetectType;
+
     [Header("UI ref-s: ")]
     [SerializeField] private HealthBarUI bar;
 
@@ -16,11 +18,12 @@ public class Info : MonoBehaviour
     [SerializeField] private UnityEvent ResurrectEvent;
 
     public virtual float InputMaxHealth { get; set; }
-    public virtual float InputDamage { get; set; }
+    public virtual float InputInteractMod { get; set; }
 
-    public virtual float MaxHealth => InputMaxHealth * (1f + ups.PlusHealth / 100f);
-    public virtual float Damage => InputDamage * (1f + ups.PlusDamage / 100f);
+    public float MaxHealth => InputMaxHealth * (1f + ups.PlusHealth / 100f);
+    public float InteractMod => InputInteractMod * (1f + ups.PlusInteractMod / 100f);
 
+    public bool Active => gameObject.activeSelf;
     public bool Died { get; set; }
 
     float _health;
@@ -62,8 +65,5 @@ public class Info : MonoBehaviour
         DeathEvent?.Invoke();
     }
 
-    public virtual void Hit(Info nf)
-    {
-        nf.GetHit(Damage);
-    }
+    public virtual void Interact(Info nf = null) { }
 }

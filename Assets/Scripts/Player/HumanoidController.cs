@@ -5,11 +5,10 @@ using UnityEngine.AI;
 
 public class HumanoidController : MonoBehaviour
 {
-    public static readonly int _Speed = Animator.StringToHash("Speed");
-
     public Animator Animator;
     public NavMeshAgent Agent;
     public Rigidbody rb;
+    public Info info;
 
     public bool takeControl { get; set; }
 
@@ -50,21 +49,38 @@ public class HumanoidController : MonoBehaviour
     }
 
     [HideInInspector] public Vector3 direction;
-    public bool Active = true;
+    Vector3 previousTP;
+    
+    public bool Active => info.Active;
+    public bool Died => info.Died;
 
-    public virtual void On() { }
-    public virtual void Death() { }
-    public virtual void Off() { }
+    public virtual void On(Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
+    { 
+        DetectorPool.Instance.AddInPool(transform, info.DetectType);
+    }
+    public virtual void Death()
+    { 
+        DetectorPool.Instance.RemoveFromPool(transform, info.DetectType);
+    }
+    public virtual void Off() 
+    { 
+        DetectorPool.Instance.RemoveFromPool(transform, info.DetectType);
+    }
 
     protected virtual void Update()
     {
         if(Active)
         {
-            UpdateDirection();
-            UpdateAnimator();
+            ZeroRBVelocities();
 
-            if(!takeControl) Move();
+            if(!takeControl) 
+            {
+                UpdateDirection();
+                Move();
+            }
+            else ZeroAgentVelocityAndDirection();
             
+            UpdateAnimator();
             Rotate();
         }
         else
@@ -77,11 +93,23 @@ public class HumanoidController : MonoBehaviour
     protected virtual void UpdateDirection() { }
     protected virtual void UpdateAnimator() { }
 
-    private void Move()
-    {
-        ZeroRBVelocities();
+    protected virtual void Move() { }
 
-        if (Agent.isActiveAndEnabled && direction != Vector3.zero)
+    public void MoveByDestination()
+    {
+        if(Agent.isActiveAndEnabled && direction != Vector3.zero)
+        {
+            if(previousTP != target.position)
+            {
+                Agent.SetDestination(target.position);
+                previousTP = target.position;
+            }
+        }
+    }
+
+    public void MoveByDirection()
+    {
+        if(Agent.isActiveAndEnabled && direction != Vector3.zero)
         {
             Agent.Move(direction * (Agent.speed * Time.deltaTime));
         }

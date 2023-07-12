@@ -10,15 +10,12 @@ public class EnemyInfo : Info
     [SerializeField] private HumanoidController controller;
 
     public override float InputMaxHealth => health;
-    public override float InputDamage => damage;
-
-    void Start()
-    {
-        Heal(999f);
-    }
+    public override float InputInteractMod => damage;
 
     public override void Resurrect()
     {
+        Died = false;
+        
         base.Resurrect();
         Heal(MaxHealth);
     }
@@ -29,5 +26,10 @@ public class EnemyInfo : Info
         controller.Death();
 
         base.Death();
+    }
+
+    public override void Interact(Info nf)
+    {
+        if(nf != null) nf.GetHit(InteractMod);
     }
 }

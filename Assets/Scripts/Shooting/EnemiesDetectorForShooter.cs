@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemiesDetectorForShooter : Detector
 {
+    public override HumanoidController humanController => controller;
+    
     [Space]
     public HumanoidController controller;
     public Shooting shooting;
@@ -20,10 +22,13 @@ public class EnemiesDetectorForShooter : Detector
 
     protected override void Change()
     {
-        controller.ResetTarget();
-        controller.takeControl = false;
+        if(data != null)
+        {
+            controller.SetTarget(data.transform);
+            controller.takeControl = TakeControl;
+        }
 
-        shooting.Disable();
+        /* shooting.Disable(); */
     }
 
     protected override void Set()

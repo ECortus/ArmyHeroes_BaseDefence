@@ -12,6 +12,6 @@ public class HealthBarUI : BarUI
 
     void Update()
     {
-        transform.eulerAngles = new Vector3(45f, 0f, 0f);
+        transform.eulerAngles = Camera.main.transform.eulerAngles;
     }
 }

@@ -4,26 +4,39 @@ using UnityEngine;
 
 public class Engineer : HumanoidController
 {
-    public override void On()
+    public static readonly int _Speed = Animator.StringToHash("Speed");
+
+    public override void On(Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
     {
+        transform.position = pos;
+        transform.rotation = rot;
+
         gameObject.SetActive(true);
+        base.On();
+    }
+
+    public void Repair(Info nf)
+    {
+        info.Interact(nf);
     }
 
     public override void Death()
     {
-        Active = false;
         gameObject.SetActive(false);
+
+        base.Death();
     }
 
     public override void Off()
     {
         gameObject.SetActive(false);
+
+        base.Off();
     }
 
-    protected override void UpdateDirection()
+    protected override void Move()
     {
-        direction = (target.position - transform.position).normalized;
-        direction.y = 0f;
+        MoveByDestination();
     }
 
     protected override void UpdateAnimator()

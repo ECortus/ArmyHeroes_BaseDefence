@@ -57,7 +57,7 @@ public class UpgraderZone : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    protected virtual void OnEnable()
     {
         Refresh();
     }
@@ -70,7 +70,7 @@ public class UpgraderZone : MonoBehaviour
 
     public void Refresh()
     {
-        if(Progress != MaxProgress)
+        if(Progress < MaxProgress)
         {
             if(RequireAmount == 0) RequireAmount = Cost;
             RefreshOutInfo();
