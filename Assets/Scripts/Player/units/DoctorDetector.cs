@@ -24,17 +24,34 @@ public class DoctorDetector : Detector
 
     protected override void Change()
     {
-        controller.SetTarget(data.transform);
+        if(data.MaxHealth > data.Health)
+        {
+            controller.SetTarget(data.transform);
+        }
+        
         StopHeal();
     }
 
     protected override void Set()
     {
-        controller.SetTarget(data.transform);
+        if(data.MaxHealth > data.Health)
+        {
+            controller.SetTarget(data.transform);
+        }
     }
 
     void Update()
     {
+        if(data == null) return;
+        else
+        {
+            if(data.MaxHealth == data.Health)
+            {
+                Reset();
+                return;
+            }
+        }
+
         if(InColWithTargetMask || Vector3.Distance(transform.position, target.position) <= HealRange)
         {
             StartHeal();

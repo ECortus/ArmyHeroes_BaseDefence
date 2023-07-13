@@ -32,7 +32,7 @@ public class Soldier : HumanoidController
 
     protected override void Move()
     {
-        MoveByDestination();
+        MoveByDestination(target);
     }
 
     protected override void UpdateAnimator()

@@ -74,14 +74,14 @@ public class Enemy : HumanoidController
 
     protected override void Move()
     {
-        MoveByDestination();
+        MoveByDestination(target);
     }
 
-    protected override void UpdateDirection()
+    /* protected override void UpdateDirection()
     {
         direction = (target.position - transform.position).normalized;
         direction.y = 0f;
-    }
+    } */
 
     protected override void UpdateAnimator()
     {

@@ -434,7 +434,7 @@ MonoBehaviour:
   ResurrectEvent:
     m_PersistentCalls:
       m_Calls: []
-  health: 117.35
+  health: 25
   damage: 2
   controller: {fileID: 1767988619501561688}
 --- !u!114 &1767988619546593722
@@ -462,8 +462,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  ballAmount: 5
-  resourcePerBall: 25
+  ballAmount: 4
+  resourcePerBall: 15
 --- !u!1 &1767988619558764579
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Zenject;
 
 public class DetectorPool : MonoBehaviour
 {
-    public static DetectorPool Instance { get; set; }
-    void Awake() => Instance = this;
+    [Inject] public static DetectorPool Instance { get; set; }
+    [Inject] void Awake() => Instance = this;
 
     public int TypeCount = 6;
     public Transform Player;

@@ -55,7 +55,7 @@ public class HumanoidController : MonoBehaviour
     public bool Died => info.Died;
 
     public virtual void On(Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
-    { 
+    {
         DetectorPool.Instance.AddInPool(transform, info.DetectType);
     }
     public virtual void Death()
@@ -95,14 +95,14 @@ public class HumanoidController : MonoBehaviour
 
     protected virtual void Move() { }
 
-    public void MoveByDestination()
+    public void MoveByDestination(Transform destination)
     {
-        if(Agent.isActiveAndEnabled && direction != Vector3.zero)
+        if(Agent.isActiveAndEnabled)
         {
-            if(previousTP != target.position)
+            if(previousTP != destination.position)
             {
-                Agent.SetDestination(target.position);
-                previousTP = target.position;
+                Agent.SetDestination(destination.position);
+                previousTP = destination.position;
             }
         }
     }

@@ -36,7 +36,7 @@ public class Doctor : HumanoidController
 
     protected override void Move()
     {
-        MoveByDestination();
+        MoveByDestination(target);
     }
 
     protected override void UpdateAnimator()
