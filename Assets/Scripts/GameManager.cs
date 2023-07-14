@@ -25,12 +25,4 @@ public class GameManager : MonoBehaviour
     {
         
     }
-
-    /* void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            Money.Plus(53453452345653436745f);
-        }
-    } */
 }

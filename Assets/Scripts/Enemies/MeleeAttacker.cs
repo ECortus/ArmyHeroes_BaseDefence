@@ -25,7 +25,6 @@ public class MeleeAttacker : Detector
     protected override void Change()
     {
         controller.SetAdditionalTarget(data.transform);
-        StopAttack();
     }
 
     protected override void Set()
@@ -37,10 +36,12 @@ public class MeleeAttacker : Detector
     {
         if(InColWithTargetMask || Vector3.Distance(transform.position, target.position) <= attackRange)
         {
+            controller.takeControl = true;
             StartAttack();
         }
         else
         {
+            controller.takeControl = false;
             StopAttack();
         }
     }
@@ -58,14 +59,11 @@ public class MeleeAttacker : Detector
             coroutine = null;
         }
 
-        controller.takeControl = false;
         InColWithTargetMask = false;
     }
 
     IEnumerator Attack()
     {
-        controller.takeControl = true;
-
         while(true)
         {
             if(data == null || data.Died || !data.Active)
@@ -75,6 +73,7 @@ public class MeleeAttacker : Detector
             }
 
             controller.Attack(data);
+
             yield return new WaitForSeconds(attackDelay);
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InfoUpgrades : MonoBehaviour
 {
-    float _health = 0f, _InteractMod = 0f;
+    float _health = 0f, _Damage = 0f;
 
     public float PlusHealth
     {
@@ -20,17 +20,17 @@ public class InfoUpgrades : MonoBehaviour
         }
     }
 
-    public float PlusInteractMod
+    public float PlusDamage
     {
         get
         {
-            return _InteractMod;
+            return _Damage;
         }
         set
         {
             float val = value;
             val = Mathf.Clamp(val, 0f, MaxPercent);
-            _InteractMod = val;
+            _Damage = val;
         }
     }
 
@@ -41,9 +41,9 @@ public class InfoUpgrades : MonoBehaviour
         PlusHealth += perc;
     }
 
-    public void UpInteractMod(float perc)
+    public void UpDamage(float perc)
     {
-        PlusInteractMod += perc;
+        PlusDamage += perc;
     }
 
     public void DownHealth(float perc)
@@ -51,8 +51,8 @@ public class InfoUpgrades : MonoBehaviour
         PlusHealth -= perc;
     }
 
-    public void DownInteractMod(float perc)
+    public void DownDamage(float perc)
     {
-        PlusInteractMod -= perc;
+        PlusDamage -= perc;
     }
 }

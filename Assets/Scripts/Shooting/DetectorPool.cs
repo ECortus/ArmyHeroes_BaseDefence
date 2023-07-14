@@ -46,6 +46,22 @@ public class DetectorPool : MonoBehaviour
         return list;
     }
 
+    public bool CheckTypeInDetectTypes(DetectType type)
+    {
+        DetectType tp = DetectType.Nothing;
+
+        for(int i = 0; i < TypeCount; i++)
+        {
+            tp = GetTypeByIndex(i);
+            if(type.HasFlag(tp))
+            {
+
+            }
+        }
+
+        return false;
+    }
+
     DetectType GetTypeByIndex(int i)
     {
         switch(i)

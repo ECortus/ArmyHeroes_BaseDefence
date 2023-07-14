@@ -17,17 +17,17 @@ MonoBehaviour:
     - Calls:
       - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
           type: 3}
-        Count: 2
+        Count: 6
       - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
           type: 3}
-        Count: 4
+        Count: 2
     - Calls:
       - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
           type: 3}
-        Count: 1
+        Count: 12
       - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
           type: 3}
-        Count: 4
+        Count: 8
   - Slots:
     - Calls:
       - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
@@ -35,9 +35,9 @@ MonoBehaviour:
         Count: 5
       - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
           type: 3}
-        Count: 5
+        Count: 7
       - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
           type: 3}
-        Count: 5
+        Count: 9
   DelayBetweenCalls: 1
   DelayBetweenSlots: 3

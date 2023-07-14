@@ -18,10 +18,10 @@ public class Info : MonoBehaviour
     [SerializeField] private UnityEvent ResurrectEvent;
 
     public virtual float InputMaxHealth { get; set; }
-    public virtual float InputInteractMod { get; set; }
+    public virtual float InputDamage { get; set; }
 
     public float MaxHealth => InputMaxHealth * (1f + ups.PlusHealth / 100f);
-    public float InteractMod => InputInteractMod * (1f + ups.PlusInteractMod / 100f);
+    public float Damage => InputDamage * (1f + ups.PlusDamage / 100f);
 
     public bool Active => gameObject.activeSelf;
     public bool Died { get; set; }

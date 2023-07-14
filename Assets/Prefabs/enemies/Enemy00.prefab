@@ -360,10 +360,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectRange: 8
-  PriorityTypes: 1
+  PriorityTypes: 9
   DetectTypes: 15
   data: {fileID: 0}
   CheckCollisionWithTarget: 1
+  DetectedCols: []
   controller: {fileID: 1767988619501561688}
   attackRange: 1.75
   attackDelay: 1.25

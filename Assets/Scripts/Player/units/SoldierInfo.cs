@@ -10,7 +10,7 @@ public class SoldierInfo : Info
     [SerializeField] private Weapon weapon;
 
     public override float InputMaxHealth => health;
-    public override float InputInteractMod => weapon.Damage;
+    public override float InputDamage => weapon.Damage;
 
     void Start()
     {
@@ -33,6 +33,6 @@ public class SoldierInfo : Info
 
     public override void Interact(Info nf)
     {
-        if(nf != null) nf.GetHit(InteractMod);
+        if(nf != null) nf.GetHit(Damage);
     }
 }

@@ -25,7 +25,6 @@ public class EngineerDetector : Detector
     protected override void Change()
     {
         controller.SetTarget(data.transform);
-        StopRepair();
     }
 
     protected override void Set()
@@ -35,12 +34,29 @@ public class EngineerDetector : Detector
 
     void Update()
     {
+        if(data == null) return;
+        else
+        {
+            if(data.MaxHealth == data.Health)
+            {
+                controller.takeControl = true;
+                Reset();
+                return;
+            }
+            else
+            {
+                controller.takeControl = false;
+            }
+        }
+
         if(InColWithTargetMask || Vector3.Distance(transform.position, target.position) <= RepairRange)
         {
+            controller.takeControl = true;
             StartRepair();
         }
         else
         {
+            controller.takeControl = false;
             StopRepair();
         }
     }
@@ -58,14 +74,11 @@ public class EngineerDetector : Detector
             coroutine = null;
         }
 
-        controller.takeControl = false;
         InColWithTargetMask = false;
     }
 
     IEnumerator Repair()
     {
-        controller.takeControl = true;
-
         while(true)
         {
             if(data == null || data.Died || !data.Active)

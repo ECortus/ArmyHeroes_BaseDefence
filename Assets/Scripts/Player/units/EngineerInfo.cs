@@ -10,7 +10,7 @@ public class EngineerInfo : Info
     public float repairForce = 2f;
 
     public override float InputMaxHealth => health;
-    public override float InputInteractMod => repairForce;
+    public override float InputDamage => repairForce;
 
     void Start()
     {
@@ -33,6 +33,6 @@ public class EngineerInfo : Info
 
     public override void Interact(Info nf)
     {
-        if(nf != null) nf.Heal(InteractMod);
+        
     }
 }

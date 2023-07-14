@@ -20,6 +20,8 @@ public class Detector : MonoBehaviour
     [SerializeField] private bool CheckCollisionWithTarget = false;
     public bool InColWithTargetMask { get; set; }
 
+    [HideInInspector] public List<Transform> DetectedCols = new List<Transform>();
+
     Info previous;
     float distanceToData;
     Coroutine coroutine;
@@ -55,8 +57,13 @@ public class Detector : MonoBehaviour
 
             if(data == null)
             {
-                SomeoneAround(detectRange, out data);
+                NearestAround(detectRange, out data);
                 previous = data;
+
+                if(data != null)
+                {
+                    Set();
+                }
             }
 
             if(data != null)
@@ -69,7 +76,7 @@ public class Detector : MonoBehaviour
                     continue;
                 }
 
-                if(SomeoneAround(distanceToData, out data))
+                if(NearestAround(distanceToData, out data))
                 {
                     if(data != previous)
                     {
@@ -77,8 +84,6 @@ public class Detector : MonoBehaviour
                         previous = data;
                     }
                 }
-
-                Set();
             }
         }
     }
@@ -98,7 +103,7 @@ public class Detector : MonoBehaviour
 
     }
 
-    bool SomeoneAround(float dstnc, out Info data)
+    bool NearestAround(float dstnc, out Info data)
     {
         Info unit = null;
 
@@ -156,6 +161,10 @@ public class Detector : MonoBehaviour
         if(detectCols.Count > 0)
         {
             detectCols = detectCols.OrderBy(x  => Vector3.Distance(transform.position, x.transform.position)).ToList();
+            
+            DetectedCols.Clear();
+            DetectedCols.AddRange(detectCols);
+            
             unit = detectCols[0].GetComponentInChildren<Info>();
         }
 
@@ -173,20 +182,18 @@ public class Detector : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if(!CheckCollisionWithTarget) return;
+        if(!CheckCollisionWithTarget || data == null) return;
 
         GameObject go = col.gameObject;
+        Info nf = go.GetComponent<Info>();
 
-        if(humanController.info.DetectType == DetectTypes)
+        if(nf == data)
         {
-            if(go.GetComponentInChildren<Info>() == data)
-            {
-                InColWithTargetMask = true;
-            }
-            else
-            {
-                InColWithTargetMask = false;
-            }
+            InColWithTargetMask = true;
+        }
+        else
+        {
+            InColWithTargetMask = false;
         }
     }
 
@@ -195,10 +202,6 @@ public class Detector : MonoBehaviour
         if(!CheckCollisionWithTarget) return;
 
         GameObject go = col.gameObject;
-
-        if(humanController.info.DetectType == DetectTypes)
-        {
-            InColWithTargetMask = false;
-        }
+        InColWithTargetMask = false;
     }
 }

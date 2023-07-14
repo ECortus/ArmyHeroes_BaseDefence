@@ -8,7 +8,7 @@ public class HelicarrierInfo : Info
     [SerializeField] private float health;
 
     public override float InputMaxHealth => health;
-    public override float InputInteractMod => 0f;
+    public override float InputDamage => 0f;
 
     void Start()
     {

@@ -56,7 +56,7 @@ public class EnemiesGenerator : MonoBehaviour
 
     IEnumerator Working()
     {
-        yield return null;
+        yield return new WaitForSeconds(1f);
 
         Enemy enemy = null;
         Vector3 position = Vector3.zero;
@@ -100,7 +100,7 @@ public class EnemiesGenerator : MonoBehaviour
         Vector3 point = RandomPointOnCircleEdge(Radius);
         Vector3 pos = Center + point;
 
-        if(Vector3.Distance(Player.Instance.transform.position, pos) < Radius * 0.8f)
+        if(Vector3.Distance(Player.Instance.transform.position, pos) < Radius * 0.5f)
         {
             return GetPosition();
         }

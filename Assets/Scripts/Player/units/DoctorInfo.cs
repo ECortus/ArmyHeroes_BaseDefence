@@ -7,10 +7,9 @@ public class DoctorInfo : Info
     [Header("Info: ")]
     [SerializeField] private float health;
     [SerializeField] private Doctor doctor;
-    public float healForce = 5f;
 
     public override float InputMaxHealth => health;
-    public override float InputInteractMod => healForce;
+    public override float InputDamage => 0f;
 
     void Start()
     {
@@ -33,6 +32,6 @@ public class DoctorInfo : Info
 
     public override void Interact(Info nf)
     {
-        if(nf != null) nf.Heal(InteractMod);
+        
     }
 }

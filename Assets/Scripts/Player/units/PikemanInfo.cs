@@ -10,7 +10,7 @@ public class PikemanInfo : Info
     public float miningForce = 2f;
 
     public override float InputMaxHealth => health;
-    public override float InputInteractMod => miningForce;
+    public override float InputDamage => miningForce;
 
     void Start()
     {
@@ -33,6 +33,6 @@ public class PikemanInfo : Info
 
     public override void Interact(Info nf = null)
     {
-        Crystal.Plus((int)InteractMod);
+        
     }
 }

@@ -10,7 +10,7 @@ public class EnemyInfo : Info
     [SerializeField] private HumanoidController controller;
 
     public override float InputMaxHealth => health;
-    public override float InputInteractMod => damage;
+    public override float InputDamage => damage;
 
     public override void Resurrect()
     {
@@ -30,6 +30,6 @@ public class EnemyInfo : Info
 
     public override void Interact(Info nf)
     {
-        if(nf != null) nf.GetHit(InteractMod);
+        if(nf != null) nf.GetHit(Damage);
     }
 }
