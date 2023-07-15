@@ -10,28 +10,28 @@ public class DetectorPool : MonoBehaviour
     [Inject] void Awake() => Instance = this;
 
     public int TypeCount = 6;
-    public Transform Player;
-    public List<Transform> Allies = new List<Transform>();
-    public List<Transform> Firepositions = new List<Transform>();
-    public List<Transform> Buildings = new List<Transform>();
-    public List<Transform> Enemies = new List<Transform>();
-    public List<Transform> Crystals = new List<Transform>();
+    public List<Info> Player = new List<Info>();
+    public List<Info> Allies = new List<Info>();
+    public List<Info> Helicarriers = new List<Info>();
+    public List<Info> Buildings = new List<Info>();
+    public List<Info> Enemies = new List<Info>();
+    public List<Info> Crystals = new List<Info>();
 
-    public void AddInPool(Transform tr, DetectType type)
+    public void AddInPool(Info tr, DetectType type)
     {
-        List<Transform> list = GetListByType(type);
+        List<Info> list = GetListByType(type);
         list.Add(tr);
     }
 
-    public void RemoveFromPool(Transform tr, DetectType type)
+    public void RemoveFromPool(Info tr, DetectType type)
     {
-        List<Transform> list = GetListByType(type);
+        List<Info> list = GetListByType(type);
         list.Remove(tr);
     }
 
-    public List<Transform> RequirePools(DetectType type)
+    public List<Info> RequirePools(DetectType type)
     {
-        List<Transform> list = new List<Transform>();
+        List<Info> list = new List<Info>();
         DetectType tp = DetectType.Nothing;
 
         for(int i = 0; i < TypeCount; i++)
@@ -46,16 +46,16 @@ public class DetectorPool : MonoBehaviour
         return list;
     }
 
-    public bool CheckTypeInDetectTypes(DetectType type)
+    public bool CheckTypeInDetectTypes(DetectType type, DetectType types)
     {
         DetectType tp = DetectType.Nothing;
 
         for(int i = 0; i < TypeCount; i++)
         {
             tp = GetTypeByIndex(i);
-            if(type.HasFlag(tp))
+            if(types.HasFlag(tp))
             {
-
+                
             }
         }
 
@@ -71,7 +71,7 @@ public class DetectorPool : MonoBehaviour
             case 1:
                 return DetectType.Ally;
             case 2:
-                return DetectType.Fireposition;
+                return DetectType.Helicarrier;
             case 3:
                 return DetectType.Building;
             case 4:
@@ -83,16 +83,16 @@ public class DetectorPool : MonoBehaviour
         }
     }
 
-    List<Transform> GetListByType(DetectType type)
+    List<Info> GetListByType(DetectType type)
     {
         switch(type)
         {
             case DetectType.Player:
-                return new List<Transform>{Player};
+                return Player;
             case DetectType.Ally:
                 return Allies;
-            case DetectType.Fireposition:
-                return Firepositions;
+            case DetectType.Helicarrier:
+                return Helicarriers;
             case DetectType.Building:
                 return Buildings;
             case DetectType.Enemy:

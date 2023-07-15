@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HelicarrierInfo : Info
+public class CrystalInfo : Info
 {
     [Header("Info: ")]
     [SerializeField] private float health;
@@ -13,7 +13,17 @@ public class HelicarrierInfo : Info
     void Start()
     {
         Heal(999f);
-        DetectorPool.Instance.AddInPool(this, DetectType.Helicarrier);
+        DetectorPool.Instance.AddInPool(this, DetectType);
+    }
+
+    public override void Heal(float mnt)
+    {
+        base.Heal(mnt);
+    }
+
+    public override void GetHit(float mnt)
+    {
+        base.GetHit(mnt);
     }
 
     public override void Resurrect()
@@ -26,5 +36,10 @@ public class HelicarrierInfo : Info
     {
         Died = true;
         base.Death();
+    }
+
+    public override void Interact(Info nf)
+    {
+        if(nf != null) nf.GetHit(Damage);
     }
 }

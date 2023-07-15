@@ -6,8 +6,9 @@ public class DoctorDetector : MonoBehaviour
 {
     [Space]
     public Doctor controller;
-    [SerializeField] private float HealRange = 2f, HealDelay = 2f;
+    [SerializeField] private float HealRange = 2f;
 
+    private List<Info> dataList => DetectorPool.Instance.Allies;
     private Info data;
 
     private Transform target => controller.target;
@@ -15,30 +16,31 @@ public class DoctorDetector : MonoBehaviour
 
     public bool Healing => coroutine != null;
 
+    [SerializeField] private Transform HealPoint;
+
     void Update()
     {
-        if(data == null) return;
-        else
+        if(data == null)
         {
-            if(data.MaxHealth == data.Health)
+            foreach(var dt in dataList)
             {
-                controller.takeControl = true;
-                return;
-            }
-            else
-            {
-                controller.takeControl = false;
-            }
+                if(data != null && data.Died && data.Active)
+                {
+                    data = dt;
+                    break;
+                }
+            }   
+            return;
         }
 
-        if(Vector3.Distance(transform.position, target.position) <= HealRange)
+        if(data != null)
         {
-            controller.takeControl = true;
+            controller.takeControl = false;
             StartHeal();
         }
         else
         {
-            controller.takeControl = false;
+            controller.takeControl = true;
             StopHeal();
         }
     }
@@ -54,32 +56,33 @@ public class DoctorDetector : MonoBehaviour
         {
             StopCoroutine(coroutine);
             coroutine = null;
+
+            data = null;
         }
     }
 
     IEnumerator Heal()
     {
-        while(true)
-        {
-            if(data == null || data.Died || !data.Active)
-            {
-                StopHeal();
-                break;
-            }
+        HumanoidController patient = data.GetComponentInParent<HumanoidController>();
 
-            /* if(data.Health == data.MaxHealth)
-            {
-                controller.takeControl = false;
-                yield return new WaitUntil(() => 
-                    data.Health != data.MaxHealth);
+        controller.SetTarget(data.transform);
+        yield return new WaitUntil(() => Vector3.Distance(transform.position, data.transform.position) < HealRange);
+        patient.Off();
+        
+        controller.SetTarget(HealPoint);
+        yield return new WaitUntil(() => Vector3.Distance(transform.position, HealPoint.position) < HealRange);
 
-                yield return new WaitUntil(() => 
-                    InColWithTargetMask || Vector3.Distance(transform.position, target.position) <= HealRange);
-                controller.takeControl = true;
-            } */
+        controller.Off();
+        yield return new WaitForSeconds(2f);
 
-            controller.Heal(data);
-            yield return new WaitForSeconds(HealDelay);
-        }
+        controller.On(HealPoint.position);
+
+        data.Resurrect();
+        patient.On(HealPoint.position);
+
+        controller.ResetTarget();
+        StopHeal();
+
+        yield return null;
     }
 }

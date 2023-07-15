@@ -56,15 +56,15 @@ public class HumanoidController : MonoBehaviour
 
     public virtual void On(Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
     {
-        DetectorPool.Instance.AddInPool(transform, info.DetectType);
+        DetectorPool.Instance.AddInPool(info, info.DetectType);
     }
     public virtual void Death()
     { 
-        DetectorPool.Instance.RemoveFromPool(transform, info.DetectType);
+        DetectorPool.Instance.RemoveFromPool(info, info.DetectType);
     }
     public virtual void Off() 
     { 
-        DetectorPool.Instance.RemoveFromPool(transform, info.DetectType);
+        DetectorPool.Instance.RemoveFromPool(info, info.DetectType);
     }
 
     protected virtual void Update()

@@ -6,41 +6,48 @@ public class PikemanDetector : Detector
 {
     [Space]
     public Pikeman controller;
-    [SerializeField] private float MineRange = 2f, MineDelay = 2f;
+    [SerializeField] private float mineRange = 2f;
 
     public override HumanoidController humanController => controller;
     private Transform target => controller.target;
     private Coroutine coroutine;
 
-    public bool Mineing => coroutine != null;
+    public bool Mining => coroutine != null;
+
+    [SerializeField] private Transform recyclePoint;
+    [SerializeField] private GameObject crystal;
 
     protected override void Reset()
     {
-        data = null;
-        controller.ResetTarget();
+        if(!Mining)
+        {
+            data = null;
+            controller.ResetTarget();
 
-        StopMine();
+            StopMine();
+        }
     }
 
     protected override void Change()
     {
-        controller.SetTarget(data.transform);
-        StopMine();
+        if(!Mining) controller.SetTarget(data.transform);
     }
 
     protected override void Set()
     {
-        controller.SetTarget(data.transform);
+        if(!Mining) controller.SetTarget(data.transform);
     }
 
     void Update()
     {
-        if(InColWithTargetMask || Vector3.Distance(transform.position, target.position) <= MineRange)
+        if(data != null)
         {
+            controller.takeControl = false;
             StartMine();
         }
         else
         {
+            controller.takeControl = true;
             StopMine();
         }
     }
@@ -56,26 +63,45 @@ public class PikemanDetector : Detector
         {
             StopCoroutine(coroutine);
             coroutine = null;
+
+            data = null;
         }
 
-        controller.takeControl = false;
         InColWithTargetMask = false;
     }
 
     IEnumerator Mine()
     {
-        controller.takeControl = true;
-
-        while(true)
+        /* if(data == null || !data.Died || !data.Active)
         {
-            if(data == null || data.Died || !data.Active)
-            {
-                StopMine();
-                break;
-            }
+            StopMine();
+        } */
+        Info crstl = data;
 
-            controller.Mine();
-            yield return new WaitForSeconds(MineDelay);
-        }
+        controller.SetTarget(crstl.transform);
+        controller.takeControl = false;
+
+        yield return new WaitUntil(() => 
+            Vector3.Distance(transform.position, crstl.transform.position) < mineRange || InColWithTargetMask);
+
+        controller.ResetTarget();
+        yield return new WaitForSeconds(1f);
+
+        crystal.SetActive(true);
+
+        controller.SetTarget(recyclePoint);
+        yield return new WaitUntil(() => Vector3.Distance(transform.position, recyclePoint.position) < mineRange);
+
+        controller.ResetTarget();
+        yield return new WaitForSeconds(1f);
+
+        crystal.SetActive(false);
+        Crystal.Plus(1);
+        crstl.GetHit(1f);
+
+        Reset();
+        StopMine();
+
+        yield return null;
     }
 }

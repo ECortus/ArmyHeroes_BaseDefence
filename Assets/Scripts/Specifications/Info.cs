@@ -20,8 +20,8 @@ public class Info : MonoBehaviour
     public virtual float InputMaxHealth { get; set; }
     public virtual float InputDamage { get; set; }
 
-    public float MaxHealth => InputMaxHealth * (1f + ups.PlusHealth / 100f);
-    public float Damage => InputDamage * (1f + ups.PlusDamage / 100f);
+    public float MaxHealth => InputMaxHealth * (1f + (ups != null ? ups.PlusHealth / 100f : 0f));
+    public float Damage => InputDamage * (1f + (ups != null ? ups.PlusDamage / 100f : 0f));
 
     public bool Active => gameObject.activeSelf;
     public bool Died { get; set; }

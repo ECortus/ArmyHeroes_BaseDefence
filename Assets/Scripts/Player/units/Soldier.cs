@@ -18,7 +18,7 @@ public class Soldier : HumanoidController
 
     public override void Death()
     {
-        gameObject.SetActive(false);
+        /* gameObject.SetActive(false); */
 
         base.Death();
     }

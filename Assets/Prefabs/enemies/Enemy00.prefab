@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectRange: 8
-  PriorityTypes: 9
+  PriorityTypes: 1
   DetectTypes: 15
   data: {fileID: 0}
   CheckCollisionWithTarget: 1

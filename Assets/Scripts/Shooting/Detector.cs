@@ -20,7 +20,7 @@ public class Detector : MonoBehaviour
     [SerializeField] private bool CheckCollisionWithTarget = false;
     public bool InColWithTargetMask { get; set; }
 
-    [HideInInspector] public List<Transform> DetectedCols = new List<Transform>();
+    [HideInInspector] public List<Info> DetectedCols = new List<Info>();
 
     Info previous;
     float distanceToData;
@@ -114,16 +114,15 @@ public class Detector : MonoBehaviour
             cols = Physics.OverlapSphere(transform.position, dstnc, enemiesMask).ToList();
         } */
 
-        List<Transform> priorityCols = Pool.RequirePools(PriorityTypes);
-        List<Transform> detectCols = Pool.RequirePools(DetectTypes);
+        List<Info> priorityCols = new List<Info>(Pool.RequirePools(PriorityTypes));
+        List<Info> detectCols = new List<Info>(Pool.RequirePools(DetectTypes));
 
         int count = priorityCols.Count + detectCols.Count;
 
-        List<Transform> valid = new List<Transform>();
-        
+        List<Info> valid = new List<Info>();
         valid.AddRange(priorityCols);
 
-        foreach(Transform pr in detectCols)
+        foreach(Info pr in detectCols)
         {
             if(!valid.Contains(pr))
             {
@@ -131,27 +130,29 @@ public class Detector : MonoBehaviour
             }
         }
 
-        if(valid.Contains(transform))
+        if(valid.Contains(GetComponentInChildren<Info>()))
         {
-            valid.Remove(transform);
+            valid.Remove(GetComponentInChildren<Info>());
         }
 
         detectCols.Clear();
         bool priorityInRange = false;
 
-        foreach(Transform col in valid)
+        foreach(Info col in valid)
         {
             if(priorityCols.Contains(col) || priorityInRange)
             {
-                if(Vector3.Distance(transform.position, col.position) <= detectRange)
+                if(Vector3.Distance(transform.position, col.transform.position) <= detectRange)
                 {
+                    if(!priorityInRange) detectCols.Clear();
+
                     priorityInRange = true;
                     detectCols.Add(col);
                 }
             }
             else
             {
-                if(Vector3.Distance(transform.position, col.position) <= dstnc)
+                if(Vector3.Distance(transform.position, col.transform.position) <= dstnc)
                 {
                     detectCols.Add(col);
                 }
@@ -160,12 +161,19 @@ public class Detector : MonoBehaviour
 
         if(detectCols.Count > 0)
         {
-            detectCols = detectCols.OrderBy(x  => Vector3.Distance(transform.position, x.transform.position)).ToList();
+            detectCols = detectCols.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).ToList();
             
             DetectedCols.Clear();
             DetectedCols.AddRange(detectCols);
             
-            unit = detectCols[0].GetComponentInChildren<Info>();
+            for(int i = 0; i < DetectedCols.Count; i++)
+            {
+                unit = detectCols[i];
+                if(!unit.Died && unit.Active)
+                {
+                    break;
+                }
+            }
         }
 
         data = unit;
@@ -182,18 +190,20 @@ public class Detector : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if(!CheckCollisionWithTarget || data == null) return;
+        if(!CheckCollisionWithTarget) return;
 
         GameObject go = col.gameObject;
-        Info nf = go.GetComponent<Info>();
+        Info nf = go.GetComponentInChildren<Info>();
 
-        if(nf == data)
+        if(nf == null) return;
+
+        if(DetectTypes.HasFlag(nf.DetectType))
         {
-            InColWithTargetMask = true;
-        }
-        else
-        {
-            InColWithTargetMask = false;
+            if(!PriorityTypes.HasFlag(data.DetectType))
+            {
+                InColWithTargetMask = true;
+                data = nf;
+            }
         }
     }
 
@@ -202,6 +212,13 @@ public class Detector : MonoBehaviour
         if(!CheckCollisionWithTarget) return;
 
         GameObject go = col.gameObject;
-        InColWithTargetMask = false;
+        Info nf = go.GetComponentInChildren<Info>();
+
+        if(nf == null) return;
+
+        if(DetectTypes.HasFlag(nf.DetectType))
+        {
+            InColWithTargetMask = false;
+        }
     }
 }

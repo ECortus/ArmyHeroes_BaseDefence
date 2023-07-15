@@ -25,6 +25,7 @@ public class MeleeAttacker : Detector
     protected override void Change()
     {
         controller.SetAdditionalTarget(data.transform);
+        StopAttack();
     }
 
     protected override void Set()
@@ -59,11 +60,14 @@ public class MeleeAttacker : Detector
             coroutine = null;
         }
 
+        controller.takeControl = false;
         InColWithTargetMask = false;
     }
 
     IEnumerator Attack()
     {
+        controller.takeControl = true;
+        
         while(true)
         {
             if(data == null || data.Died || !data.Active)

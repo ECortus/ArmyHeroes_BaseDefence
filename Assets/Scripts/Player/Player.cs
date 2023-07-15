@@ -19,6 +19,11 @@ public class Player : HumanoidController
         Instance = this;
     }
 
+    void Start()
+    {
+        On();
+    }
+
     public override void On(Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
     {
         gameObject.SetActive(true);
