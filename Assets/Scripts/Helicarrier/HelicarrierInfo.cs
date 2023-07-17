@@ -2,29 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HelicarrierInfo : Info
+public class HelicarrierInfo : Detection
 {
-    [Header("Info: ")]
-    [SerializeField] private float health;
-
-    public override float InputMaxHealth => health;
-    public override float InputDamage => 0f;
-
     void Start()
     {
-        Heal(999f);
-        DetectorPool.Instance.AddInPool(this, DetectType.Helicarrier);
-    }
-
-    public override void Resurrect()
-    {
-        base.Resurrect();
-        Heal(MaxHealth);
-    }
-
-    public override void Death()
-    {
-        Died = true;
-        base.Death();
+        Heal(99999f);
+        Pool();
     }
 }

@@ -10,11 +10,6 @@ public class BarUI : MonoBehaviour
 
     [SerializeField] private Slider slider;
 
-    void OnEnable()
-    {
-        Refresh();
-    }
-
     public void Refresh()
     {
         slider.minValue = 0f;

@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-public class PlayerInfo : Info
+public class PlayerInfo : Detection
 {
     public static PlayerInfo Instance { get; set; }
     void Awake() => Instance = this;
 
-    [Header("Info: ")]
-    [SerializeField] private float health;
+    [Header("Player info: ")]
     [SerializeField] private Weapon weapon;
     [SerializeField] private float DefaultMaxExp = 100f, ExpRequirePerProgress = 50f;
 
-    public override float InputMaxHealth => health;
-    public override float InputDamage => weapon.Damage;
+    public float Damage => weapon.Damage;
     public float MaxExperience => DefaultMaxExp + Progress * ExpRequirePerProgress;
 
     void Start()
@@ -22,20 +20,9 @@ public class PlayerInfo : Info
         Heal(999f);
     }
 
-    public override void Resurrect()
+    public void Hit(Detection dtct)
     {
-        base.Resurrect();
-        Heal(MaxHealth);
-    }
-
-    public override void Death()
-    {
-        base.Death();
-    }
-
-    public override void Interact(Info nf)
-    {
-        if(nf != null) nf.GetHit(Damage);
+        if(dtct != null) dtct.GetHit(Damage);
     }
 
     public int Progress

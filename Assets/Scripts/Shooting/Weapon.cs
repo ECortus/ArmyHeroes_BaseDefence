@@ -17,6 +17,23 @@ public class Weapon : Shooting
         List[i].Model.SetActive(true);
     }
 
+    void Start()
+    {
+        Disable();
+    }
+
+    public override void Enable()
+    {
+        base.Enable();
+        List[index].Model.SetActive(true);
+    }
+
+    public override void Disable()
+    {
+        base.Disable();
+        List[index].Model.SetActive(false);
+    }
+
     public override float Damage => info.Damage;
     protected override float Delay => info.DelayPerShot;
     protected override List<Transform> Muzzles => info.Muzzles;

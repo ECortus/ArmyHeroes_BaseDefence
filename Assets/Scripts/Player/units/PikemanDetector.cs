@@ -2,44 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PikemanDetector : Detector
+public class PikemanDetector : NearestDetector
 {
     [Space]
-    public Pikeman controller;
+    [SerializeField] private Pikeman controller;
     [SerializeField] private float mineRange = 2f;
 
-    public override HumanoidController humanController => controller;
-    private Transform target => controller.target;
+    protected override bool AdditionalConditionToData(Detection dt)
+    {
+        return !dt.Died && dt.Active && !dt.Marked;
+    }
+
     private Coroutine coroutine;
 
-    public bool Mining => coroutine != null;
+    public bool Mining { get; set; }
+    public bool Carring { get; set; }
 
     [SerializeField] private Transform recyclePoint;
     [SerializeField] private GameObject crystal;
 
     protected override void Reset()
     {
-        if(!Mining)
-        {
-            data = null;
-            controller.ResetTarget();
+        data = null;
+        controller.ResetTarget();
 
-            StopMine();
-        }
+        StopMine();
     }
 
     protected override void Change()
     {
-        if(!Mining) controller.SetTarget(data.transform);
+        controller.SetTarget(data.transform);
+        StopMine();
     }
 
     protected override void Set()
     {
-        if(!Mining) controller.SetTarget(data.transform);
+        controller.SetTarget(data.transform);
     }
 
     void Update()
     {
+        if(detection.Died)
+        {
+            StopMine();
+            return;
+        }
+
         if(data != null)
         {
             controller.takeControl = false;
@@ -63,10 +71,13 @@ public class PikemanDetector : Detector
         {
             StopCoroutine(coroutine);
             coroutine = null;
-
-            data = null;
         }
 
+        Mining = false;
+        Carring = false;
+
+        data = null;
+        controller.takeControl = false;
         InColWithTargetMask = false;
     }
 
@@ -76,31 +87,45 @@ public class PikemanDetector : Detector
         {
             StopMine();
         } */
-        Info crstl = data;
 
-        controller.SetTarget(crstl.transform);
-        controller.takeControl = false;
+        Stop();
+        Detection crstl = data;
 
-        yield return new WaitUntil(() => 
-            Vector3.Distance(transform.position, crstl.transform.position) < mineRange || InColWithTargetMask);
+        if(!crstl.Marked)
+        {
+            controller.SetTarget(crstl.transform);
+            controller.takeControl = false;
 
-        controller.ResetTarget();
-        yield return new WaitForSeconds(1f);
+            crstl.Marked = true;
 
-        crystal.SetActive(true);
+            yield return new WaitUntil(() => controller.NearPoint(crstl.transform.position, mineRange) || InColWithTargetMask);
 
-        controller.SetTarget(recyclePoint);
-        yield return new WaitUntil(() => Vector3.Distance(transform.position, recyclePoint.position) < mineRange);
+            Mining = true;
+            controller.ResetTarget();
+            yield return new WaitForSeconds(2f);
+            Mining = false;
 
-        controller.ResetTarget();
-        yield return new WaitForSeconds(1f);
+            crystal.SetActive(true);
+            Carring = true;
 
-        crystal.SetActive(false);
-        Crystal.Plus(1);
-        crstl.GetHit(1f);
+            controller.SetTarget(recyclePoint);
+            yield return new WaitUntil(() => controller.NearPoint(recyclePoint.position,mineRange));
+
+            controller.ResetTarget();
+            yield return new WaitForSeconds(1f);
+
+            crystal.SetActive(false);
+            Carring = false;
+
+            Crystal.Plus(1);
+            crstl.GetHit(1f);
+
+            crstl.Marked = false;
+        }
 
         Reset();
         StopMine();
+        On();
 
         yield return null;
     }

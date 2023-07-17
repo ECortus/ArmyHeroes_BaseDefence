@@ -6,39 +6,16 @@ public class Soldier : HumanoidController
 {
     public static readonly int _Speed = Animator.StringToHash("Speed");
     public static readonly int _Shooting = Animator.StringToHash("Shooting");
+    public static readonly int _Death = Animator.StringToHash("Death");
+
+    [SerializeField] private Shooting shooting;
     
-    public override void On(Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
-    {
-        transform.position = pos;
-        transform.rotation = rot;
-
-        gameObject.SetActive(true);
-        base.On();
-    }
-
-    public override void Death()
-    {
-        /* gameObject.SetActive(false); */
-
-        base.Death();
-    }
-
-    public override void Off()
-    {
-        gameObject.SetActive(false);
-
-        base.Off();
-    }
-
-    protected override void Move()
-    {
-        MoveByDestination(target);
-    }
-
     protected override void UpdateAnimator()
     {
         if(Animator == null) return;
         
-        Animator.SetFloat(_Speed, direction.magnitude);
+        Animator.SetFloat(_Speed, Agent.velocity.magnitude);
+        Animator.SetBool(_Shooting, shooting.isEnable);
+        Animator.SetBool(_Death, Died);
     }
 }

@@ -5,44 +5,17 @@ using UnityEngine;
 public class Doctor : HumanoidController
 {
     public static readonly int _Speed = Animator.StringToHash("Speed");
+    public static readonly int _Carring = Animator.StringToHash("Carring");
+    public static readonly int _Death = Animator.StringToHash("Death");
 
-    public override void On(Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
-    {
-        transform.position = pos;
-        transform.rotation = rot;
-
-        gameObject.SetActive(true);
-        base.On();
-    }
-
-    public void Heal(Info nf)
-    {
-        info.Interact(nf);
-    }
-
-    public override void Death()
-    {
-        gameObject.SetActive(false);
-
-        base.Death();
-    }
-
-    public override void Off()
-    {
-        gameObject.SetActive(false);
-
-        base.Off();
-    }       
-
-    protected override void Move()
-    {
-        MoveByDestination(target);
-    }
+    [SerializeField] private DoctorDetector dd;
 
     protected override void UpdateAnimator()
     {
         if(Animator == null) return;
         
-        Animator.SetFloat(_Speed, direction.magnitude);
+        Animator.SetFloat(_Speed, Agent.velocity.magnitude);
+        Animator.SetBool(_Carring, dd.Carring);
+        Animator.SetBool(_Death, Died);
     }
 }

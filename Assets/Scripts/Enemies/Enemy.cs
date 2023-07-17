@@ -7,9 +7,11 @@ public class Enemy : HumanoidController
 {
     public static readonly int _Speed = Animator.StringToHash("Speed");
     public static readonly int _MeleeAttack = Animator.StringToHash("MeleeAttack");
+    public static readonly int _Death = Animator.StringToHash("Death");
 
     public EnemyType Type = EnemyType.Default;
     [HideInInspector] public Transform MainTarget, AdditionalTarget;
+    
     [SerializeField] private MeleeAttacker melee;
 
     public void SetMainTarget(Transform mt)
@@ -24,70 +26,18 @@ public class Enemy : HumanoidController
         SetTarget(AdditionalTarget);
     }
 
-    public void Attack(Info nf)
-    {
-        info.Interact(nf);
-    }
-
     public override void On(Vector3 pos, Quaternion rot = new Quaternion())
     {
-        info.Resurrect();
-
-        transform.position = pos;
-        transform.rotation = rot;
-
+        base.On(pos);
         SetTarget(MainTarget);
-        gameObject.SetActive(true);
-        base.On();
     }
-
-    public override void Death()
-    {
-        gameObject.SetActive(false);
-
-        base.Death();
-    }
-
-    public override void Off()
-    {
-        gameObject.SetActive(false);
-
-        base.Off();
-    }
-
-    protected override void Update()
-    {
-        /* if(AdditionalTarget != MainTarget && AdditionalTarget != null)
-        {
-            if((MainTarget.position - transform.position).magnitude > 15f)
-            {
-                SetTarget(MainTarget);
-            }
-            else
-            {
-                SetTarget(AdditionalTarget);
-            }
-        } */
-
-        base.Update();
-    }
-
-    protected override void Move()
-    {
-        MoveByDestination(target);
-    }
-
-    /* protected override void UpdateDirection()
-    {
-        direction = (target.position - transform.position).normalized;
-        direction.y = 0f;
-    } */
 
     protected override void UpdateAnimator()
     {
         if(Animator == null) return;
         
-        Animator.SetFloat(_Speed, direction.magnitude);
+        Animator.SetFloat(_Speed, Agent.velocity.magnitude);
         Animator.SetBool(_MeleeAttack, melee.Fighting);
+        Animator.SetBool(_Death, Died);
     }
 }

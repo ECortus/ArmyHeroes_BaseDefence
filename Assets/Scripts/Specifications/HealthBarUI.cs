@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class HealthBarUI : BarUI
 {
-    [SerializeField] private Info info;
+    public Health data { get; set; }
     
-    protected override float Amount => info.Health;
-    protected override float MaxAmount => info.MaxHealth;
+    protected override float Amount => data.HP;
+    protected override float MaxAmount => data.MaxHP;
 
     void Update()
     {

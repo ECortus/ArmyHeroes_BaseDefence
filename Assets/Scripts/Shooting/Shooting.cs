@@ -11,18 +11,16 @@ public class Shooting : MonoBehaviour
 
     public bool isEnable => coroutine != null;
     Coroutine coroutine;
-    WaitForSeconds delay;
 
-    public void Enable()
+    public virtual void Enable()
     {
         if(coroutine == null)
         {
             coroutine = StartCoroutine(PAWPAW());
-            delay = new WaitForSeconds(Delay);
         }
     }
 
-    public void Disable()
+    public virtual void Disable()
     {
         if(coroutine != null)
         {
@@ -38,7 +36,7 @@ public class Shooting : MonoBehaviour
         while(true)
         {
             Shoot();
-            yield return delay;
+            yield return new WaitForSeconds(Delay);
         }
     }
  

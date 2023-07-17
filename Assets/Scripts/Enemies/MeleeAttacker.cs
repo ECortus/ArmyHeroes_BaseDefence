@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeAttacker : Detector
+public class MeleeAttacker : NearestDetector
 {
     [Space]
-    public Enemy controller;
-    [SerializeField] private float attackRange = 2f, attackDelay = 2f;
+    [SerializeField] private Enemy controller;
+    [SerializeField] private EnemyInfo info;
+    [SerializeField] private float attackRange = 2f, preAttackDelay = 1f, attackDelay = 1.5f;
 
-    public override HumanoidController humanController => controller;
     private Transform target => controller.target;
+    private bool TargetInAttackRange
+    {
+        get
+        {
+            if(data == null) return false;
+            else return Vector3.Distance(transform.position, data.transform.position) <= attackRange;
+        }
+    }
     private Coroutine coroutine;
 
     public bool Fighting => coroutine != null;
+
+    protected override bool AdditionalConditionToData(Detection dt) => !dt.Died;
 
     protected override void Reset()
     {
@@ -35,7 +45,7 @@ public class MeleeAttacker : Detector
 
     void Update()
     {
-        if(InColWithTargetMask || Vector3.Distance(transform.position, target.position) <= attackRange)
+        if(InColWithTargetMask || TargetInAttackRange)
         {
             controller.takeControl = true;
             StartAttack();
@@ -75,9 +85,8 @@ public class MeleeAttacker : Detector
                 StopAttack();
                 break;
             }
-
-            controller.Attack(data);
-
+            yield return new WaitForSeconds(preAttackDelay);
+            info.Attack(data);
             yield return new WaitForSeconds(attackDelay);
         }
     }

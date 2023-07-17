@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EngineerDetector : Detector
+public class EngineerDetector : NearestDetector
 {
     [Space]
-    public Engineer controller;
+    [SerializeField] private Engineer controller;
+    [SerializeField] private EngineerInfo info;
     [SerializeField] private float RepairRange = 2f, RepairDelay = 2f;
 
-    public override HumanoidController humanController => controller;
     private Transform target => controller.target;
     private Coroutine coroutine;
 
     public bool Repairing => coroutine != null;
+
+    protected override bool AdditionalConditionToData(Detection dt)
+    {
+        return dt != null && dt.MaxHP > dt.HP && !dt.Died && dt.Active;
+    }
 
     protected override void Reset()
     {
@@ -35,21 +40,8 @@ public class EngineerDetector : Detector
     void Update()
     {
         if(data == null) return;
-        else
-        {
-            if(data.MaxHealth == data.Health)
-            {
-                controller.takeControl = true;
-                Reset();
-                return;
-            }
-            else
-            {
-                controller.takeControl = false;
-            }
-        }
 
-        if(InColWithTargetMask || Vector3.Distance(transform.position, target.position) <= RepairRange)
+        if(InColWithTargetMask || controller.NearPoint(data.transform.position, RepairRange))
         {
             controller.takeControl = true;
             StartRepair();
@@ -81,13 +73,13 @@ public class EngineerDetector : Detector
     {
         while(true)
         {
-            if(data == null || data.Died || !data.Active)
+            if(AdditionalConditionToData(data))
             {
                 StopRepair();
                 break;
             }
 
-            controller.Repair(data);
+            info.Repair(data);
             yield return new WaitForSeconds(RepairDelay);
         }
     }

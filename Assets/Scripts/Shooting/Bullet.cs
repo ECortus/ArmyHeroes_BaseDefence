@@ -19,7 +19,7 @@ public class Bullet : Ammo
         switch(go.tag)
         {
             case "Enemy":
-                col.GetComponentInChildren<Info>().GetHit(Damage);
+                col.GetComponent<Detection>().GetHit(Damage);
                 Off();
                 break;
             default:

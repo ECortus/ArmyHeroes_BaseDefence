@@ -2,18 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallInfo : Info
+public class WallInfo : Detection
 {
-    [Header("Info: ")]
-    [SerializeField] private float health;
     [SerializeField] private List<GameObject> models = new List<GameObject>();
-
-    public override float InputMaxHealth => health;
-    public override float InputDamage => 0f;
 
     void Start()
     {
-        Heal(999f);
+        Heal(999);
+        Pool();
     }
 
     public override void Heal(float mnt)
@@ -28,18 +24,18 @@ public class WallInfo : Info
         RefreshWallModel();
     }
 
-    void RefreshWallModel()
+    public void RefreshWallModel()
     {
-        int t = (int)MaxHealth / models.Count;
-        int y = (int)Health / t;
-        y = y < 0 ? 0 : y;
-        y++;
+        int t = (int)MaxHP / models.Count;
+        int y = (int)HP;
 
         for(int i = 0; i < models.Count; i++)
-        {   
-            if(i == y)
+        { 
+            y -= t;
+            if(y <= t)
             {
                 models[i].SetActive(true);
+                y = 999999;
             }
             else
             {

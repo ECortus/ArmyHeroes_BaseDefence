@@ -4,84 +4,152 @@ using UnityEngine;
 using UnityEngine.AI;
 using Cysharp.Threading.Tasks;
 
-public class Player : HumanoidController
+public class Player : Target
 {
     public static Player Instance { get; set; }
+    void Awake() => Instance = this;
+
     public Transform Transform { get { return transform; } }
 
     public static readonly int _Speed = Animator.StringToHash("Speed");
     public static readonly int _Shooting = Animator.StringToHash("Shooting");
+    public static readonly int _Death = Animator.StringToHash("Death");
 
     private FloatingJoystick joyStick => GameManager.Instance.Joystick;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+    [SerializeField] private Animator Animator;
+    [SerializeField] private NavMeshAgent Agent;
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private Shooting shooting;
+    [SerializeField] private BaseDetector detector;
+    [SerializeField] private Detection detection;
+
+    [HideInInspector] public Vector3 Direction;
+    
+    public bool Active => detection.Active;
+    public bool Died => detection.Died;
 
     void Start()
     {
         On();
     }
 
-    public override void On(Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
+    public void On(Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
     {
+        detection.Resurrect();
+
+        TeleportToPoint(pos);
+        transform.rotation = rot;
+
         gameObject.SetActive(true);
-        joyStick.Reset();
-
-        base.On();
+        detection.Pool();
+        detector.On();
     }
 
-    public override void Death()
-    {
-        gameObject.SetActive(false);
-
-        base.Death();
+    public void Death()
+    { 
+        /* detection.Depool(); */
+        detector.Off();
     }
 
-    public override void Off()
-    {
-        gameObject.SetActive(false);
-
-        base.Off();
+    public void Off() 
+    { 
+        detection.Depool();
+        detector.Off();
     }
 
-    protected override void UpdateDirection()
+    void Update()
     {
-        if(joyStick.gameObject.activeSelf)
+        if(Active)
         {
-            direction = new Vector3(joyStick.Horizontal, 0, joyStick.Vertical).normalized;
-            direction = Quaternion.AngleAxis(Camera.main.transform.eulerAngles.y, Vector3.up) * direction;
+            ZeroRBVelocities();
+
+            if(!takeControl) 
+            {
+                UpdateDirection();
+            }
+            else ZeroDirection();
+            
+            Move();
+            UpdateAnimator();
+            Rotate();
         }
         else
         {
-            direction = Vector3.zero;
+            ZeroDirection();
+            UpdateAnimator();
         }
     }
 
-    protected override void Move()
+    void UpdateDirection()
     {
-        MoveByDirection();
+        if(joyStick.gameObject.activeSelf)
+        {
+            Direction = new Vector3(joyStick.Horizontal, 0, joyStick.Vertical).normalized;
+            Direction = Quaternion.AngleAxis(Camera.main.transform.eulerAngles.y, Vector3.up) * Direction;
+        }
+        else
+        {
+            Direction = Vector3.zero;
+        }
     }
 
-    protected override void UpdateAnimator()
+    void UpdateAnimator()
     {
-        if(Animator == null) return;
-        
-        Animator.SetFloat(_Speed, direction.magnitude);
+        Animator.SetFloat(_Speed, Direction.magnitude);
+        Animator.SetBool(_Shooting, shooting.isEnable && !Died);
+        Animator.SetBool(_Death, Died);
     }
 
-    public async void TakeControlToPoint(Vector3 from, Vector3 to)
+    void Move()
     {
-        takeControl = true;
+        if(target != null && takeControl)
+        {
+            if(Agent.destination != target.position) Agent.SetDestination(target.position);
+            return;
+        }
 
-        TeleportToPoint(from);
-        Agent.SetDestination(to);
-        UpdateAnimator();
+        if(Agent.isActiveAndEnabled && Direction != Vector3.zero)
+        {
+            Agent.Move(Direction * (Agent.speed * Time.deltaTime));
+        }
+    }
 
-        await UniTask.WaitUntil(() => Agent.velocity.magnitude < 0.05f);
+    private void Rotate()
+    {
+        Vector3 dir = Vector3.zero;
+        if(target != transform) dir = DirectionToTarget;
+        else dir = Direction;
 
-        takeControl = false;
+        if (Agent.isActiveAndEnabled && dir != Vector3.zero)
+        {
+            var targetRotation = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * Agent.angularSpeed);
+        }
+    }
+
+    void ZeroRBVelocities()
+    {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+    }
+
+    void ZeroDirection()
+    {
+        Direction = Vector3.zero;
+    }
+
+    public void TeleportToPoint(Vector3 point)
+    {
+        int mask = LayerMask.NameToLayer("NavMesh");
+        NavMesh.SamplePosition(point, out var hit, 5f, mask);
+
+        if (hit.hit)
+        {
+            Agent.enabled = false;
+            transform.position = point;
+            Agent.enabled = true;
+        }
     }
 
     void OnTriggerEnter(Collider col)

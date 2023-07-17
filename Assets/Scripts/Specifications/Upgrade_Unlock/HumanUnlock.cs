@@ -12,7 +12,7 @@ public class HumanUnlock : UpgraderZone
     { 
         get
         {
-            return Statistics.Gold > 0 && Player.Instance.direction == Vector3.zero 
+            return Statistics.Gold > 0 && Player.Instance.Direction == Vector3.zero 
                 && (Input.touchCount == 0 && !Input.GetMouseButton(0));
         }
     }
