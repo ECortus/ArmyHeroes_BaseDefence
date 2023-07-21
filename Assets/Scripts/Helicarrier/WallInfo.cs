@@ -26,11 +26,21 @@ public class WallInfo : Detection
 
     public void RefreshWallModel()
     {
-        int t = (int)MaxHP / models.Count;
+        int t = (int)MaxHP / (models.Count - 1);
         int y = (int)HP;
 
-        for(int i = 0; i < models.Count; i++)
-        { 
+        if(y <= 0f)
+        {
+            models[0].SetActive(true);
+            y = 999999;
+        }
+        else
+        {
+            models[0].SetActive(false);
+        }
+
+        for(int i = 1; i < models.Count; i++)
+        {
             y -= t;
             if(y <= t)
             {

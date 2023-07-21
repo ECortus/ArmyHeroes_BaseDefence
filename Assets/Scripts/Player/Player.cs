@@ -11,6 +11,20 @@ public class Player : Target
 
     public Transform Transform { get { return transform; } }
 
+    [SerializeField] private float defaultSpeed;
+    private float speed
+    {
+        get
+        {
+            if(detection.HPvDMGvSPD == null)
+            {
+                return defaultSpeed;
+            }
+
+            return defaultSpeed * (1f + detection.HPvDMGvSPD.bonusSPD / 100f);
+        }
+    }
+
     public static readonly int _Speed = Animator.StringToHash("Speed");
     public static readonly int _Shooting = Animator.StringToHash("Shooting");
     public static readonly int _Death = Animator.StringToHash("Death");
@@ -31,7 +45,7 @@ public class Player : Target
 
     void Start()
     {
-        On();
+        On(transform.position);
     }
 
     public void On(Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
@@ -62,17 +76,21 @@ public class Player : Target
     {
         if(Active)
         {
-            ZeroRBVelocities();
-
-            if(!takeControl) 
+            if(Agent.isActiveAndEnabled)
             {
-                UpdateDirection();
+                Agent.speed = speed;
+                ZeroRBVelocities();
+
+                if(!takeControl) 
+                {
+                    UpdateDirection();
+                }
+                else ZeroDirection();
+                
+                Move();
+                UpdateAnimator();
+                Rotate();
             }
-            else ZeroDirection();
-            
-            Move();
-            UpdateAnimator();
-            Rotate();
         }
         else
         {
@@ -109,7 +127,7 @@ public class Player : Target
             return;
         }
 
-        if(Agent.isActiveAndEnabled && Direction != Vector3.zero)
+        if(Direction != Vector3.zero)
         {
             Agent.Move(Direction * (Agent.speed * Time.deltaTime));
         }

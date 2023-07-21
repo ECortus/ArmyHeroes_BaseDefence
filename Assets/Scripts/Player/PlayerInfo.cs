@@ -10,6 +10,26 @@ public class PlayerInfo : Detection
 
     [Header("Player info: ")]
     [SerializeField] private Weapon weapon;
+
+    public int WeaponIndex
+    {
+        get
+        {
+            return PlayerPrefs.GetInt(DataManager.WeaponKey, 0);
+        }
+        set
+        {
+            PlayerPrefs.SetInt(DataManager.WeaponKey, value);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public void SetWeapon(int i)
+    {
+        WeaponIndex = i;
+        weapon.SetNewWeapon(WeaponIndex);
+    }
+
     [SerializeField] private float DefaultMaxExp = 100f, ExpRequirePerProgress = 50f;
 
     public float Damage => weapon.Damage;
@@ -18,6 +38,7 @@ public class PlayerInfo : Detection
     void Start()
     {
         Heal(999f);
+        SetWeapon(WeaponIndex);
     }
 
     public void Hit(Detection dtct)
@@ -38,12 +59,10 @@ public class PlayerInfo : Detection
         }
     }
 
-    public async UniTask GetNewProgress()
+    public void GetNewProgress()
     {
-        await UniTask.Delay(0);
         Progress++;
-
-        Debug.Log("new level");
+        PlayerNewProgress.Instance.On();
     }
 
     public void ResetProgress()

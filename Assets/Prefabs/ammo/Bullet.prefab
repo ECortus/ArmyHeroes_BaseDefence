@@ -302,8 +302,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: -567914100534804488}
-  trial: {fileID: 1101043061054565070}
+  sphere: {fileID: 7342528977530786445}
   speed: 75
+  trial: {fileID: 1101043061054565070}
   destroyEffect: {fileID: 0}
 --- !u!1 &1381991387212023156
 GameObject:
@@ -331,9 +332,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1381991387212023156}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.0714285}
-  m_LocalScale: {x: 5, y: 5, z: 5}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: 0, z: -0.17}
+  m_LocalScale: {x: 5, y: 5, z: 1.4768}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1101043062399094409}
   m_RootOrder: 0

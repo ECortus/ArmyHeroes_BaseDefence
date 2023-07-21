@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 
 public class Enemy : HumanoidController
 {
@@ -30,6 +31,15 @@ public class Enemy : HumanoidController
     {
         base.On(pos);
         SetTarget(MainTarget);
+    }
+
+    public async void ForceBack(float force)
+    {
+        Agent.enabled = false;
+        rb.AddForce(-transform.forward * force, ForceMode.Force);
+
+        await UniTask.Delay(250);
+        Agent.enabled = true;
     }
 
     protected override void UpdateAnimator()

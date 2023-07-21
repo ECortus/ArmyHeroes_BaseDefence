@@ -84,6 +84,8 @@ public class EnemiesGenerator : MonoBehaviour
 
             yield return new WaitUntil(() => EnemiesPool.Instance.AllDied);
             WaveIndex++;
+
+            GoldRewardPerWaveChest.Instance.On();
         }
 
         Stop();

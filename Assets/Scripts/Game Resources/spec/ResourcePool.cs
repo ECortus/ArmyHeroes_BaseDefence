@@ -18,14 +18,17 @@ public class ResourcePool : MonoBehaviour
             case ResourceType.Exp:
                 rc = Balls[0];
                 break;
-            case ResourceType.HealKit:
+            case ResourceType.Gold:
                 rc = Balls[1];
                 break;
-            case ResourceType.Magnit:
+            case ResourceType.HealKit:
                 rc = Balls[2];
                 break;
-            case ResourceType.Dynamit:
+            case ResourceType.Magnit:
                 rc = Balls[3];
+                break;
+            case ResourceType.Dynamit:
+                rc = Balls[4];
                 break;
             default:
                 break;
@@ -40,6 +43,40 @@ public class ResourcePool : MonoBehaviour
         HealKitPool = new List<ResourceBall>(), 
         MagnitPool = new List<ResourceBall>(), 
         DynamitPool = new List<ResourceBall>();
+
+    public void SetMoveAllType(ResourceType type)
+    {
+        List<ResourceBall> list = new List<ResourceBall>();
+
+        switch(type)
+        {
+            case ResourceType.Exp:
+                list = ExpPool;
+                break;
+            case ResourceType.Gold:
+                list = GoldPool;
+                break;
+            case ResourceType.HealKit:
+                list = HealKitPool;
+                break;
+            case ResourceType.Magnit:
+                list = MagnitPool;
+                break;
+            case ResourceType.Dynamit:
+                list = DynamitPool;
+                break;
+            default:
+                break;
+        }
+
+        foreach(ResourceBall ball in list)
+        {
+            if(ball.Active)
+            {
+                ball.SetMove(true);
+            }
+        }
+    }
 
     public ResourceBall Insert(ResourceType type, Vector3 pos = new Vector3())
     {

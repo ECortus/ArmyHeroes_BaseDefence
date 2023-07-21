@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PikemanDetector : NearestDetector
 {
@@ -8,7 +9,7 @@ public class PikemanDetector : NearestDetector
     [SerializeField] private Pikeman controller;
     [SerializeField] private float mineRange = 2f;
 
-    protected override bool AdditionalConditionToData(Detection dt)
+    public override bool AdditionalCondition(Detection dt)
     {
         return !dt.Died && dt.Active && !dt.Marked;
     }
@@ -18,15 +19,29 @@ public class PikemanDetector : NearestDetector
     public bool Mining { get; set; }
     public bool Carring { get; set; }
 
-    [SerializeField] private Transform recyclePoint;
+    [Space]
+    [SerializeField] private Transform[] entersToRecycle;
+
+    private Transform GetClosest(Transform[] array)
+    {
+        List<Transform> list = array.ToList();
+        list = list.OrderBy(x => (x.transform.position - transform.position).magnitude).ToList();
+
+        return list[0];
+    }
+
+    [SerializeField] private Transform recycle;
+
+    [Space]
     [SerializeField] private GameObject crystal;
 
     protected override void Reset()
     {
+        StopMine();
+
         data = null;
         controller.ResetTarget();
-
-        StopMine();
+        controller.ResetDestination();
     }
 
     protected override void Change()
@@ -44,7 +59,7 @@ public class PikemanDetector : NearestDetector
     {
         if(detection.Died)
         {
-            StopMine();
+            Reset();
             return;
         }
 
@@ -75,8 +90,8 @@ public class PikemanDetector : NearestDetector
 
         Mining = false;
         Carring = false;
+        if(data != null) data.Marked = false;
 
-        data = null;
         controller.takeControl = false;
         InColWithTargetMask = false;
     }
@@ -90,15 +105,20 @@ public class PikemanDetector : NearestDetector
 
         Stop();
         Detection crstl = data;
+        Transform point = null;
 
         if(!crstl.Marked)
         {
-            controller.SetTarget(crstl.transform);
+            point = crstl.transform;
+
+            controller.SetTarget(point);
             controller.takeControl = false;
 
             crstl.Marked = true;
 
-            yield return new WaitUntil(() => controller.NearPoint(crstl.transform.position, mineRange) || InColWithTargetMask);
+            yield return new WaitUntil(() => controller.NearPoint(point.position, mineRange) || InColWithTargetMask);
+
+            controller.takeControl = true;
 
             Mining = true;
             controller.ResetTarget();
@@ -108,8 +128,17 @@ public class PikemanDetector : NearestDetector
             crystal.SetActive(true);
             Carring = true;
 
-            controller.SetTarget(recyclePoint);
-            yield return new WaitUntil(() => controller.NearPoint(recyclePoint.position,mineRange));
+            controller.takeControl = false;
+
+            point = GetClosest(entersToRecycle);
+
+            controller.SetTarget(point);
+            yield return new WaitUntil(() => controller.NearPoint(point.position, 1f));
+
+            point = recycle;
+
+            controller.SetTarget(point);
+            yield return new WaitUntil(() => controller.NearPoint(point.position, 1f));
 
             controller.ResetTarget();
             yield return new WaitForSeconds(1f);

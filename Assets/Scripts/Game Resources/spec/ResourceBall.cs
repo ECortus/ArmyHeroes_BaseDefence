@@ -15,12 +15,17 @@ public class ResourceBall : MonoBehaviour
 
     public bool Active => gameObject.activeSelf;
 
+    float spawnDelay = 0.5f;
+    float time = 0f;
+
     public void On(Vector3 pos = new Vector3())
     {
         if(pos != new Vector3()) transform.position = pos;
 
-        move = false;
+        SetMove(false);
         gameObject.SetActive(true);
+
+        time = spawnDelay;
     }
 
     public void Off()
@@ -33,18 +38,29 @@ public class ResourceBall : MonoBehaviour
         resourceAmount = amount;
     }
 
+    public void SetMove(bool val)
+    {
+        move = val;
+    }
+
     public void Force(Vector3 direction, float force)
     {
         rb.AddForce(direction * force);
     }
 
-    public virtual void AddRecourceToPlayer()
+    protected virtual void AddRecourceToPlayer()
     {
         Off();
     }
 
     void Update()
     {
+        if(time > 0f)
+        {
+            time -= Time.deltaTime;
+            return;
+        }
+
         if(move)
         {
             transform.position = Vector3.Lerp(transform.position, target.position, speed * Time.deltaTime);
@@ -53,7 +69,7 @@ public class ResourceBall : MonoBehaviour
 
         if(Vector3.Distance(transform.position, target.position) < distanceToPlayer)
         {
-            move = true;
+            SetMove(true);
         }
     }
 

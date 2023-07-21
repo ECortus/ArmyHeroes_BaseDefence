@@ -17,10 +17,17 @@ public class Gate : MonoBehaviour
     [SerializeField] private float timeToClose, rotateSpeed;
     Quaternion rot;
 
-    void Start()
+    void OnEnable()
     {
         WriteCloseAngle();
         SetRotateList(closedGateRotate, out gateRotateAngle);
+
+        Reset();
+    }
+
+    void OnDisable()
+    {
+        Reset();
     }
 
     void Update()
@@ -46,6 +53,22 @@ public class Gate : MonoBehaviour
             }
 
             gate.localRotation = Quaternion.Slerp(gate.localRotation, rot, rotateSpeed * Time.deltaTime);
+            i++;
+        }
+    }
+
+    void Reset()
+    {
+        int i = 0;
+        foreach(Transform gate in gates)
+        {
+            rot = Quaternion.Euler(
+                gate.transform.localEulerAngles.x, 
+                closedGateRotate[i], 
+                gate.transform.localEulerAngles.z
+            );
+
+            gate.localRotation = rot;
             i++;
         }
     }

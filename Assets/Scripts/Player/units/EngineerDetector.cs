@@ -14,22 +14,24 @@ public class EngineerDetector : NearestDetector
 
     public bool Repairing => coroutine != null;
 
-    protected override bool AdditionalConditionToData(Detection dt)
+    public override bool AdditionalCondition(Detection dt)
     {
-        return dt != null && dt.MaxHP > dt.HP && !dt.Died && dt.Active;
+        return dt != null && dt.HP < dt.MaxHP && dt.Active && !dt.Marked;
     }
 
     protected override void Reset()
     {
+        StopRepair();
+
         data = null;
         controller.ResetTarget();
-
-        StopRepair();
+        controller.ResetDestination();
     }
 
     protected override void Change()
     {
         controller.SetTarget(data.transform);
+        StopRepair();
     }
 
     protected override void Set()
@@ -39,17 +41,22 @@ public class EngineerDetector : NearestDetector
 
     void Update()
     {
-        if(data == null) return;
-
-        if(InColWithTargetMask || controller.NearPoint(data.transform.position, RepairRange))
+        if(controller.Died)
         {
-            controller.takeControl = true;
-            StartRepair();
+            Reset();
+            return;
         }
+
+        if(data == null) return;
         else
         {
-            controller.takeControl = false;
-            StopRepair();
+            Stop();
+            data.Marked = true;
+
+            if(InColWithTargetMask || controller.NearPoint(data.transform.position, RepairRange))
+            {
+                StartRepair();
+            }
         }
     }
 
@@ -66,21 +73,27 @@ public class EngineerDetector : NearestDetector
             coroutine = null;
         }
 
+        if(data != null) data.Marked = false;
+        controller.takeControl = false;
         InColWithTargetMask = false;
     }
 
     IEnumerator Repair()
     {
+        controller.takeControl = true;
+
         while(true)
         {
-            if(AdditionalConditionToData(data))
+            if(!(data != null && data.HP < data.MaxHP && data.Active))
             {
-                StopRepair();
                 break;
             }
 
-            info.Repair(data);
             yield return new WaitForSeconds(RepairDelay);
+            info.Repair(data);
         }
+
+        On();
+        Reset();
     }
 }

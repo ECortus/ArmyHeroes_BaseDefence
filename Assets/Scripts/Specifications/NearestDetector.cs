@@ -32,7 +32,7 @@ public class NearestDetector : BaseDetector
             {
                 distanceToData = Vector3.Distance(data.transform.position, transform.position);
 
-                if(!AdditionalConditionToData(data) || distanceToData > range)
+                if(!AdditionalCondition(data) || distanceToData > range)
                 {
                     Reset();
                     continue;

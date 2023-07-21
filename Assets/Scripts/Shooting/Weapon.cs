@@ -6,15 +6,31 @@ using System;
 
 public class Weapon : Shooting
 {
+    [SerializeField] private Detection detection;
+
     [SerializeField] private List<WeaponTuple> List = new List<WeaponTuple>();
 
-    int index = 0;
-    private WeaponInfo info => List[index].Info;
+    public int Index { get; set; }
+    private WeaponInfo info => List[Index].Info;
 
     public void SetNewWeapon(int i)
     {
-        index = i % List.Count;
+        bool shooted = isEnable;
+        
+        foreach(WeaponTuple tuple in List)
+        {
+            tuple.Model.SetActive(false);
+        }
+        Disable();
+
+        Index = i % List.Count;
         List[i].Model.SetActive(true);
+
+        if(shooted)
+        {
+            delaypoolvar = 0f;
+            Enable();
+        }
     }
 
     void Start()
@@ -25,17 +41,39 @@ public class Weapon : Shooting
     public override void Enable()
     {
         base.Enable();
-        List[index].Model.SetActive(true);
+        /* List[Index].Model.SetActive(true); */
     }
 
     public override void Disable()
     {
         base.Disable();
-        List[index].Model.SetActive(false);
+        /* List[Index].Model.SetActive(false); */
     }
 
-    public override float Damage => info.Damage;
-    protected override float Delay => info.DelayPerShot;
+    public override float Damage
+    {
+        get
+        {
+            if(detection.HPvDMGvSPD == null)
+            {
+                return info.Damage;
+            }
+
+            return info.Damage * (1f + detection.HPvDMGvSPD.bonusDMG / 100f);
+        }
+    }
+    protected override float Delay
+    {
+        get
+        {
+            if(ups == null)
+            {
+                return info.DelayPerShot;
+            }
+
+            return info.DelayPerShot * (1f - ups.DecreaseSC / 100f);
+        }
+    }
     protected override List<Transform> Muzzles => info.Muzzles;
     protected override Ammo Ammo => info.Ammo;
 }

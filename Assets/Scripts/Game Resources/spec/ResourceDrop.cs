@@ -5,21 +5,27 @@ using UnityEngine;
 public class ResourceDrop : MonoBehaviour
 {
     [SerializeField] private ResourceType type;
-    [SerializeField] private float ballAmount, resourcePerBall;
+    public int BallAmount;
+    public float ResourcePerBall;
 
     public void Drop()
+    {
+        DropAmount((int)BallAmount);
+    }
+
+    public void DropAmount(int count)
     {
         ResourceBall ball = null;
         Vector3 dir = Vector3.zero;
 
-        for(int i = 0; i < ballAmount; i++)
+        for(int i = 0; i < count; i++)
         {
             dir = Random.insideUnitSphere;
-            dir.y = 0.7f;
+            dir.y = 1f;
 
-            ball = ResourcePool.Instance.Insert(type, transform.position);
-            ball.SetRecource(resourcePerBall);
-            ball.Force(dir, 400f * Random.Range(0f, 1f));
+            ball = ResourcePool.Instance.Insert(type, transform.position + Vector3.up * 1.25f);
+            ball.SetRecource(ResourcePerBall);
+            ball.Force(dir, 300f * Random.Range(0.35f, 1f));
         }
     }
 }

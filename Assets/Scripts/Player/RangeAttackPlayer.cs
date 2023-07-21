@@ -8,7 +8,7 @@ public class RangeAttackPlayer : NearestDetector
     [SerializeField] private Player controller;
     [SerializeField] private Shooting shooting;
 
-    protected override bool AdditionalConditionToData(Detection dt)
+    public override bool AdditionalCondition(Detection dt)
     {
         return !dt.Died && dt.Active;
     }
@@ -24,14 +24,8 @@ public class RangeAttackPlayer : NearestDetector
 
     protected override void Change()
     {
-        if(data != null)
-        {
-            Set();
-        }
-        else
-        {
-            Reset();
-        }
+        controller.SetTarget(data.transform);
+        controller.takeControl = false;
 
         /* shooting.Disable(); */
     }

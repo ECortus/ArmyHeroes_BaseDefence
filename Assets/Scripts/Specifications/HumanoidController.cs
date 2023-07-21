@@ -5,6 +5,21 @@ using UnityEngine.AI;
 
 public class HumanoidController : Target
 {
+    [SerializeField] private float defaultSpeed;
+    private float speed
+    {
+        get
+        {
+            if(detection.HPvDMGvSPD == null)
+            {
+                return defaultSpeed;
+            }
+            
+            return defaultSpeed * (1f + detection.HPvDMGvSPD.bonusSPD / 100f);
+        }
+    }
+
+    [Space]
     public Animator Animator;
     public NavMeshAgent Agent;
     public Rigidbody rb;
@@ -46,13 +61,23 @@ public class HumanoidController : Target
 
     void Update()
     {
-        if(Active)
+        if(!Died && Active)
         {
-            ZeroRBVelocities();
-
-            if(!takeControl) 
+            if(Agent.isActiveAndEnabled)
             {
-                Move();
+                Agent.speed = speed;
+                ZeroRBVelocities();
+
+                if(!takeControl) 
+                {
+                    Agent.isStopped = false;
+
+                    Move();
+                }
+                else
+                {
+                    Agent.isStopped = true;
+                }
             }
             
             UpdateAnimator();
@@ -60,6 +85,8 @@ public class HumanoidController : Target
         }
         else
         {
+            ZeroRBVelocities();
+
             ZeroAgentVelocity();
             UpdateAnimator();
         }
@@ -72,7 +99,7 @@ public class HumanoidController : Target
 
     private void Move()
     {
-        if(Agent.isActiveAndEnabled && target != transform)
+        if(target != transform)
         {
             SetDestination(target.position);
         }
@@ -84,6 +111,11 @@ public class HumanoidController : Target
         {
             Agent.SetDestination(point);
         }
+    }
+
+    public void ResetDestination()
+    {
+        if(Agent.isActiveAndEnabled) SetDestination(transform.position);
     }
 
     public bool NearPoint(Vector3 point, float distance)

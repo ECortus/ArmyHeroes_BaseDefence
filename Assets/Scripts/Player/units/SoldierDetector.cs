@@ -13,7 +13,7 @@ public class SoldierDetector : NearestDetector
     [Range(0, 100)]
     [SerializeField] private int ChanceToChangePosition = 0;
 
-    protected override bool AdditionalConditionToData(Detection dt)
+    public override bool AdditionalCondition(Detection dt)
     {
         return !dt.Died && dt.Active;
     }
@@ -22,6 +22,8 @@ public class SoldierDetector : NearestDetector
     {
         data = null;
         controller.ResetTarget();
+        controller.ResetDestination();
+
         controller.takeControl = false;
 
         shooting.Disable();
@@ -29,14 +31,8 @@ public class SoldierDetector : NearestDetector
 
     protected override void Change()
     {
-        if(data != null)
-        {
-            Set();
-        }
-        else
-        {
-            Reset();
-        }
+        controller.SetTarget(data.transform);
+        controller.takeControl = TakeControl;
 
         /* shooting.Disable(); */
     }

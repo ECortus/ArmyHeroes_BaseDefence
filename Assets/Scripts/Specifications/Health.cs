@@ -10,7 +10,8 @@ public class Health : MonoBehaviour
 
     [Header("HP Input: ")]
     [SerializeField] private float InputHP = 25f;
-    private  float Bonus = 0f;
+    public HP_DMG_SPD HPvDMGvSPD;
+    private float Bonus => HPvDMGvSPD.bonusHP;
 
     [Header("HP UI ref-s: ")]
     [SerializeField] private HealthBarUI bar;
@@ -39,7 +40,18 @@ public class Health : MonoBehaviour
         }
     }
 
-    public float MaxHP => InputHP * (1f + Bonus);
+    public float MaxHP 
+    { 
+        get
+        {
+            if(HPvDMGvSPD == null)
+            {
+                return InputHP;
+            }
+
+            return InputHP * (1f + Bonus / 100f);
+        }
+    }
 
     public virtual void Heal(float mnt)
     {
@@ -56,16 +68,6 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void AddBonus(float percent)
-    {
-        Bonus += percent;
-    }
-
-    public void ResetBonus()
-    {
-        Bonus = 0f;
-    }
-
     public virtual void Resurrect()
     {
         Died = false;
@@ -80,5 +82,35 @@ public class Health : MonoBehaviour
         HP = 0f;
 
         DeathEvent?.Invoke();
+    }
+
+    float percentPerSecond = 0.5f;
+    Coroutine coroutine;
+
+    public void StartAutoRegeneration(float pps)
+    {
+        percentPerSecond = pps;
+        if(coroutine == null)
+        {
+            coroutine = StartCoroutine(AutoRegeneration());
+        }
+    }   
+
+    public void StopAutoRegeneration()
+    {
+        if(coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+    }
+
+    IEnumerator AutoRegeneration()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(1f);
+            Heal(MaxHP * percentPerSecond);
+        }
     }
 }

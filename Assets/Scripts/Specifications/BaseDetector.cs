@@ -16,8 +16,7 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
     public bool CheckCollisionWithTarget = false;
     public bool InColWithTargetMask { get; set; }
 
-    public bool AdditionalCondition(Detection dt) => AdditionalConditionToData(dt);
-    protected virtual bool AdditionalConditionToData(Detection dt) => true;
+    public virtual bool AdditionalCondition(Detection dt) => true;
 
     Coroutine coroutine;
 
@@ -56,7 +55,20 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
         GameObject go = col.gameObject;
         Detection nf = go.GetComponent<Detection>();
 
-        if(nf == null) return;
+        if(nf == null)
+        {
+            nf = go.GetComponentInParent<Detection>();
+            if(nf == null)
+            {
+                return;
+            }
+        }
+
+        if(nf == data)
+        {
+            InColWithTargetMask = true;
+            return;
+        }
 
         if(detectTypes.HasFlag(nf.Type))
         {
@@ -81,9 +93,17 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
         if(!CheckCollisionWithTarget) return;
 
         GameObject go = col.gameObject;
-        Detection nf = go.GetComponentInChildren<Detection>();
+        Detection nf = go.GetComponent<Detection>();
 
-        if(nf == null) return;
+        if(nf == null)
+        {
+            nf = go.GetComponentInParent<Detection>();
+            if(nf == null)
+            {
+                return;
+            }
+        }
+
         InColWithTargetMask = false;
     }
 

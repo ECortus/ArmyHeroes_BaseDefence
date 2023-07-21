@@ -9,6 +9,41 @@ public class EnemiesPool : MonoBehaviour
 
     private List<Enemy> Enemy00Pool = new List<Enemy>();
 
+    public void GetHitAllLowEnemies(Vector3 center, float distance, float hit)
+    {
+        List<Enemy> enemies = new List<Enemy>();
+        enemies.AddRange(Enemy00Pool);
+
+        foreach(Enemy enemy in enemies)
+        {
+            if((center - enemy.transform.position).magnitude < distance)
+            {
+                if(enemy.Active && !enemy.Died)
+                {
+                    enemy.detection.GetHit(hit);
+                }
+            }
+        }
+    }
+
+    public List<Enemy> GetAllEnemiesOnDistance(Vector3 center, float distance)
+    {
+        List<Enemy> enemies = new List<Enemy>();
+        enemies.AddRange(Enemy00Pool);
+
+        List<Enemy> list = new List<Enemy>();
+
+        foreach(Enemy enemy in enemies)
+        {
+            if((center - enemy.transform.position).magnitude < distance)
+            {
+                list.Add(enemy);
+            }
+        }
+
+        return list;
+    }
+
     public Enemy Insert(EnemyType type, Enemy enemy, Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
     {
         Enemy enm = null;
@@ -72,7 +107,7 @@ public class EnemiesPool : MonoBehaviour
             
             foreach(Enemy enemy in enemies)
             {
-                if(!enemy.Died)
+                if(!enemy.Died && enemy.Active)
                 {
                     allDied = false;
                     break;

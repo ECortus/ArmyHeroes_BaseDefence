@@ -9,9 +9,9 @@ public class DoctorDetector : AllDetector
     [SerializeField] private float HealRange = 2f;
     [SerializeField] private Transform HealPoint;
 
-    protected override bool AdditionalConditionToData(Detection dt)
+    public override bool AdditionalCondition(Detection dt)
     {
-        return dt.Died && dt.Active;
+        return !dt.Marked && dt.Died && dt.Active;
     }
 
     private Coroutine coroutine;
@@ -19,6 +19,13 @@ public class DoctorDetector : AllDetector
 
     void Update()
     {
+        if(controller.Died)
+        {
+            Stop();
+            StopHeal();
+            return;
+        }
+
         if(data != null)
         {
             controller.takeControl = false;
@@ -42,15 +49,17 @@ public class DoctorDetector : AllDetector
         {
             StopCoroutine(coroutine);
             coroutine = null;
-
-            data = null;
         }
+
+        if(data != null) data.Marked = false;
+        data = null;
     }
 
     IEnumerator Heal()
     {
         Stop();
         HumanoidController patient = data.GetComponentInParent<HumanoidController>();
+        data.Marked = true;
 
         controller.SetTarget(data.transform);
         yield return new WaitUntil(() => controller.NearPoint(data.transform.position, HealRange));
@@ -66,8 +75,10 @@ public class DoctorDetector : AllDetector
         /* controller.On(HealPoint.position); */
 
         patient.On(HealPoint.position);
+        data.Marked = false;
 
         controller.ResetTarget();
+        controller.ResetDestination();
         Carring = false;
 
         yield return new WaitForSeconds(1f);

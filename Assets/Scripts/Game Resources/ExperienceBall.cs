@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExperienceBall : ResourceBall
 {
-    public override void AddRecourceToPlayer()
+    protected override void AddRecourceToPlayer()
     {
         Experience.Plus(resourceAmount);
         base.AddRecourceToPlayer();

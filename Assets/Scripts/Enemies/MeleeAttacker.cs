@@ -9,7 +9,6 @@ public class MeleeAttacker : NearestDetector
     [SerializeField] private EnemyInfo info;
     [SerializeField] private float attackRange = 2f, preAttackDelay = 1f, attackDelay = 1.5f;
 
-    private Transform target => controller.target;
     private bool TargetInAttackRange
     {
         get
@@ -22,7 +21,10 @@ public class MeleeAttacker : NearestDetector
 
     public bool Fighting => coroutine != null;
 
-    protected override bool AdditionalConditionToData(Detection dt) => !dt.Died;
+    public override bool AdditionalCondition(Detection dt)
+    {
+        return dt != null && !dt.Died && dt.Active;
+    }
 
     protected override void Reset()
     {
@@ -47,12 +49,10 @@ public class MeleeAttacker : NearestDetector
     {
         if(InColWithTargetMask || TargetInAttackRange)
         {
-            controller.takeControl = true;
             StartAttack();
         }
         else
         {
-            controller.takeControl = false;
             StopAttack();
         }
     }
@@ -80,14 +80,16 @@ public class MeleeAttacker : NearestDetector
         
         while(true)
         {
-            if(data == null || data.Died || !data.Active)
+            if(!AdditionalCondition(data))
             {
-                StopAttack();
                 break;
             }
+
             yield return new WaitForSeconds(preAttackDelay);
             info.Attack(data);
             yield return new WaitForSeconds(attackDelay);
         }
+
+        StopAttack();
     }
 }

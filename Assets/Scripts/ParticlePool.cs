@@ -7,7 +7,12 @@ public class ParticlePool : MonoBehaviour
     public static ParticlePool Instance;
     void Awake() => Instance = this;
 
-    private List<ParticleSystem> BulletEffectPool = new List<ParticleSystem>();
+    private List<ParticleSystem> 
+        BulletEffectPool = new List<ParticleSystem>(),
+        DynamitEffectPool = new List<ParticleSystem>(),
+        RocketEffectPool = new List<ParticleSystem>(),
+        SubBuckshotEffectPool = new List<ParticleSystem>(),
+        ArrowEffectPool = new List<ParticleSystem>();
 
     public GameObject Insert(ParticleType type, GameObject obj, Vector3 pos)
     {
@@ -17,6 +22,18 @@ public class ParticlePool : MonoBehaviour
         {
             case ParticleType.Bullet:
                 list = BulletEffectPool;
+                break;
+            case ParticleType.Dynamit:
+                list = DynamitEffectPool;
+                break;
+            case ParticleType.Rocket:
+                list = RocketEffectPool;
+                break;
+            case ParticleType.SubBuckshot:
+                list = SubBuckshotEffectPool;
+                break;
+            case ParticleType.Arrow:
+                list = ArrowEffectPool;
                 break;
             default:
                 break;
@@ -42,6 +59,18 @@ public class ParticlePool : MonoBehaviour
             case ParticleType.Bullet:
                 BulletEffectPool = list;
                 break;
+            case ParticleType.Dynamit:
+                DynamitEffectPool = list;
+                break;
+            case ParticleType.Rocket:
+                RocketEffectPool = list;
+                break;
+            case ParticleType.SubBuckshot:
+                SubBuckshotEffectPool = list;
+                break;
+            case ParticleType.Arrow:
+                ArrowEffectPool = list;
+                break;
             default:
                 break;
         }
@@ -53,5 +82,5 @@ public class ParticlePool : MonoBehaviour
 [System.Serializable]
 public enum ParticleType
 {
-    Default, Bullet
+    Default, Bullet, SubBuckshot, Arrow, Rocket, Dynamit
 }

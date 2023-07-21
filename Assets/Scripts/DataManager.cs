@@ -8,6 +8,7 @@ public static class DataManager
     public static string LevelIndexKey = "LevelIndex";
 
     public static string ProgressKey = "PlayerProgress";
+    public static string WeaponKey = "PlayerWeaponIndex";
     public static string ExperienceKey = "Experience";
     public static string GoldKey = "Gold";
     public static string CrystalKey = "Crystal";

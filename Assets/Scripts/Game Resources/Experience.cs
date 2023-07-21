@@ -7,14 +7,14 @@ public static class Experience
 {
     private static float experience { get { return Statistics.Experience; } set { Statistics.Experience = value; } }
 
-    public async static void Plus(float count) 
+    public static void Plus(float count) 
     {
         experience += count;
 
         if(experience >= PlayerInfo.Instance.MaxExperience)
         {
-            await PlayerInfo.Instance.GetNewProgress();
             experience = 0f;
+            PlayerInfo.Instance.GetNewProgress();
         }
 
         ExperienceUI.Instance.Refresh();
