@@ -9,9 +9,9 @@ public class Health : MonoBehaviour
     [SerializeField] float _HP;
 
     [Header("HP Input: ")]
-    [SerializeField] private float InputHP = 25f;
+    public float InputHP = 25f;
     public HP_DMG_SPD HPvDMGvSPD;
-    private float Bonus => HPvDMGvSPD.bonusHP;
+    public float Bonus => HPvDMGvSPD.bonusHP;
 
     [Header("HP UI ref-s: ")]
     [SerializeField] private HealthBarUI bar;
@@ -40,7 +40,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    public float MaxHP 
+    public virtual float MaxHP 
     { 
         get
         {

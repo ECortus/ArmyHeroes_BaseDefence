@@ -6,9 +6,9 @@ public class Rocket : Ammo
 {
     private float Damage => GetDamage();
     public override AmmoType Type => AmmoType.Rocket;
-    protected override ParticleType Particle => ParticleType.Rocket;
 
     [Space]
+    [SerializeField] private ParticleSystem standartHitEffect;
     [SerializeField] private float blowRadius;
 
     Vector3 destination;
@@ -22,7 +22,6 @@ public class Rocket : Ammo
         base.On(spawn, rot);
 
         distance = Vector3.Distance(Center, destination);
-        distance -= distance > 3f ? 1f : 0f;
         transform.eulerAngles += new Vector3(-60f, 0f, 0f);
 
         g = G;
@@ -44,13 +43,22 @@ public class Rocket : Ammo
             }
         }
 
+        if(standartHitEffect != null)
+        {
+            standartHitEffect.Play();
+        }
+
         base.Off();
     }
 
     protected override void Update()
     {
         base.Update();
-        rb.velocity -= new Vector3(0f, g * Time.deltaTime, 0f);
+        
+        if(!Hited)
+        {
+            rb.velocity -= new Vector3(0f, g * Time.deltaTime, 0f);
+        }
     }
 
     void OnTriggerEnter(Collider col)

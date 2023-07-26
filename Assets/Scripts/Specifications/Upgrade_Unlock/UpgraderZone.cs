@@ -20,6 +20,7 @@ public class UpgraderZone : MonoBehaviour
     protected virtual void Complete() 
     {
         Progress++;
+        Refresh();
     }
 
     public string SaveName => PreName + "_Upgrade";
@@ -129,7 +130,6 @@ public class UpgraderZone : MonoBehaviour
             if(RequireAmount <= 0)
             {
                 Complete();
-                Refresh();
                 iter = 0;
 
                 /* StopReduce();

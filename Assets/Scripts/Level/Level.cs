@@ -9,15 +9,19 @@ public class Level : MonoBehaviour
     public void On() => gameObject.SetActive(true);
     public void Off() => gameObject.SetActive(false);
     public void Eliminate() => Destroy(gameObject);
+
+    public EnemiesGenerator Generator;
+    public LevelWavesInfo WavesInfo;
+
     public void StartLevel()
     {
         GameManager.Instance.SetActive(true);
+        Generator.Launch();
     }
+
     public void EndLevel()
     {
         UI.Instance.EndLevel();
-
-
 
         GameManager.Instance.SetActive(false);
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class DynamitBall : ResourceBall
 {
     [SerializeField] private float BLOWdistance;
-    [SerializeField] private GameObject dynamitBLOWEffect;
+    [SerializeField] private ParticleSystem dynamitBLOWEffect;
 
     protected override void AddRecourceToPlayer()
     {

@@ -8,7 +8,7 @@ public class Soldier : HumanoidController
     public static readonly int _Shooting = Animator.StringToHash("Shooting");
     public static readonly int _Death = Animator.StringToHash("Death");
 
-    [SerializeField] private Shooting shooting;
+    [SerializeField] private GunHandler shooting;
     
     protected override void UpdateAnimator()
     {

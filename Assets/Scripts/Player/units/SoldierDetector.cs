@@ -7,7 +7,7 @@ public class SoldierDetector : NearestDetector
 {
     [Space]
     [SerializeField] private Soldier controller;
-    [SerializeField] private Shooting shooting;
+    [SerializeField] private GunHandler shooting;
     [SerializeField] private bool TakeControl = false;
 
     [Range(0, 100)]

@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class Target : MonoBehaviour
 {
+    public Transform Transform { get { return transform; } }
+    
     public Transform _target { get; set; }
     public Transform target
     {

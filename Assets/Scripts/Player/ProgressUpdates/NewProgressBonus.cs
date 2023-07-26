@@ -9,6 +9,8 @@ public class NewProgressBonus : ScriptableObject
     [SerializeField] private int MaxUsedCount = 1;
     public bool IsMaxUsed => UsedCount >= MaxUsedCount;
 
+    public virtual bool AdditionalContidion => true;
+
     public virtual void Apply()
     {
         
@@ -56,7 +58,7 @@ public class NewProgressBonus : ScriptableObject
     {
         int count = UsedCount;
         
-        if(count < ApplyCount)
+        if(count <= ApplyCount)
         {
             ApplyCount = 0; 
             Cancel();

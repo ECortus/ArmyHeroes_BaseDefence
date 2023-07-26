@@ -14,7 +14,7 @@ public class MainBuckshot : Ammo
 
     public override void On(Vector3 spawn, Quaternion rot, Vector3 destination = new Vector3())
     {
-        base.On(spawn, rot);
+        gameObject.SetActive(true);
 
         Vector3 pos = spawn;
         Vector3 mainRot = rot.eulerAngles;
@@ -42,8 +42,9 @@ public class MainBuckshot : Ammo
             ammo = AmmoPool.Instance.Insert(sub.Type, sub);
             ammo.On(pos, Quaternion.Euler(rotate));
             ammo.SetDamage(Damage / 6f);
+            ammo.SetSpecifics(Specifics);
         }
 
-        Off();
+        gameObject.SetActive(false);
     }
 }   

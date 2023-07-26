@@ -6,7 +6,6 @@ public class Bullet : Ammo
 {
     private float Damage => GetDamage();
     public override AmmoType Type => AmmoType.Bullet;
-    protected override ParticleType Particle => ParticleType.Bullet;
 
     public override void On(Vector3 spawn, Quaternion rot, Vector3 destination = new Vector3())
     {

@@ -8,32 +8,20 @@ public class ParticlePool : MonoBehaviour
     void Awake() => Instance = this;
 
     private List<ParticleSystem> 
-        BulletEffectPool = new List<ParticleSystem>(),
         DynamitEffectPool = new List<ParticleSystem>(),
-        RocketEffectPool = new List<ParticleSystem>(),
-        SubBuckshotEffectPool = new List<ParticleSystem>(),
-        ArrowEffectPool = new List<ParticleSystem>();
+        ElectricHitEffectPool = new List<ParticleSystem>();
 
-    public GameObject Insert(ParticleType type, GameObject obj, Vector3 pos)
+    public GameObject Insert(ParticleType type, ParticleSystem obj, Vector3 pos)
     {
         List<ParticleSystem> list = new List<ParticleSystem>();
 
         switch(type)
         {
-            case ParticleType.Bullet:
-                list = BulletEffectPool;
-                break;
             case ParticleType.Dynamit:
                 list = DynamitEffectPool;
                 break;
-            case ParticleType.Rocket:
-                list = RocketEffectPool;
-                break;
-            case ParticleType.SubBuckshot:
-                list = SubBuckshotEffectPool;
-                break;
-            case ParticleType.Arrow:
-                list = ArrowEffectPool;
+            case ParticleType.ElectricHit:
+                list = ElectricHitEffectPool;
                 break;
             default:
                 break;
@@ -51,25 +39,16 @@ public class ParticlePool : MonoBehaviour
             }
         }
 
-        ParticleSystem scr = Instantiate(obj, pos, Quaternion.Euler(Vector3.zero)).GetComponent<ParticleSystem>();
+        ParticleSystem scr = Instantiate(obj, pos, Quaternion.Euler(Vector3.zero));
         list.Add(scr);
 
         switch(type)
         {
-            case ParticleType.Bullet:
-                BulletEffectPool = list;
-                break;
             case ParticleType.Dynamit:
                 DynamitEffectPool = list;
                 break;
-            case ParticleType.Rocket:
-                RocketEffectPool = list;
-                break;
-            case ParticleType.SubBuckshot:
-                SubBuckshotEffectPool = list;
-                break;
-            case ParticleType.Arrow:
-                ArrowEffectPool = list;
+            case ParticleType.ElectricHit:
+                ElectricHitEffectPool = list;
                 break;
             default:
                 break;
@@ -82,5 +61,5 @@ public class ParticlePool : MonoBehaviour
 [System.Serializable]
 public enum ParticleType
 {
-    Default, Bullet, SubBuckshot, Arrow, Rocket, Dynamit
+    Default, Dynamit, ElectricHit
 }

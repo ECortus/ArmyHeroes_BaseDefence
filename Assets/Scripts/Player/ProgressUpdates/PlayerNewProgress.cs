@@ -38,21 +38,14 @@ public class PlayerNewProgress : MonoBehaviour
             index = Random.Range(0, list.Count);
             bonus = list[index];
 
-            if(bonus.IsMaxUsed)
+            if(bonus.IsMaxUsed || !bonus.AdditionalContidion || Bonuses.Contains(bonus))
             {
                 i--;
                 continue;
             }
 
-            if(Bonuses.Contains(bonus))
-            {
-                continue;
-            }
-            else
-            {
-                Bonuses.Add(bonus);
-                list.Remove(bonus);
-            }
+            Bonuses.Add(bonus);
+            list.Remove(bonus);
         }
 
         RefrestButtons();
@@ -75,6 +68,11 @@ public class PlayerNewProgress : MonoBehaviour
         );
 
         Time.timeScale = 1f;
+    }
+
+    public void RefreshBonus(NewProgressBonus bns)
+    {
+        bns.SetBonus();
     }
 
     public void SetAllBonuses()

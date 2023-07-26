@@ -50,18 +50,14 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
 
     void OnCollisionEnter(Collision col)
     {
-        if(!CheckCollisionWithTarget) return;
+        if(!CheckCollisionWithTarget || InColWithTargetMask) return;
 
         GameObject go = col.gameObject;
         Detection nf = go.GetComponent<Detection>();
 
         if(nf == null)
         {
-            nf = go.GetComponentInParent<Detection>();
-            if(nf == null)
-            {
-                return;
-            }
+            return;
         }
 
         if(nf == data)
@@ -72,19 +68,8 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
 
         if(detectTypes.HasFlag(nf.Type))
         {
-            if(!priorityTypes.HasFlag(nf.Type))
-            {
-                if(data != null)
-                {
-                    if(priorityTypes.HasFlag(data.Type))
-                    {
-                        return;
-                    }
-                }
-
-                InColWithTargetMask = true;
-                data = nf;
-            }
+            InColWithTargetMask = true;
+            data = nf;
         }
     }
 
@@ -95,16 +80,10 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
         GameObject go = col.gameObject;
         Detection nf = go.GetComponent<Detection>();
 
-        if(nf == null)
+        if(nf != null)
         {
-            nf = go.GetComponentInParent<Detection>();
-            if(nf == null)
-            {
-                return;
-            }
+            InColWithTargetMask = false;
         }
-
-        InColWithTargetMask = false;
     }
 
     void OnDrawGizmos()

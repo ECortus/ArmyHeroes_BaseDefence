@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class NewProgressBonusUI : MonoBehaviour
 {
-    public int index => System.Int32.Parse(gameObject.name);
+    [SerializeField] private NewProgressBonus bonus;
     public bool ContainInBonuses => 
-        PlayerNewProgress.Instance.Bonuses.Contains(PlayerNewProgress.Instance.AllBonuses[index]);
+        PlayerNewProgress.Instance.Bonuses.Contains(bonus);
 
     void Start()
     {
@@ -16,7 +16,7 @@ public class NewProgressBonusUI : MonoBehaviour
 
     public void OnButtonClick()
     {
-        PlayerNewProgress.Instance.AllBonuses[index].Add();
+        bonus.Add();
         PlayerNewProgress.Instance.Off();
     }
 

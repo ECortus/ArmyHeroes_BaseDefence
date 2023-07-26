@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 
 public class EnemiesGenerator : MonoBehaviour
 {
-    [SerializeField] private LevelWavesInfo info;
+    private LevelWavesInfo info => LevelManager.Instance.ActualLevel.WavesInfo;
     [SerializeField] private Transform MainTargetForEnemies;
     [SerializeField] private float Radius = 30f;
     private Vector3 Center
@@ -35,11 +35,6 @@ public class EnemiesGenerator : MonoBehaviour
 
     Coroutine coroutine;
 
-    void Start()
-    {
-        Launch();
-    }
-
     public void Launch()
     {
         if(coroutine == null) coroutine = StartCoroutine(Working());
@@ -56,8 +51,6 @@ public class EnemiesGenerator : MonoBehaviour
 
     IEnumerator Working()
     {
-        yield return new WaitForSeconds(1f);
-
         Enemy enemy = null;
         Vector3 position = Vector3.zero;
         WaveIndex = 0;
@@ -86,6 +79,20 @@ public class EnemiesGenerator : MonoBehaviour
             WaveIndex++;
 
             GoldRewardPerWaveChest.Instance.On();
+        }
+
+        bool infinity = true;
+        if(infinity)
+        {
+            while(true)
+            {
+                enemy = Spawn(enemy, GetPosition());
+                            
+                enemy.SetMainTarget(MainTargetForEnemies);
+                enemy.SetAdditionalTarget(MainTargetForEnemies);
+
+                yield return new WaitForSeconds(1f);
+            }
         }
 
         Stop();

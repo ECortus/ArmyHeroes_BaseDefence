@@ -9,10 +9,10 @@ public class Gate : MonoBehaviour
     public bool SomeoneOnDoor { get; set; }
 
     [Space]
-    [SerializeField] private Transform[] gates;
-    private List<float> closedGateRotate = new List<float>();
-    private List<float> openedGateRotate = new List<float>();
-    private List<float> gateRotateAngle = new List<float>();
+    [SerializeField] private Transform gate;
+    private float closedGateRotate;
+    private float openedGateRotate;
+    private float gateRotateAngle;
 
     [SerializeField] private float timeToClose, rotateSpeed;
     Quaternion rot;
@@ -20,7 +20,7 @@ public class Gate : MonoBehaviour
     void OnEnable()
     {
         WriteCloseAngle();
-        SetRotateList(closedGateRotate, out gateRotateAngle);
+        SetRotate(closedGateRotate, out gateRotateAngle);
 
         Reset();
     }
@@ -37,66 +37,43 @@ public class Gate : MonoBehaviour
 
     void RotateGates()
     {
-        int i = 0;
-        foreach(Transform gate in gates)
-        {
-            rot = Quaternion.Euler(
-                gate.transform.localEulerAngles.x, 
-                gateRotateAngle[i], 
-                gate.transform.localEulerAngles.z
-            );
+        rot = Quaternion.Euler(
+            gate.transform.localEulerAngles.x, 
+            gateRotateAngle, 
+            gate.transform.localEulerAngles.z
+        );
 
-            if(gate.localEulerAngles.y == gateRotateAngle[i])
-            {
-                i++;
-                continue;
-            }
-
-            gate.localRotation = Quaternion.Slerp(gate.localRotation, rot, rotateSpeed * Time.deltaTime);
-            i++;
-        }
+        gate.localRotation = Quaternion.Slerp(gate.localRotation, rot, rotateSpeed * Time.deltaTime);
     }
 
     void Reset()
     {
-        int i = 0;
-        foreach(Transform gate in gates)
-        {
-            rot = Quaternion.Euler(
-                gate.transform.localEulerAngles.x, 
-                closedGateRotate[i], 
-                gate.transform.localEulerAngles.z
-            );
+        rot = Quaternion.Euler(
+            gate.transform.localEulerAngles.x, 
+            closedGateRotate, 
+            gate.transform.localEulerAngles.z
+        );
 
-            gate.localRotation = rot;
-            i++;
-        }
-    }
+        gate.localRotation = rot;
+}
 
     async void Open(Transform opener)
     {
-        SetRotateList(closedGateRotate, out openedGateRotate);
+        SetRotate(closedGateRotate, out openedGateRotate);
 
         Vector3 dir = (transform.position - opener.position).normalized;
         float angle = Vector3.Angle(transform.forward, dir);
+
         if(angle < 90f)
         {
-            for(int i = 0; i < openedGateRotate.Count; i++)
-            {
-                if(closedGateRotate[i] >= 180f) openedGateRotate[i] -= 90f;
-                else openedGateRotate[i] += 90f;
-            }
+            openedGateRotate += 90f;
         }
         else
         {
-            for(int i = 0; i < openedGateRotate.Count; i++)
-            {
-                if(closedGateRotate[i] >= 180f) openedGateRotate[i] += 90f;
-                else openedGateRotate[i] -= 90f;
-            }
+            openedGateRotate -= 90f;
         }
 
-        SetRotateList(openedGateRotate, out gateRotateAngle);
+        SetRotate(openedGateRotate, out gateRotateAngle);
         Opened = true;
 
         await UniTask.Delay((int)(timeToClose * 1000));
@@ -110,7 +87,7 @@ public class Gate : MonoBehaviour
 
     public async void Close()
     {
-        SetRotateList(closedGateRotate, out gateRotateAngle);
+        SetRotate(closedGateRotate, out gateRotateAngle);
 
         await UniTask.Delay(1000);
 
@@ -119,22 +96,12 @@ public class Gate : MonoBehaviour
 
     void WriteCloseAngle()
     {
-        closedGateRotate.Clear();
-        foreach(Transform gate in gates)
-        {
-            closedGateRotate.Add(gate.localEulerAngles.y);
-        }
+        closedGateRotate = gate.localEulerAngles.y;
     }
 
-    void SetRotateList(List<float> angles, out List<float> outAngles)
+    void SetRotate(float angle, out float outAngles)
     {
-        List<float> list = new List<float>();
-        foreach(float angle in angles)
-        {
-            list.Add(angle);
-        }
-
-        outAngles = list;
+        outAngles = angle;;
     }
 
     void OnTriggerStay(Collider col)

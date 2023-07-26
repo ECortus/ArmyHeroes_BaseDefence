@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class BarUI : MonoBehaviour
 {
-    protected virtual float Amount { get; set; }
-    protected virtual float MaxAmount { get; set; }
+    protected virtual float Amount { get; }
+    protected virtual float MaxAmount { get; }
 
     [SerializeField] private Slider slider;
 

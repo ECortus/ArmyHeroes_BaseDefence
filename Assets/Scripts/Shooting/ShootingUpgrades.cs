@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class ShootingUpgrades : MonoBehaviour
 {
-    public SpecificAmmoEffect specificAmmoUp { get; set; }
-    public void SetSAE(SpecificAmmoEffect eff)
+    public SpecificType Specifics = SpecificType.Simple;
+    public void AddSpecific(SpecificType type)
     {
-        specificAmmoUp = eff;
+        if(!Specifics.HasFlag(type))
+        {
+            Specifics |= type;
+        }
     }
-    public void ResetSAE()
+    public void RemoveSpecific(SpecificType type)
     {
-        specificAmmoUp = null;
+        if(Specifics.HasFlag(type))
+        {
+            Specifics &= ~type;
+        }
     }
 
     [HideInInspector] public float DecreaseSC = 0f;

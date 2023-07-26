@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: NPS_ElectricAmmo
   m_EditorClassIdentifier: 
   MaxUsedCount: 1
-  effect: {fileID: 0}
+  type: 8

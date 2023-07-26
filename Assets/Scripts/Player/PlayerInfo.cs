@@ -9,7 +9,7 @@ public class PlayerInfo : Detection
     void Awake() => Instance = this;
 
     [Header("Player info: ")]
-    [SerializeField] private Weapon weapon;
+    [SerializeField] private GunHandler gunHandler;
 
     public int WeaponIndex
     {
@@ -27,23 +27,17 @@ public class PlayerInfo : Detection
     public void SetWeapon(int i)
     {
         WeaponIndex = i;
-        weapon.SetNewWeapon(WeaponIndex);
+        gunHandler.SetGunPair(i);
     }
 
     [SerializeField] private float DefaultMaxExp = 100f, ExpRequirePerProgress = 50f;
 
-    public float Damage => weapon.Damage;
     public float MaxExperience => DefaultMaxExp + Progress * ExpRequirePerProgress;
 
     void Start()
     {
         Heal(999f);
         SetWeapon(WeaponIndex);
-    }
-
-    public void Hit(Detection dtct)
-    {
-        if(dtct != null) dtct.GetHit(Damage);
     }
 
     public int Progress

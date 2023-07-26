@@ -7,11 +7,11 @@ public class DoubleAmmo : NewProgressBonus
 {
     public override void Apply()
     {
-        PlayerUpgrades.Instance.shootingUpgrades.AddAmmoPerShotMultiple(2);
+        PlayerUpgrades.Instance.ShootingUpgrades.AddAmmoPerShotMultiple(2);
     }
 
     public override void Cancel()
     {
-        PlayerUpgrades.Instance.shootingUpgrades.ResetAmmoPerShotMultiple();
+        PlayerUpgrades.Instance.ShootingUpgrades.ResetAmmoPerShotMultiple();
     }
 }

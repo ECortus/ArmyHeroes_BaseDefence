@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Cysharp.Threading.Tasks;
 
 public class HumanoidController : Target
 {
@@ -63,7 +64,7 @@ public class HumanoidController : Target
     {
         if(!Died && Active)
         {
-            if(Agent.isActiveAndEnabled)
+            if(Agent.isActiveAndEnabled && Agent.isOnNavMesh)
             {
                 Agent.speed = speed;
                 ZeroRBVelocities();
@@ -125,9 +126,7 @@ public class HumanoidController : Target
 
     private void Rotate()
     {
-        Vector3 dir = Vector3.zero;
-        if(target != transform) dir = DirectionToTarget;
-        else dir = transform.forward;
+        Vector3 dir = Agent.velocity.normalized;
 
         if (Agent.isActiveAndEnabled && dir != Vector3.zero)
         {

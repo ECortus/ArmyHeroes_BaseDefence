@@ -6,7 +6,6 @@ public class SubBuckshot : Ammo
 {
     private float Damage => GetDamage();
     public override AmmoType Type => AmmoType.SubBuckshot;
-    protected override ParticleType Particle => ParticleType.SubBuckshot;
 
     public override void On(Vector3 spawn, Quaternion rot, Vector3 destination = new Vector3())
     {

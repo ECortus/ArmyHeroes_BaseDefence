@@ -10,6 +10,7 @@ public class Enemy : HumanoidController
     public static readonly int _MeleeAttack = Animator.StringToHash("MeleeAttack");
     public static readonly int _Death = Animator.StringToHash("Death");
 
+    [Space]
     public EnemyType Type = EnemyType.Default;
     [HideInInspector] public Transform MainTarget, AdditionalTarget;
     

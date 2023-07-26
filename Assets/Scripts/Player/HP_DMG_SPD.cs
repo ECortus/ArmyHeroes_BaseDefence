@@ -15,7 +15,7 @@ public class HP_DMG_SPD : MonoBehaviour
         bonusHP = 0f;
     }
 
-    public float bonusDMG { get; set; }
+    [HideInInspector]public float bonusDMG = 0f;
     public void AddDMGPercent(float perc)
     {
         bonusDMG += perc;

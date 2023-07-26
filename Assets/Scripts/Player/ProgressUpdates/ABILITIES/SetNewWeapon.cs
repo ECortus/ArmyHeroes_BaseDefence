@@ -7,6 +7,8 @@ public class SetNewWeapon : NewProgressBonus
 {
     [SerializeField] private int Index = 0;
 
+    public override bool AdditionalContidion => PlayerInfo.Instance.WeaponIndex + 1 == Index;
+
     public override void Apply()
     {
         PlayerInfo.Instance.SetWeapon(Index);

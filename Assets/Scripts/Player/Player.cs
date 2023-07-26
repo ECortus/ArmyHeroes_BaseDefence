@@ -9,8 +9,6 @@ public class Player : Target
     public static Player Instance { get; set; }
     void Awake() => Instance = this;
 
-    public Transform Transform { get { return transform; } }
-
     [SerializeField] private float defaultSpeed;
     private float speed
     {
@@ -34,7 +32,7 @@ public class Player : Target
     [SerializeField] private Animator Animator;
     [SerializeField] private NavMeshAgent Agent;
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private Shooting shooting;
+    [SerializeField] private GunHandler shooting;
     [SerializeField] private BaseDetector detector;
     [SerializeField] private Detection detection;
 
@@ -70,6 +68,8 @@ public class Player : Target
     { 
         detection.Depool();
         detector.Off();
+
+        gameObject.SetActive(false);
     }
 
     void Update()

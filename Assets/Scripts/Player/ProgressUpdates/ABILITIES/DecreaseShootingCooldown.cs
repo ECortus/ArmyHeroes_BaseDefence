@@ -7,11 +7,11 @@ public class DecreaseShootingCooldown : NewProgressBonus
 {
     public override void Apply()
     {
-        PlayerUpgrades.Instance.shootingUpgrades.AddDecreaseSC(10f);
+        PlayerUpgrades.Instance.ShootingUpgrades.AddDecreaseSC(10f);
     }
 
     public override void Cancel()
     {
-        PlayerUpgrades.Instance.shootingUpgrades.ResetDecreaseSC();
+        PlayerUpgrades.Instance.ShootingUpgrades.ResetDecreaseSC();
     }
 }

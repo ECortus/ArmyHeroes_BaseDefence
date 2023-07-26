@@ -6,7 +6,7 @@ public class RangeAttackPlayer : NearestDetector
 {
     [Space]
     [SerializeField] private Player controller;
-    [SerializeField] private Shooting shooting;
+    [SerializeField] private GunHandler shooting;
 
     public override bool AdditionalCondition(Detection dt)
     {

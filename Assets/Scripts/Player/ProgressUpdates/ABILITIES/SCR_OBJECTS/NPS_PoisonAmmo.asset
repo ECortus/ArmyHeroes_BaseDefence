@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: NPS_PoisonAmmo
   m_EditorClassIdentifier: 
   MaxUsedCount: 1
-  effect: {fileID: 0}
+  type: 2

@@ -34,9 +34,19 @@ public class NearestDetector : BaseDetector
 
                 if(!AdditionalCondition(data) || distanceToData > range)
                 {
+                    InColWithTargetMask = false;
+
                     Reset();
                     continue;
                 }
+
+                /* if(InColWithTargetMask)
+                {
+                    if(distanceToData < range)
+                    {
+                        continue;
+                    }
+                } */
 
                 if(detection.NearestAround(priorityTypes, detectTypes, range, distanceToData, this, out previous))
                 {

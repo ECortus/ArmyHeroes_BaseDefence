@@ -94,7 +94,7 @@ MonoBehaviour:
   speed: 9
   rb: {fileID: 1036376469860513700}
   BLOWdistance: 12
-  dynamitBLOWEffect: {fileID: 6468649880327618159, guid: 6094c8bae4217d44aaba165b366e2554,
+  dynamitBLOWEffect: {fileID: 6468649880312144151, guid: 6094c8bae4217d44aaba165b366e2554,
     type: 3}
 --- !u!1001 &8600130292776223774
 PrefabInstance:
