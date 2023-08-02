@@ -9,54 +9,91 @@ public class UltProcessing : MonoBehaviour
     void Awake() => Instance = _Inst;
 
     [SerializeField] private UltProcessing_IEnumerator DRONES, SHIELD, ORBHIT, GAUSS, MINES, ECONOMY;
-    Coroutine drones, shield, orbhit, gauss, mines, economy;
+    Coroutine dronesOn, shieldOn, orbhitOn, gaussOn, minesOn, economyOn;
+    Coroutine dronesOff, shieldOff, orbhitOff, gaussOff, minesOff, economyOff;
 
 #region TurnOn
     public void TurnOnDrones()
     {
-        if(drones == null)
+        if(dronesOn == null)
         {
-            drones = StartCoroutine(DRONES.Process());
+            if(dronesOff != null)
+            {
+                StopCoroutine(dronesOff);
+                dronesOff = null;
+            }
+
+            dronesOn = StartCoroutine(DRONES.Process());
         }
     }
 
     public void TurnOnShield()
     {
-        if(shield == null)
+        if(shieldOn == null)
         {
-            shield = StartCoroutine(SHIELD.Process());
+            if(shieldOff != null)
+            {
+                StopCoroutine(shieldOff);
+                shieldOff = null;
+            }
+
+            shieldOn = StartCoroutine(SHIELD.Process());
         }
     }
 
     public void TurnOnMines()
     {
-        if(mines == null)
+        if(minesOn == null)
         {
-            mines = StartCoroutine(MINES.Process());
+            if(minesOff != null)
+            {
+                StopCoroutine(minesOff);
+                minesOff = null;
+            }
+
+            minesOn = StartCoroutine(MINES.Process());
         }
     }
 
     public void TurnOnOrbHit()
     {
-        if(orbhit == null)
+        if(orbhitOn == null)
         {
-            orbhit = StartCoroutine(ORBHIT.Process());
+            if(orbhitOff != null)
+            {
+                StopCoroutine(orbhitOff);
+                orbhitOff = null;
+            }
+
+            orbhitOn = StartCoroutine(ORBHIT.Process());
         }
     }
 
     public void TurnOnGauss()
     {
-        if(gauss == null)
+        if(gaussOn == null)
         {
-            gauss = StartCoroutine(GAUSS.Process());
+            if(gaussOff != null)
+            {
+                StopCoroutine(gaussOff);
+                gaussOff = null;
+            }
+
+            gaussOn = StartCoroutine(GAUSS.Process());
         }
     }
 
     public void TurnOnEconomy()
     {
-        if(economy == null)
+        if(economyOn == null)
         {
-            economy = StartCoroutine(ECONOMY.Process());
+            if(economyOff != null)
+            {
+                StopCoroutine(economyOff);
+                economyOff = null;
+            }
+
+            economyOn = StartCoroutine(ECONOMY.Process());
         }
     }
 #endregion
@@ -64,55 +101,85 @@ public class UltProcessing : MonoBehaviour
 #region TurnOff
     public void TurnOffDrones()
     {   
-        if(drones != null)
+        if(dronesOff == null)
         {
-            StopCoroutine(drones);
-            drones = null;
+            if(dronesOn != null)
+            {
+                StopCoroutine(dronesOn);
+                dronesOn = null;
+            }
+
+            dronesOff = StartCoroutine(DRONES.Deprocess());
         }
     }
 
     public void TurnOffShield()
     {
-        if(shield != null)
+        if(shieldOff == null)
         {
-            StopCoroutine(shield);
-            shield = null;
+            if(shieldOn != null)
+            {
+                StopCoroutine(shieldOn);
+                shieldOn = null;
+            }
+
+            shieldOff = StartCoroutine(SHIELD.Deprocess());
         }
     }
 
     public void TurnOffMines()
     {
-        if(mines != null)
+        if(minesOff == null)
         {
-            StopCoroutine(mines);
-            mines = null;
+            if(minesOn != null)
+            {
+                StopCoroutine(minesOn);
+                minesOn = null;
+            }
+
+            minesOff = StartCoroutine(MINES.Deprocess());
         }
     }
 
     public void TurnOffOrbHit()
     {
-        if(orbhit != null)
+        if(orbhitOff == null)
         {
-            StopCoroutine(orbhit);
-            orbhit = null;
+            if(orbhitOn != null)
+            {
+                StopCoroutine(orbhitOn);
+                orbhitOn = null;
+            }
+
+            orbhitOff = StartCoroutine(ORBHIT.Deprocess());
         }
     }
 
     public void TurnOffGauss()
     {
-        if(gauss != null)
+        if(gaussOff == null)
         {
-            StopCoroutine(gauss);
-            gauss = null;
+            if(gaussOn != null)
+            {
+                StopCoroutine(gaussOn);
+                gaussOn = null;
+            }
+
+            gaussOff = StartCoroutine(GAUSS.Deprocess());
         }
     }
 
     public void TurnOffEconomy()
     {
-        if(economy != null)
+        if(economyOff == null)
         {
-            StopCoroutine(economy);
-            economy = null;
+            if(economyOn != null)
+            {
+                StopCoroutine(economyOn);
+                economyOn = null;
+            }
+
+            economyOff = StartCoroutine(ECONOMY.Deprocess());
         }
     }
 #endregion

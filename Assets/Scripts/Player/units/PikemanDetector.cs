@@ -33,6 +33,7 @@ public class PikemanDetector : NearestDetector
     [SerializeField] private Transform recycle;
 
     [Space]
+    [SerializeField] private GameObject pickaxe;
     [SerializeField] private GameObject crystal;
 
     protected override void Reset()
@@ -47,7 +48,6 @@ public class PikemanDetector : NearestDetector
     protected override void Change()
     {
         controller.SetTarget(data.transform);
-        StopMine();
     }
 
     protected override void Set()
@@ -63,15 +63,10 @@ public class PikemanDetector : NearestDetector
             return;
         }
 
-        if(data != null)
-        {
-            controller.takeControl = false;
-            StartMine();
-        }
+        if(data == null) return;
         else
         {
-            controller.takeControl = true;
-            StopMine();
+            StartMine();
         }
     }
 
@@ -121,8 +116,12 @@ public class PikemanDetector : NearestDetector
             controller.takeControl = true;
 
             Mining = true;
+            pickaxe.SetActive(true);
+
             controller.ResetTarget();
             yield return new WaitForSeconds(2f);
+
+            pickaxe.SetActive(false);
             Mining = false;
 
             crystal.SetActive(true);

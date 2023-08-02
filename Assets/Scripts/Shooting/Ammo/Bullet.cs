@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bullet : Ammo
 {
-    private float Damage => GetDamage();
     public override AmmoType Type => AmmoType.Bullet;
 
     public override void On(Vector3 spawn, Quaternion rot, Vector3 destination = new Vector3())

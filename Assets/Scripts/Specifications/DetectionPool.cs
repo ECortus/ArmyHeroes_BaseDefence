@@ -28,6 +28,7 @@ public class DetectionPool : MonoBehaviour
         }
     }
 
+    [Header("DEBUG: ")]
     public List<Pool> Pools = new List<Pool>();
 
     public void CreatePools()

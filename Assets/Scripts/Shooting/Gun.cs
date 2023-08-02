@@ -79,6 +79,9 @@ public class Gun : MonoBehaviour
         }
     }
 
+    [Space]
+    [SerializeField] private ParticleSystem AdditionalEffectOnShooting;
+
     public bool isEnable => coroutine != null;
     Coroutine coroutine;
 
@@ -94,6 +97,8 @@ public class Gun : MonoBehaviour
     {
         if(!isEnable)
         {
+            if(AdditionalEffectOnShooting != null) AdditionalEffectOnShooting.Play();
+
             coroutine = StartCoroutine(PAWPAW());
 
             if(delaypoolvar < requirePause) 
@@ -115,6 +120,8 @@ public class Gun : MonoBehaviour
     {
         if(isEnable)
         {
+            if(AdditionalEffectOnShooting != null) AdditionalEffectOnShooting.Stop();
+
             StopCoroutine(coroutine);
             coroutine = null;
         }
@@ -153,13 +160,22 @@ public class Gun : MonoBehaviour
             yield return new WaitForSeconds(Delay);
         }
     }
+
+    Vector3 GetCorrectTargetPoint(Vector3 target)
+    {
+        Vector3 point = target;
+        point.y += 0.5f;
+        return point;
+    }
  
     void Shoot()
     {
         Vector3 pos = Vector3.zero;
         Quaternion rot = Quaternion.identity;
 
-        Muzzle.forward = trg.Transform.forward;
+        /* Muzzle.forward = (GetCorrectTargetPoint(trg.target.position) - trg.Transform.position).normalized; */
+        /* Muzzle.forward = trg.Transform.forward; */
+        /* transform.forward = (trg.target.position - trg.Transform.position).normalized; */
 
         pos = Muzzle.position;
         rot = Muzzle.rotation;
@@ -189,7 +205,7 @@ public class Gun : MonoBehaviour
     {
         ammo = AmmoPool.Instance.Insert(ammo.Type, ammo);
 
-        ammo.On(pos, rot, trg.target.position);
+        ammo.On(pos, rot, GetCorrectTargetPoint(trg.target.position));
         ammo.SetDamage(dmg);
         
         if(ups != null)

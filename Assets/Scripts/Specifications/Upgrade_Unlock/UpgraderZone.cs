@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Zenject;
 
 public class UpgraderZone : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class UpgraderZone : MonoBehaviour
 
     public string SaveName => PreName + "_Upgrade";
     public string AmountName => PreName + "_RequireAmount";
-    public int Cost => DefaultCost + UpCostPerProgress * Progress;
+    public int Cost => DefaultCost + UpCostPerProgress * (Progress - MinProgress);
 
     [Header("Info zone:")]
     [SerializeField] private Slider amountSlider;
@@ -58,6 +59,7 @@ public class UpgraderZone : MonoBehaviour
         }
     }
 
+    [Inject]
     protected virtual void OnEnable()
     {
         Refresh();

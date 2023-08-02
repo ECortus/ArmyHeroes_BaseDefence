@@ -25,12 +25,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101043061054565056}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.292}
-  m_LocalScale: {x: 0.099999994, y: 0.099999994, z: 0.099999994}
+  m_LocalPosition: {x: 0, y: 0, z: -1.2919998}
+  m_LocalScale: {x: 0.09999999, y: 0.09999999, z: 0.09999999}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5407931407807236086}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &1101043061054565070
 TrailRenderer:
@@ -83,7 +83,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.059671044
+        value: 0.15
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -205,7 +205,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8133454355906393383
 MonoBehaviour:
@@ -224,7 +224,6 @@ MonoBehaviour:
   ammoModel: {fileID: 4712012157403114994}
   speed: 20
   trial: {fileID: 1101043061054565070}
-  standartHitEffect: {fileID: 6804724085014414636}
   SpecificInfos:
   - Type: 2
     OnEffect: {fileID: 5026718289430482167}
@@ -246,6 +245,8 @@ MonoBehaviour:
     OnEffect: {fileID: 4471136439652841456}
     HitEffect: {fileID: 215796687927220053}
     OnHit: {fileID: 11400000, guid: a4c1fb34a4303574db17e4fca6f8b721, type: 2}
+  Specifics: 1
+  standartHitEffect: {fileID: 6804724085014414636}
   blowRadius: 5
 --- !u!1 &3029370614555150517
 GameObject:
@@ -347,8 +348,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1101043061054565057}
   - {fileID: 7139340666029134723}
+  - {fileID: 1101043061054565057}
   m_Father: {fileID: 1101043062399094409}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1358,7 +1359,7 @@ PrefabInstance:
     - target: {fileID: 1079908864946842279, guid: ad9001b279948cf4d9285144c39ca797,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1079908864946842279, guid: ad9001b279948cf4d9285144c39ca797,
         type: 3}

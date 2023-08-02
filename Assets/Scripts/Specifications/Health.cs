@@ -5,8 +5,8 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-    [Header("DEBUG: ")]
-    [SerializeField] float _HP;
+    /* [Header("DEBUG: ")]
+    [SerializeField]  */float _HP;
 
     [Header("HP Input: ")]
     public float InputHP = 25f;
@@ -17,8 +17,8 @@ public class Health : MonoBehaviour
     [SerializeField] private HealthBarUI bar;
 
     [Header("HP Events: ")]
-    [SerializeField] private  UnityEvent ResurrectEvent;
-    [SerializeField] private  UnityEvent DeathEvent;
+    public UnityEvent ResurrectEvent;
+    [SerializeField] private UnityEvent DeathEvent;
 
     public bool Active => gameObject.activeSelf;
     public bool Died { get; set; }
@@ -55,6 +55,11 @@ public class Health : MonoBehaviour
 
     public virtual void Heal(float mnt)
     {
+        if(HP <= 0 && mnt > 0f)
+        {
+            ResurrectEvent?.Invoke();
+        }
+
         HP += mnt;
         if(HP > MaxHP) HP = MaxHP;
     }

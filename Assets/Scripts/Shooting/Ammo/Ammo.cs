@@ -17,6 +17,7 @@ public class Ammo : MonoBehaviour
 
     [Space]
     [SerializeField] private SpecificAmmoArray[] SpecificInfos;
+    [SerializeField] private float maxDistance = 100f;
 
     [HideInInspector] public SpecificType Specifics = SpecificType.Simple;
     public void SetSpecifics(SpecificType tp)
@@ -41,7 +42,6 @@ public class Ammo : MonoBehaviour
 
     public virtual void On(Vector3 spawn, Quaternion rot, Vector3 destination = new Vector3())
     {
-        trial.Clear();
         rb.isKinematic = false;
 
         ammoModel.SetActive(true);
@@ -52,17 +52,24 @@ public class Ammo : MonoBehaviour
         spawnPos = spawn;
         transform.position = spawn;
         transform.rotation = rot;
+
+        trial.Clear();
     }
 
-    public virtual async void Off()
+    public virtual async void Off(Transform pos = null)
     {
+        rb.isKinematic = true;
+        rb.velocity = Vector3.zero;
+
         ammoModel.SetActive(false);
         sphere.enabled = false;
 
-        transform.position = transform.position - transform.forward * 2f;
+        /* transform.position = transform.position - transform.forward * 2f; */
 
-        rb.velocity = Vector3.zero;
-        rb.isKinematic = true;
+        if(pos != null)
+        {
+            transform.position = pos.position;
+        }
 
         await UniTask.Delay(2000);
 
@@ -75,7 +82,7 @@ public class Ammo : MonoBehaviour
     {
         get
         {
-            return Vector3.Distance(Center, spawnPos) > 100f;
+            return Vector3.Distance(Center, spawnPos) > maxDistance;
         }
     }
 
@@ -106,7 +113,7 @@ public class Ammo : MonoBehaviour
 
     public virtual void OnHit(Detection det)
     {
-        Off();
+        Off(det.transform);
 
         det.GetHit(GetDamage());
         EffectOnHit(det);

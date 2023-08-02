@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EngineerDetector : NearestDetector
+public class EngineerDetector : AllDetector
 {
     [Space]
     [SerializeField] private Engineer controller;
@@ -12,7 +12,7 @@ public class EngineerDetector : NearestDetector
     private Transform target => controller.target;
     private Coroutine coroutine;
 
-    public bool Repairing => coroutine != null;
+    [HideInInspector] public bool Repairing = false;
 
     public override bool AdditionalCondition(Detection dt)
     {
@@ -50,14 +50,10 @@ public class EngineerDetector : NearestDetector
         if(data == null) return;
         else
         {
-            Stop();
-            data.Marked = true;
-
-            if(InColWithTargetMask || controller.NearPoint(data.transform.position, RepairRange))
-            {
-                StartRepair();
-            }
+            StartRepair();
         }
+
+        Debug.Log($"{gameObject.name}: {data != null} {(data != null ? ", data: " + data.transform.parent.name + ": " + data.name : "")}");
     }
 
     void StartRepair()
@@ -73,25 +69,40 @@ public class EngineerDetector : NearestDetector
             coroutine = null;
         }
 
-        if(data != null) data.Marked = false;
         controller.takeControl = false;
-        InColWithTargetMask = false;
     }
 
     IEnumerator Repair()
     {
-        controller.takeControl = true;
+        Stop();
+        data.Marked = true;
 
         while(true)
         {
-            if(!(data != null && data.HP < data.MaxHP && data.Active))
+            if(data == null || data.HP >= data.MaxHP || !data.Active)
             {
                 break;
             }
 
-            yield return new WaitForSeconds(RepairDelay);
-            info.Repair(data);
+            if(InColWithTargetMask || controller.NearPoint(data.transform.position, RepairRange))
+            {
+                Repairing = true;
+                controller.takeControl = true;
+
+                yield return new WaitForSeconds(RepairDelay);
+                info.Repair(data);
+            }
+            else
+            {
+                Repairing = false;
+                controller.takeControl = false;
+            }
+
+            yield return null;
         }
+
+        Repairing = false;
+        data.Marked = false;
 
         On();
         Reset();

@@ -25,7 +25,7 @@ public class ShowHideUI : MonoBehaviour
         while(transform.localScale.x < 1f)
         {
             transform.localScale += new Vector3(
-                showSpeed * Time.deltaTime, showSpeed * Time.deltaTime, showSpeed * Time.deltaTime
+                showSpeed * Time.unscaledDeltaTime, showSpeed * Time.unscaledDeltaTime, showSpeed * Time.unscaledDeltaTime
             );
 
             if(!gameObject.activeInHierarchy)
@@ -55,7 +55,7 @@ public class ShowHideUI : MonoBehaviour
         while(transform.localScale.x > 0f)
         {
             transform.localScale -= new Vector3(
-                showSpeed * Time.deltaTime, showSpeed * Time.deltaTime, showSpeed * Time.deltaTime
+                showSpeed * Time.unscaledDeltaTime, showSpeed * Time.unscaledDeltaTime, showSpeed * Time.unscaledDeltaTime
             );
 
             if(!gameObject.activeInHierarchy)

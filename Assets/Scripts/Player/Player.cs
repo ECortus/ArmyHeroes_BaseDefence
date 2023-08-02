@@ -9,6 +9,7 @@ public class Player : Target
     public static Player Instance { get; set; }
     void Awake() => Instance = this;
 
+    [Space]
     [SerializeField] private float defaultSpeed;
     private float speed
     {
@@ -115,7 +116,7 @@ public class Player : Target
     void UpdateAnimator()
     {
         Animator.SetFloat(_Speed, Direction.magnitude);
-        Animator.SetBool(_Shooting, shooting.isEnable && !Died);
+        Animator.SetFloat(_Shooting, shooting.GunsCount);
         Animator.SetBool(_Death, Died);
     }
 
@@ -141,6 +142,8 @@ public class Player : Target
 
         if (Agent.isActiveAndEnabled && dir != Vector3.zero)
         {
+            dir.y = 0f;
+
             var targetRotation = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * Agent.angularSpeed);
         }

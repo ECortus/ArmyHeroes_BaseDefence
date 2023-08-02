@@ -12,7 +12,8 @@ public enum DetectType
     Helicarrier = 32, 
     Wall = 64,
     Building = 128, 
-    Enemy = 256, 
-    Boss = 512,
-    Crystal = 1024,
+    Fireposition = 256,
+    Enemy = 512, 
+    Boss = 1024,
+    Crystal = 2048,
 }

@@ -8,7 +8,8 @@ public class UI : MonoBehaviour
 {
     public static UI Instance { get; set; }
 
-    [SerializeField] private EndLevelUI End;
+    [SerializeField] private EndLevelUI End, Lose;
+    [SerializeField] private LoadLobbyManager loadLobbyManager;
 
     void Awake()
     {
@@ -24,19 +25,19 @@ public class UI : MonoBehaviour
     {
 
     }
-    public void Restart()
-    {
-        LevelManager.Instance.RestartLevel();
-    }
 
-    public void NextLevel()
+    public void LoadLobby()
     {
-        LevelManager.Instance.NextLevel();
-        End.Close();
+        loadLobbyManager.LoadLobby();
     }
 
     public void EndLevel()
     {
         End.Open();
+    }
+
+    public void LoseLevel()
+    {
+        Lose.Open();
     }
 }

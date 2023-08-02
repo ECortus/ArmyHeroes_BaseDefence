@@ -5,7 +5,10 @@ using TMPro;
 
 public class GeneratorUI : MonoBehaviour
 {
-    [SerializeField] private EnemiesGenerator gen;
+    public static GeneratorUI Instance { get; set; }
+    void Awake() => Instance = this;
+
+    private EnemiesGenerator gen => LevelManager.Instance.ActualLevel.Generator;
     [SerializeField] private TextMeshProUGUI counter;
 
     public void Refresh()

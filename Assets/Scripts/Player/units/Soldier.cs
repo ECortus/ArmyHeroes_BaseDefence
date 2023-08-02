@@ -9,6 +9,11 @@ public class Soldier : HumanoidController
     public static readonly int _Death = Animator.StringToHash("Death");
 
     [SerializeField] private GunHandler shooting;
+
+    void Start()
+    {
+        shooting.SetGunPair(0);
+    }
     
     protected override void UpdateAnimator()
     {

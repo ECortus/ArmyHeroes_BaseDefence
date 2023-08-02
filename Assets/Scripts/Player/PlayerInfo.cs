@@ -63,4 +63,10 @@ public class PlayerInfo : Detection
     {
         Progress = 0;
     }
+
+    public override void Death()
+    {
+        base.Death();
+        Time.timeScale = 0f;
+    }
 }

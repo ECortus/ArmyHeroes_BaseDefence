@@ -12,6 +12,6 @@ public class HealthBarUI : BarUI
 
     void Update()
     {
-        transform.eulerAngles = Camera.main.transform.eulerAngles;
+        transform.rotation = Camera.main.transform.rotation;
     }
 }

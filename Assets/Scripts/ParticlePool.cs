@@ -40,6 +40,7 @@ public class ParticlePool : MonoBehaviour
         }
 
         ParticleSystem scr = Instantiate(obj, pos, Quaternion.Euler(Vector3.zero));
+        scr.Play();
         list.Add(scr);
 
         switch(type)

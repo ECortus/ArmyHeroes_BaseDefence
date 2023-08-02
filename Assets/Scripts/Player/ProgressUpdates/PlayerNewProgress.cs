@@ -14,7 +14,7 @@ public class PlayerNewProgress : MonoBehaviour
     [HideInInspector] public List<NewProgressBonus> Bonuses = new List<NewProgressBonus>();
 
     [SerializeField] private List<NewProgressBonusUI> BonusesUI = new List<NewProgressBonusUI>();
-    [SerializeField] private GameObject menu;
+    [SerializeField] private GameObject menu, tip;
     
     private int RequiredCount = 3;
 
@@ -62,11 +62,13 @@ public class PlayerNewProgress : MonoBehaviour
     public async void Off()
     {
         menu.SetActive(false);
+        tip.SetActive(true);
 
         await UniTask.WaitUntil(() => 
             Input.touchCount > 0 || Input.GetMouseButtonDown(0)
         );
 
+        tip.SetActive(false);
         Time.timeScale = 1f;
     }
 

@@ -14,7 +14,8 @@ public class AllDetector : BaseDetector
             {
                 if(detection.AllAround(priorityTypes, detectTypes, range, range, this, out Detected))
                 {
-                    data = Detected[Random.Range(0, Detected.Count)];
+                    data = Detected[0];
+                    Set();
                 }
             }
 

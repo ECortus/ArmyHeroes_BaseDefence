@@ -30,7 +30,7 @@ public class Rocket : Ammo
         rb.velocity = transform.forward * speed;
     }
 
-    public override void Off()
+    public override void Off(Transform pos = null)
     {
         List<Enemy> enemies = EnemiesPool.Instance.GetAllEnemiesOnDistance(Center, blowRadius);
 

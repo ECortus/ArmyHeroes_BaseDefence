@@ -9,9 +9,12 @@ public class DynamitBall : ResourceBall
 
     protected override void AddRecourceToPlayer()
     {
-        if(dynamitBLOWEffect != null) ParticlePool.Instance.Insert(ParticleType.Dynamit, dynamitBLOWEffect, transform.position);
+        if(dynamitBLOWEffect != null) 
+        {
+            ParticlePool.Instance.Insert(ParticleType.Dynamit, dynamitBLOWEffect, transform.position + Vector3.up * 0.5f);
+        }
 
         EnemiesPool.Instance.GetHitAllLowEnemies(transform.position, BLOWdistance, 999f);
-        base.AddRecourceToPlayer();
+        Off();
     }
 }

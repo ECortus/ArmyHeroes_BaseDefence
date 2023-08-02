@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class LandScene : MonoBehaviour
 {
+    public static LandScene Instance { get; set; }
+    void Awake() => Instance = this;
+
     [SerializeField] private CameraController cmr;
     [SerializeField] private Player player;
 
@@ -18,6 +21,7 @@ public class LandScene : MonoBehaviour
 
     public void On()
     {
+        gameObject.SetActive(true);
         StartCoroutine(Process());
     }
 
@@ -36,6 +40,8 @@ public class LandScene : MonoBehaviour
         player.Off();
 
         cmr.SetTarget(spawnDot);
+        cmr.Reset();
+
         heliAnim.Play();
 
         yield return new WaitForSeconds(heliAnim.GetClip("HeliLand").length);

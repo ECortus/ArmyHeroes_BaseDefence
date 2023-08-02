@@ -13,8 +13,12 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
     public DetectType detectTypes;
     public float range;
 
+    protected virtual void Reset() { }
+    protected virtual void Change() { }
+    protected virtual void Set() { }
+
     public bool CheckCollisionWithTarget = false;
-    public bool InColWithTargetMask { get; set; }
+    [HideInInspector] public bool InColWithTargetMask = false;
 
     public virtual bool AdditionalCondition(Detection dt) => true;
 
@@ -40,7 +44,7 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
     public void Off()
     {
         Stop();
-        data = null;
+        Reset();
     }
 
     protected virtual IEnumerator Working()
@@ -57,19 +61,32 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
 
         if(nf == null)
         {
+            InColWithTargetMask = false;
             return;
         }
 
         if(nf == data)
         {
             InColWithTargetMask = true;
-            return;
         }
-
-        if(detectTypes.HasFlag(nf.Type))
+        else
         {
-            InColWithTargetMask = true;
-            data = nf;
+            if(data != null)
+            {
+                if(priorityTypes.HasFlag(data.Type))
+                {
+                    InColWithTargetMask = false;
+                    return;
+                }
+            }
+
+            if(detectTypes.HasFlag(nf.Type) && AdditionalCondition(nf))
+            {
+                InColWithTargetMask = true;
+                data = nf;
+                
+                Change();
+            }
         }
     }
 
@@ -88,7 +105,7 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
 
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.black;
+        Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, range);
     }
 }

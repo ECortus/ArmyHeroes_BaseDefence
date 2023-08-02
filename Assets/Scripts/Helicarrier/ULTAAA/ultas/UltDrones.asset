@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: UltDrones
   m_EditorClassIdentifier: 
   defCost: 25
-  defReloading: 15
+  costDownPerLvl: 2
+  defDuration: 15
+  durationUpPerLvl: 50
+  Count: 4
+  Damage: 5
+  Delay: 0.5

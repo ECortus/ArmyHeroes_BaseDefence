@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: UltMines
   m_EditorClassIdentifier: 
   defCost: 125
-  costDownPerLvl: 50
+  costDownPerLvl: 9
   defDuration: 15
   durationUpPerLvl: 50
+  Count: 10
+  Damage: 25

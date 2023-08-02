@@ -7,10 +7,6 @@ public class NearestDetector : BaseDetector
     Detection previous;
     float distanceToData;
 
-    protected virtual void Reset() { }
-    protected virtual void Change() { }
-    protected virtual void Set() { }
-
     protected override IEnumerator Working()
     {
         while(true)
@@ -48,7 +44,8 @@ public class NearestDetector : BaseDetector
                     }
                 } */
 
-                if(detection.NearestAround(priorityTypes, detectTypes, range, distanceToData, this, out previous))
+                if(detection.NearestAround(priorityTypes, detectTypes, range, distanceToData, this, out previous)
+                    || InColWithTargetMask)
                 {
                     if(data != previous)
                     {

@@ -53,7 +53,7 @@ public class Detection : Health
         return data != null;
     }
 
-    public bool SortDetectionListByDistance(List<Detection> nonSorted, float distance, IAdditionalCondition ac, out List<Detection> sorted)
+    bool SortDetectionListByDistance(List<Detection> nonSorted, float distance, IAdditionalCondition ac, out List<Detection> sorted)
     {
         if(nonSorted.Count == 0)
         {

@@ -7,19 +7,11 @@ public class MeleeAttacker : NearestDetector
     [Space]
     [SerializeField] private Enemy controller;
     [SerializeField] private EnemyInfo info;
-    [SerializeField] private float attackRange = 2f, preAttackDelay = 1f, attackDelay = 1.5f;
+    [SerializeField] private float attackRange = 2f, attackDelay = 1.75f;
 
-    private bool TargetInAttackRange
-    {
-        get
-        {
-            if(data == null) return false;
-            else return Vector3.Distance(transform.position, data.transform.position) <= attackRange;
-        }
-    }
     private Coroutine coroutine;
 
-    public bool Fighting => coroutine != null;
+    public bool Fighting = false;
 
     public override bool AdditionalCondition(Detection dt)
     {
@@ -47,13 +39,16 @@ public class MeleeAttacker : NearestDetector
 
     void Update()
     {
-        if(InColWithTargetMask || TargetInAttackRange)
+        if(controller.Died)
+        {
+            data = null;
+            StopAttack();
+            return;
+        }
+
+        if(data != null)
         {
             StartAttack();
-        }
-        else
-        {
-            StopAttack();
         }
     }
 
@@ -76,8 +71,6 @@ public class MeleeAttacker : NearestDetector
 
     IEnumerator Attack()
     {
-        controller.takeControl = true;
-        
         while(true)
         {
             if(!AdditionalCondition(data))
@@ -85,9 +78,21 @@ public class MeleeAttacker : NearestDetector
                 break;
             }
 
-            yield return new WaitForSeconds(preAttackDelay);
-            info.Attack(data);
-            yield return new WaitForSeconds(attackDelay);
+            if(controller.NearPoint(data.transform.position, attackRange) || InColWithTargetMask)
+            {
+                controller.takeControl = true;
+                Fighting = true;
+
+                yield return new WaitForSeconds(attackDelay);
+                info.Attack(data);
+            }
+            else
+            {
+                Fighting = false;
+                controller.takeControl = false;
+            }
+
+            yield return null;
         }
 
         StopAttack();

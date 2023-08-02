@@ -5,9 +5,11 @@ using UnityEngine.AI;
 
 public class Target : MonoBehaviour
 {
+    /* [Header("DEBUG: ")] */
+    public Transform _target;
+
     public Transform Transform { get { return transform; } }
     
-    public Transform _target { get; set; }
     public Transform target
     {
         get
@@ -43,5 +45,5 @@ public class Target : MonoBehaviour
         _target = null;
     }
 
-    public bool takeControl { get; set; }
+    [HideInInspector] public bool takeControl = false;
 }

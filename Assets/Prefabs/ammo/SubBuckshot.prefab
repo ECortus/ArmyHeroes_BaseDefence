@@ -26,11 +26,11 @@ Transform:
   m_GameObject: {fileID: 1101043061054565056}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.099999994, y: 0.099999994, z: 0.099999994}
+  m_LocalScale: {x: 0.09999999, y: 0.09999999, z: 0.09999999}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3385935906416237188}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &1101043061054565070
 TrailRenderer:
@@ -83,7 +83,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.059671044
+        value: 0.1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -204,7 +204,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1352633785117740976
 MonoBehaviour:
@@ -223,7 +223,6 @@ MonoBehaviour:
   ammoModel: {fileID: 8156576990061788208}
   speed: 25
   trial: {fileID: 1101043061054565070}
-  standartHitEffect: {fileID: 0}
   SpecificInfos:
   - Type: 2
     OnEffect: {fileID: 1474608855151923952}
@@ -245,6 +244,7 @@ MonoBehaviour:
     OnEffect: {fileID: 2357539653461887939}
     HitEffect: {fileID: 2158047514319899971}
     OnHit: {fileID: 11400000, guid: a4c1fb34a4303574db17e4fca6f8b721, type: 2}
+  Specifics: 1
 --- !u!1 &2785335976563713802
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,8 +345,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1101043061054565057}
   - {fileID: 4018328925517382033}
+  - {fileID: 1101043061054565057}
   m_Father: {fileID: 1101043062399094409}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -801,7 +801,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 5152a54c05c13bf49961815ec7353681,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5152a54c05c13bf49961815ec7353681,
         type: 3}

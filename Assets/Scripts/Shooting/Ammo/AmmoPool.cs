@@ -12,7 +12,9 @@ public class AmmoPool : MonoBehaviour
         RocketPool = new List<Ammo>(),
         MainBuckshotPool = new List<Ammo>(),
         SubBuckshotPool = new List<Ammo>(),
-        ArrowPool = new List<Ammo>();
+        ArrowPool = new List<Ammo>(),
+        GaussProjectilePool = new List<Ammo>(),
+        FlamePool = new List<Ammo>();
 
     public Ammo Insert(AmmoType type, Ammo obj)
     {
@@ -35,6 +37,12 @@ public class AmmoPool : MonoBehaviour
                 break;
             case AmmoType.Arrow:
                 list = ArrowPool;
+                break;
+            case AmmoType.GaussProjectile:
+                list = GaussProjectilePool;
+                break;
+            case AmmoType.Flame:
+                list = FlamePool;
                 break;
             default:
                 break;
@@ -82,6 +90,12 @@ public class AmmoPool : MonoBehaviour
             case AmmoType.Arrow:
                 ArrowPool.Add(bllt);
                 break;
+            case AmmoType.GaussProjectile:
+                GaussProjectilePool.Add(bllt);
+                break;
+            case AmmoType.Flame:
+                FlamePool.Add(bllt);
+                break;
             default:
                 break;
         }
@@ -96,5 +110,5 @@ public class AmmoPool : MonoBehaviour
 [System.Serializable]
 public enum AmmoType
 {
-    Default, Bullet, MainBuckshot, SubBuckshot, Arrow, Rocket
+    Default, Bullet, MainBuckshot, SubBuckshot, Arrow, Rocket, GaussProjectile, Flame
 }

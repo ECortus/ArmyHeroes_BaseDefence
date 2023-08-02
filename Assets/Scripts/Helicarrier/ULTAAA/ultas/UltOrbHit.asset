@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: UltOrbHit
   m_EditorClassIdentifier: 
   defCost: 75
-  costDownPerLvl: 50
+  costDownPerLvl: 4
   defDuration: 15
   durationUpPerLvl: 50
+  Damage: 100
+  Range: 8

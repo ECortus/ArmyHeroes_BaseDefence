@@ -8,4 +8,9 @@ public class UltProcessing_IEnumerator : MonoBehaviour
     {
         yield return null;
     }
+
+    public virtual IEnumerator Deprocess()
+    {
+        yield return null;
+    }
 }

@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 
 public class HumanoidController : Target
 {
+    [Space]
     [SerializeField] private float defaultSpeed;
     private float speed
     {
@@ -25,6 +26,14 @@ public class HumanoidController : Target
     public NavMeshAgent Agent;
     public Rigidbody rb;
     public Detection detection;
+
+    public Vector3 Center
+    {
+        get
+        {
+            return transform.position + new Vector3(0f, 0.5f, 0f);
+        }
+    }
     
     public bool Active => detection.Active;
     public bool Died => detection.Died;
@@ -38,8 +47,8 @@ public class HumanoidController : Target
 
         gameObject.SetActive(true);
 
-        detection.Resurrect();
         detection.Pool();
+        detection.Resurrect();
 
         takeControl = false;
     }
@@ -121,15 +130,26 @@ public class HumanoidController : Target
 
     public bool NearPoint(Vector3 point, float distance)
     {
-        return Vector3.Distance(transform.position, point) <= distance;
+        return Vector3.Distance(Center, point) <= distance;
     }
 
     private void Rotate()
     {
-        Vector3 dir = Agent.velocity.normalized;
+        Vector3 dir;
+
+        if(Agent.velocity.magnitude < 0.05f)
+        {
+            dir = (target.position - transform.position).normalized;
+        }
+        else
+        {
+            dir = Agent.velocity.normalized;
+        }
 
         if (Agent.isActiveAndEnabled && dir != Vector3.zero)
         {
+            dir.y = 0f;
+            
             var targetRotation = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * Agent.angularSpeed);
         }

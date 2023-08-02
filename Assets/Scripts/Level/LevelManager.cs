@@ -19,14 +19,12 @@ public class LevelManager : MonoBehaviour
 
     public Level ActualLevel => Levels[GetIndex()];
 
-    [SerializeField] private Transform bufferForLevel;
-
     void Awake() => Instance = this;
 
     void Start()
     {
         LoadOnStart();
-        StartLevel();
+        /* StartLevel(); */
     }
 
     void LoadOnStart()
@@ -63,14 +61,6 @@ public class LevelManager : MonoBehaviour
 
         OffLevel(ActualLevel);
 
-        /* GameObject levelPref = GetBufferLevel(); 
-        GameObject go = Instantiate(levelPref, transform);
-        Level level = go.GetComponent<Level>();
-
-        Levels[GetIndex()] = level;
-
-        OffLevel(level); */
-
         index = _Index;
         index += 1;
         SetIndex(index);
@@ -95,40 +85,13 @@ public class LevelManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        OffLevel(ActualLevel);
-
-        GameObject levelPref = GetBufferLevel(); 
-        GameObject go = Instantiate(levelPref, transform);
-        Level level = go.GetComponent<Level>();
-
-        Levels[GetIndex()] = level;
-        LoadLevel();
-
-        StartLevel();
+        ActualLevel.ResetLevel();
+        LandScene.Instance.On();
     }
 
     void OffLevel(Level level)
     {
         level.Off();
         /* level.Eliminate(); */
-    }
-
-    GameObject GetBufferLevel()
-    {
-        return bufferForLevel.GetChild(0).gameObject;
-    }
-
-    void BufferingLevel()
-    {
-        if(bufferForLevel.childCount > 0) 
-        {
-            Destroy(GetBufferLevel());
-        }
-
-        Level level = ActualLevel;
-        GameObject go = Instantiate(level.gameObject, bufferForLevel);
-
-        level = go.GetComponent<Level>();
-        level.Off();
     }
 }

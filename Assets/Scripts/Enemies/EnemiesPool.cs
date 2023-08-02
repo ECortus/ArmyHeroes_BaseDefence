@@ -44,6 +44,17 @@ public class EnemiesPool : MonoBehaviour
         return list;
     }
 
+    public void KillAllEnemies()
+    {
+        List<Enemy> enemies = new List<Enemy>();
+        enemies.AddRange(Enemy00Pool);
+
+        foreach(Enemy enemy in enemies)
+        {
+            enemy.Off();
+        }
+    }
+
     public Enemy Insert(EnemyType type, Enemy enemy, Vector3 pos = new Vector3(), Quaternion rot = new Quaternion())
     {
         Enemy enm = null;

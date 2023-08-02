@@ -16,6 +16,6 @@ public class SetNewWeapon : NewProgressBonus
 
     public override void Cancel()
     {
-        PlayerInfo.Instance.SetWeapon(0);
+        /* PlayerInfo.Instance.SetWeapon(0); */
     }
 }

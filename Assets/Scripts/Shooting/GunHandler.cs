@@ -25,6 +25,8 @@ public class GunHandler : MonoBehaviour
     public HP_DMG_SPD HP_DMG_SPD;
     public ShootingUpgrades ShootingUpgrades;
 
+    public int GunsCount => Guns[Index].Pair.Count;
+
     public void SetGunPair(int i)
     {
         Index = i;
@@ -74,6 +76,18 @@ public class GunHandler : MonoBehaviour
 
     void Refresh()
     {
+        bool someonewasenable = false;
+
+        List<GunPair> list = Guns[Index].Pair;
+        foreach(GunPair pair in list)
+        {
+            if(pair.Gun.isEnable)
+            {
+                someonewasenable = true;
+                break;
+            }
+        }
+
         foreach(GunComplex complex in Guns)
         {
             foreach (GunPair pair in complex.Pair)
@@ -82,8 +96,6 @@ public class GunHandler : MonoBehaviour
                 pair.Gun.gameObject.SetActive(false);
             }
         }
-
-        List<GunPair> list;
 
         for(int i = 0; i < Guns.Count; i++)
         {
@@ -94,13 +106,14 @@ public class GunHandler : MonoBehaviour
                 {
                     pair.Gun.gameObject.SetActive(true);
                     
-                    pair.Gun.Transform.localPosition = new Vector3(
-                        -pair.Point.localPosition.y,
-                        pair.Point.localPosition.z,
-                        -pair.Point.localPosition.x
-                    );
+                    pair.Gun.Transform.localPosition = pair.Point.localPosition;
                 }
             }
+        }
+
+        if(someonewasenable)
+        {
+            Enable();
         }
     }
 }

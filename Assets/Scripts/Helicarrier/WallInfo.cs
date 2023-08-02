@@ -22,7 +22,9 @@ public class WallInfo : Detection
 
     void Start()
     {
-        Heal(999);
+        Heal(999f);
+        /* GetHit(9999f); */
+
         Pool();
     }
 

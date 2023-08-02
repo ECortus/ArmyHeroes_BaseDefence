@@ -26,12 +26,10 @@ public class EnemiesGenerator : MonoBehaviour
         set
         {
             _wi = value;
-            counter.Refresh();
+            GeneratorUI.Instance.Refresh();
         }
     }
     public int WavesCount => info.Waves.Count;
-
-    [SerializeField] private GeneratorUI counter;
 
     Coroutine coroutine;
 

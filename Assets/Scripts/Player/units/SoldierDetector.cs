@@ -10,9 +10,6 @@ public class SoldierDetector : NearestDetector
     [SerializeField] private GunHandler shooting;
     [SerializeField] private bool TakeControl = false;
 
-    [Range(0, 100)]
-    [SerializeField] private int ChanceToChangePosition = 0;
-
     public override bool AdditionalCondition(Detection dt)
     {
         return !dt.Died && dt.Active;
@@ -48,6 +45,8 @@ public class SoldierDetector : NearestDetector
         }
     }
 
+    /* [Range(0, 100)]
+    [SerializeField] private int ChanceToChangePosition = 0;
     float time = 0f;
 
     void Update()
@@ -93,5 +92,5 @@ public class SoldierDetector : NearestDetector
 
         await UniTask.WaitUntil(() => controller.NearPoint(point, 0.5f));
         On();
-    }
+    } */
 }
