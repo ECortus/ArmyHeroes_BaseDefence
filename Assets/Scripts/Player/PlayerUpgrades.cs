@@ -8,4 +8,6 @@ public class PlayerUpgrades : HP_DMG_SPD
     void Awake() => Instance = this;
 
     public ShootingUpgrades ShootingUpgrades;
+
+    
 }

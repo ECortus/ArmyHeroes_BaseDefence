@@ -5,10 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NPB_HealthRegeneration", menuName = "NPB-s/Health Regeneration")]
 public class HealthRegeneration : NewProgressBonus
 {
+    public float DefaultMod
+    {
+        get
+        {
+            return DefaultUsedCount * 0.05f;
+        }
+    }
+
     public override void Apply()
     {
-        float amount = UsedCount * 0.5f;
-        PlayerInfo.Instance.StartAutoRegeneration(amount);
+        PlayerInfo.Instance.SetRegenPercent(PlayerInfo.Instance.GetRegenPercent() + 0.05f);
     }
 
     public override void Cancel()

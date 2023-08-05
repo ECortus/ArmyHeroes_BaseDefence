@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class PikemanDetector : NearestDetector
+public class PikemanDetector : AllDetector
 {
     [Space]
     [SerializeField] private Pikeman controller;

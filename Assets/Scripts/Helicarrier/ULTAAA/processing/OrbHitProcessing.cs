@@ -22,7 +22,7 @@ public class OrbHitProcessing : UltProcessing_IEnumerator
     {
         yield return null;
 
-        targets = DetectionPool.Instance.RequirePools(TargetTypes);
+        targets = DetectionPool.Instance.RequirePools(TargetTypes).ToList();
         index = Random.Range(0, targets.Count);
         target = targets[index];
 

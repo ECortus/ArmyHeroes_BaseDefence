@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NPB_UpgradeSoldiers", menuName = "NPB-s/Upgrade Soldiers")]
 public class UpgradeSoldiers : NewProgressBonus
 {
-    private List<Detection> soldiers => DetectionPool.Instance.RequirePools(DetectType.Soldier);
+    private Detection[] soldiers => DetectionPool.Instance.RequirePools(DetectType.Soldier);
     private Detection soldier;
 
     public override void Apply()

@@ -7,13 +7,21 @@ public class UltEconomy : Ulta
 {
     [Space]
     [SerializeField] private int DefaultGoldPerCrystal = 10;
-    [SerializeField] private int GoldAmountUpPerLVL = 15;
+    public int GoldAmountUpPerLVL = 15;
+
+    public int GoldAmountMod
+    {
+        get
+        {
+            return GoldAmountUpPerLVL * PowerLVL;
+        }
+    }
 
     public int GoldPerCrystal
     {
         get
         {
-            return DefaultGoldPerCrystal + GoldAmountUpPerLVL * PowerLVL;
+            return DefaultGoldPerCrystal + GoldAmountMod;
         }
     }
 

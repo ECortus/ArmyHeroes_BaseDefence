@@ -12,13 +12,15 @@ public class Mine : MonoBehaviour
     }
 
     [SerializeField] private GameObject model;
+    [SerializeField] private SphereCollider sphere;
     [SerializeField] private ParticleSystem destroy;
 
     bool Hited = false;
     public bool Active => gameObject.activeSelf;
 
-    public void On()
+    public void On(float radius)
     {
+        sphere.radius = radius;
         Hited = false;
 
         model.SetActive(true);

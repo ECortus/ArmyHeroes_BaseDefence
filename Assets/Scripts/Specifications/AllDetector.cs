@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AllDetector : BaseDetector
 {
-    private List<Detection> Detected;
+    private Detection[] Detected;
 
     protected override IEnumerator Working()
     {

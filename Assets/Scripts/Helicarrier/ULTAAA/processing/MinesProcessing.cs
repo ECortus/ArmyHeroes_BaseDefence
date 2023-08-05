@@ -23,7 +23,7 @@ public class MinesProcessing : UltProcessing_IEnumerator
 
             if(!mine.Active)
             {
-                mine.On();
+                mine.On(info.Range);
                 mine.SetDamage(info.Damage);
 
                 count--;

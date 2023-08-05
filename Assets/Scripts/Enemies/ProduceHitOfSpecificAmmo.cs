@@ -77,7 +77,7 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
     public void TurnOnElectric(float damage, float maxDistanceBetweenTargets, int maxTargetsCount)
     {
         DetectType Types = DetectType.Enemy | DetectType.Boss;
-        List<Detection> enemies = DetectionPool.Instance.RequirePools(Types);
+        List<Detection> enemies = DetectionPool.Instance.RequirePools(Types).ToList();
 
         enemies = enemies.OrderBy(x => Vector3.Distance(x.transform.position, transform.position)).ToList();
 

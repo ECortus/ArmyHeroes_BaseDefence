@@ -23,17 +23,27 @@ public class Ulta : ScriptableObject
     }
 
     [SerializeField] private int defCost = 100;
-    [SerializeField] private int costDownPerLvl = 50;
+    [Range(0f, 99f)]
+    public int costDownPerLvlOnPercent = 25;
 
     public int Cost
     {
         get
         {
-            return defCost + costDownPerLvl * CostLVL;
+            return (int)(defCost * CostMod);
         }
     }
 
-    private int CostLVL
+    public float CostMod
+    {
+        get
+        {
+            float down = costDownPerLvlOnPercent;
+            return Mathf.Pow(1f - down / 100f, CostLVL);
+        }
+    }
+
+    public int CostLVL
     {
         get
         {
@@ -53,17 +63,25 @@ public class Ulta : ScriptableObject
  
     [Space]
     [SerializeField] private float defDuration = 15f;
-    [SerializeField] private float durationUpPerLvl = 50;
+    public float durationUpPerLvl = 50;
 
     public float Duration
     {
         get
         {
-            return defDuration + durationUpPerLvl * DurationLVL;
+            return defDuration + DurationMod;
         }
     }
 
-    private int DurationLVL
+    public float DurationMod
+    {
+        get
+        {
+            return durationUpPerLvl * DurationLVL;
+        }
+    }
+
+    public int DurationLVL
     {
         get
         {

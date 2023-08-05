@@ -10,6 +10,12 @@ public class Gun : MonoBehaviour
 
     [Space]
     [SerializeField] private float _Damage;
+
+    public void SetDefaultDamage(float dmg)
+    {
+        _Damage = dmg;
+    }
+
     [SerializeField] private float _Delay;
     [SerializeField] private Transform Muzzle;
     [SerializeField] private Ammo Ammo;

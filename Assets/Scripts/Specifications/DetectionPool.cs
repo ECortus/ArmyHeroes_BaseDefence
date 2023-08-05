@@ -29,45 +29,53 @@ public class DetectionPool : MonoBehaviour
     }
 
     [Header("DEBUG: ")]
-    public List<Pool> Pools = new List<Pool>();
+    public Pool[] Pools = new Pool[0];
 
     public void CreatePools()
     {
-        Pools.Clear();
+        Pools = new Pool[TypeCount];
         for(int i = 0; i < TypeCount; i++)
         {
-            Pools.Add(new Pool());
+            Pools[i] = new Pool();
         }
     }
 
     public void AddInPool(Detection tr, DetectType type)
     {
-        if(Pools.Count < TypeCount)
+        if(Pools.Length < TypeCount)
         {
             CreatePools();
         }
 
-        GetListByType(type).Add(tr);
+        List<Detection> list = GetListByType(type);
+        if(!list.Contains(tr))
+        {
+            list.Add(tr);
+        }
     }
 
     public void RemoveFromPool(Detection tr, DetectType type)
     {
-        if(Pools.Count < TypeCount)
+        if(Pools.Length < TypeCount)
         {
             CreatePools();
         }
 
-        GetListByType(type).Remove(tr);
+        List<Detection> list = GetListByType(type);
+        if(list.Contains(tr))
+        {
+            list.Remove(tr);
+        }
     }
 
-    public List<Detection> RequirePools(DetectType type)
+    public Detection[] RequirePools(DetectType type)
     {
         List<Detection> list = new List<Detection>();
         DetectType tp = DetectType.Nothing;
 
         if(type == DetectType.Nothing)
         {
-            return list;
+            return list.ToArray();
         }
 
         for(int i = 0; i < TypeCount; i++)
@@ -79,7 +87,7 @@ public class DetectionPool : MonoBehaviour
             }
         }
 
-        return list;
+        return list.ToArray();
     }
 
     DetectType GetTypeByIndex(int i)
@@ -99,7 +107,7 @@ public class DetectionPool : MonoBehaviour
 
     List<Detection> GetListByType(DetectType type)
     {
-        if(Pools.Count < TypeCount)
+        if(Pools.Length < TypeCount)
         {
             CreatePools();
         }

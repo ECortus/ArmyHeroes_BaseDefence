@@ -7,7 +7,7 @@ public class WallUpgradeInfo : UpgraderZone
     public static WallUpgradeInfo Instance { get; set; }
     void Awake() => Instance = this;
 
-    private List<Detection> wallsPool => DetectionPool.Instance.RequirePools(DetectType.Wall);
+    private Detection[] wallsPool => DetectionPool.Instance.RequirePools(DetectType.Wall);
 
     protected override bool ConditionToAllowInter 
     { 

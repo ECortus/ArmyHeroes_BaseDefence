@@ -4,7 +4,18 @@ using UnityEngine;
 
 public class HP_DMG_SPD : MonoBehaviour
 {
-    public float bonusHP { get; set; }
+    private float _bHP = 0f;
+    public virtual float bonusHP
+    {
+        get
+        {
+            return _bHP;
+        }
+        set
+        {
+            _bHP = value;
+        }
+    }
     public void AddHPPercent(float perc)
     {
         bonusHP += perc;

@@ -8,12 +8,18 @@ public class GaussProcessing : UltProcessing_IEnumerator
 
     [Space]
     [SerializeField] private GameObject obj;
+    [SerializeField] private Gun[] guns;
     [SerializeField] private GunHandler gunHandler;
     [SerializeField] private RangeShootingDetector gaussDetector;
 
     public override IEnumerator Process()
     {
         obj.SetActive(true);
+
+        foreach(var item in guns)
+        {
+            item.SetDefaultDamage(info.Damage);
+        }
 
         gaussDetector.On();
 

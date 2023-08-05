@@ -92,9 +92,19 @@ public class Health : MonoBehaviour
     float percentPerSecond = 0.5f;
     Coroutine coroutine;
 
-    public void StartAutoRegeneration(float pps)
+    public float GetRegenPercent() => percentPerSecond;
+
+    public void SetRegenPercent(float pps)
     {
         percentPerSecond = pps;
+        if(percentPerSecond > 0f)
+        {
+            StartAutoRegeneration();
+        }
+    }
+
+    void StartAutoRegeneration()
+    {
         if(coroutine == null)
         {
             coroutine = StartCoroutine(AutoRegeneration());
@@ -108,6 +118,8 @@ public class Health : MonoBehaviour
             StopCoroutine(coroutine);
             coroutine = null;
         }
+
+        percentPerSecond = 0f;
     }
 
     IEnumerator AutoRegeneration()

@@ -21,28 +21,28 @@ public class Detection : Health
         Marked = false;
     }
 
-    public bool AllAround(DetectType priority, DetectType essential, float prioriryDistance, float essentialDistance, IAdditionalCondition ac, out List<Detection> data)
+    public bool AllAround(DetectType priority, DetectType essential, float prioriryDistance, float essentialDistance, IAdditionalCondition ac, out Detection[] data)
     {
-        List<Detection> sorted = new List<Detection>(Pools.RequirePools(priority));
+        Detection[] sorted = Pools.RequirePools(priority);
 
-        if(sorted.Count == 0 || !SortDetectionListByDistance(sorted, prioriryDistance, ac, out sorted))
+        if(sorted.Length== 0 || !SortDetectionListByDistance(sorted, prioriryDistance, ac, out sorted))
         {
-            sorted = new List<Detection>(Pools.RequirePools(essential));
-            if(sorted.Count == 0 || !SortDetectionListByDistance(sorted, essentialDistance, ac, out sorted))
+            sorted = Pools.RequirePools(essential);
+            if(sorted.Length == 0 || !SortDetectionListByDistance(sorted, essentialDistance, ac, out sorted))
             {
-                data = new List<Detection>();
+                data = new Detection[0];
                 return false;
             }
         }
 
         data = sorted;
-        return sorted.Count > 0;
+        return sorted.Length > 0;
     }
 
     public bool NearestAround(DetectType priority, DetectType essential, float prioriryDistance, float essentialDistance, IAdditionalCondition ac, out Detection data)
     {
         Detection unit = null;
-        List<Detection> detectCols = new List<Detection>();
+        Detection[] detectCols = new Detection[0];
 
         if(AllAround(priority, essential, prioriryDistance, essentialDistance, ac, out detectCols))
         {
@@ -53,11 +53,13 @@ public class Detection : Health
         return data != null;
     }
 
-    bool SortDetectionListByDistance(List<Detection> nonSorted, float distance, IAdditionalCondition ac, out List<Detection> sorted)
+    bool SortDetectionListByDistance(Detection[] nonSorted, float distance, IAdditionalCondition ac, out Detection[] sorted)
     {
-        if(nonSorted.Count == 0)
+        Detection detection = null;
+
+        if(nonSorted.Length == 0)
         {
-            sorted = new List<Detection>();
+            sorted = new Detection[0];
             return false;
         }
 
@@ -69,22 +71,26 @@ public class Detection : Health
         }
 
         List<Detection> nonActiveSort = new List<Detection>(sort);
-        foreach(Detection det in nonActiveSort) /// additional check on died/active etc...
+
+        for(int i = 0; i < nonActiveSort.Count; i++) /// additional check on died/active etc...
         {
-            if((ac == null ? !det.Active : !ac.AdditionalCondition(det)))
+            detection = nonActiveSort[i];
+            if((ac == null ? !detection.Active : !ac.AdditionalCondition(detection)))
             {
-                sort.Remove(det);
+                sort.Remove(detection);
             }
         }
 
         sort = sort.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).ToList();
 
         List<Detection> sortByDistance = new List<Detection>();
-        foreach(Detection det in sort)
+
+        for(int i = 0; i < sort.Count; i++)
         {
-            if(Vector3.Distance(transform.position, det.transform.position) <= distance)
+            detection = sort[i];
+            if(Vector3.Distance(transform.position, detection.transform.position) <= distance)
             {
-                sortByDistance.Add(det);
+                sortByDistance.Add(detection);
             }
             else
             {
@@ -92,7 +98,7 @@ public class Detection : Health
             }
         }
 
-        sorted = sortByDistance;
+        sorted = sortByDistance.ToArray();
         return sortByDistance.Count > 0;
     }
 }

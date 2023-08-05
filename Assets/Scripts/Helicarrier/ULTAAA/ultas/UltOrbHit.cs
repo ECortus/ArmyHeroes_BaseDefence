@@ -6,8 +6,26 @@ using UnityEngine;
 public class UltOrbHit : Ulta
 {
     [Space]
-    public float Damage = 100f;
+    [SerializeField] private float damage = 100f;
+    public float damageUpPerLVL = 50f;
+
     public float Range = 4f;
+
+    public float DamageMod
+    {
+        get
+        {
+            return damageUpPerLVL * PowerLVL;
+        }
+    }
+
+    public float Damage
+    {
+        get
+        {
+            return damage + damageUpPerLVL * PowerLVL;
+        }
+    }
 
     public override void Activate()
     {

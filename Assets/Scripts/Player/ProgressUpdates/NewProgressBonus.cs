@@ -20,12 +20,27 @@ public class NewProgressBonus : ScriptableObject
     {
 
     }
+
+    public int DefaultUsedCount
+    {
+        get
+        {
+            return PlayerPrefs.GetInt($"BONUS_{Name}_DEFAULTUSEDCOUNT", 0);
+        }
+        set
+        {
+            PlayerPrefs.SetInt($"BONUS_{Name}_DEFAULTUSEDCOUNT", value);
+            PlayerPrefs.Save();
+
+            SetBonus();
+        }
+    }
     
     public int UsedCount
     {
         get
         {
-            return PlayerPrefs.GetInt($"BONUS_{Name}_USEDCOUNT", 0);
+            return PlayerPrefs.GetInt($"BONUS_{Name}_USEDCOUNT", DefaultUsedCount);
         }
         set
         {
@@ -52,7 +67,7 @@ public class NewProgressBonus : ScriptableObject
         }
     }
 
-    public int ApplyCount { get; set; }
+    [HideInInspector] public int ApplyCount = 0;
 
     public void SetBonus()
     {
