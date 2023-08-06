@@ -8,6 +8,8 @@ public class ResourceDrop : MonoBehaviour
     public int BallAmount;
     public float ResourcePerBall;
 
+    public float ResourcePerBallMod { get; set; }
+
     public void Drop()
     {
         DropAmount((int)BallAmount);
@@ -24,7 +26,7 @@ public class ResourceDrop : MonoBehaviour
             dir.y = 1f;
 
             ball = ResourcePool.Instance.Insert(type, transform.position + Vector3.up * 1.25f);
-            ball.SetRecource(ResourcePerBall);
+            ball.SetRecource(ResourcePerBall * ResourcePerBallMod);
             ball.Force(dir, 300f * Random.Range(0.35f, 1f));
         }
     }

@@ -88,46 +88,4 @@ public class Health : MonoBehaviour
 
         DeathEvent?.Invoke();
     }
-
-    float percentPerSecond = 0.5f;
-    Coroutine coroutine;
-
-    public float GetRegenPercent() => percentPerSecond;
-
-    public void SetRegenPercent(float pps)
-    {
-        percentPerSecond = pps;
-        if(percentPerSecond > 0f)
-        {
-            StartAutoRegeneration();
-        }
-    }
-
-    void StartAutoRegeneration()
-    {
-        if(coroutine == null)
-        {
-            coroutine = StartCoroutine(AutoRegeneration());
-        }
-    }   
-
-    public void StopAutoRegeneration()
-    {
-        if(coroutine != null)
-        {
-            StopCoroutine(coroutine);
-            coroutine = null;
-        }
-
-        percentPerSecond = 0f;
-    }
-
-    IEnumerator AutoRegeneration()
-    {
-        while(true)
-        {
-            yield return new WaitForSeconds(1f);
-            Heal(MaxHP * percentPerSecond);
-        }
-    }
 }

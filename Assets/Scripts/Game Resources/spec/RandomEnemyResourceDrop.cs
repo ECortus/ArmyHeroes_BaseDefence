@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class RandomResourceDrop : MonoBehaviour
+public class RandomEnemyResourceDrop : MonoBehaviour
 {
     [System.Serializable]
     public class ProbalityDrop
@@ -21,6 +21,9 @@ public class RandomResourceDrop : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             t = RandomIndex();
+
+            if(t == 0) dropProbality[t].Resource.ResourcePerBallMod = 1f + KillingRewardLVLs.EnemyKillingEXPRewardMod;
+
             dropProbality[t].Resource.Drop();
         }
     }

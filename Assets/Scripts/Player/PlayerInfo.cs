@@ -69,4 +69,62 @@ public class PlayerInfo : Detection
         base.Death();
         Time.timeScale = 0f;
     }
+
+    float addedPercent = 0f;
+    float percentPerSecond
+    {
+        get
+        {
+            return addedPercent + PlayerUpgradesLVLs.RegenMod;
+        }
+    }
+    Coroutine coroutine;
+
+    public float GetRegenPercent() => percentPerSecond;
+
+    public void AddRegenPercent(float pps)
+    {
+        addedPercent += pps;
+        if(percentPerSecond > 0f)
+        {
+            StartAutoRegeneration();
+        }
+    }
+
+    void StartAutoRegeneration()
+    {
+        if(coroutine == null)
+        {
+            coroutine = StartCoroutine(AutoRegeneration());
+        }
+    }   
+
+    public void StopAutoRegeneration()
+    {
+        if(coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+
+        addedPercent = 0f;
+    }
+
+    public void ResetAutoRegeneration()
+    {
+        addedPercent = 0f;
+        if(percentPerSecond <= 0f)
+        {
+            StopAutoRegeneration();
+        }
+    }
+
+    IEnumerator AutoRegeneration()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(1f);
+            Heal(MaxHP * percentPerSecond);
+        }
+    }
 }

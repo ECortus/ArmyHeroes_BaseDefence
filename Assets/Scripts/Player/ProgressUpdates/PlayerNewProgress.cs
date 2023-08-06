@@ -84,6 +84,8 @@ public class PlayerNewProgress : MonoBehaviour
             bonus.ApplyCount = 0;
             bonus.SetBonus();
         }
+
+        PlayerUpgrades.Instance.SetPermanentBonuses();
     }
 
     public void ResetAllBonuses()

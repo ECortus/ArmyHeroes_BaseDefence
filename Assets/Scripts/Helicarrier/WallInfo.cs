@@ -8,7 +8,7 @@ public class WallInfo : Detection
     { 
         get
         {
-            return InputHP * (1 + WallUpgradeInfo.Instance.Progress);
+            return InputHP * (1 + WallUpgradeInfo.Instance.Progress + BuildingUpgradesLVLs.HPMod);
         }
     }
 

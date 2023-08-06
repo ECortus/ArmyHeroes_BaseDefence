@@ -8,6 +8,38 @@ public class UpgradeSoldiers : NewProgressBonus
     private Detection[] soldiers => DetectionPool.Instance.RequirePools(DetectType.Soldier);
     private Detection soldier;
 
+    public float PlusHP
+    {
+        get
+        {
+            float bonus = 0f;
+
+            for(int i = 0; i < UsedCount; i++)
+            {
+                if(i == 0) bonus += 20f;
+                else bonus += 50f;
+            }
+
+            return bonus;
+        }
+    }
+
+    public float PlusDMG
+    {
+        get
+        {
+            float bonus = 0f;
+
+            for(int i = 0; i < UsedCount; i++)
+            {
+                if(i == 0) bonus += 50f;
+                else bonus += 10f;
+            }
+
+            return bonus;
+        }
+    }
+
     public override void Apply()
     {
         foreach(Detection sldr in soldiers)
@@ -15,16 +47,11 @@ public class UpgradeSoldiers : NewProgressBonus
             soldier = sldr;
             if(soldier != null)
             {
-                if(ApplyCount == 0)
-                {
-                    soldier.HPvDMGvSPD.AddHPPercent(20f);
-                    soldier.HPvDMGvSPD.AddDMGPercent(50f);
-                }
-                else
-                {
-                    soldier.HPvDMGvSPD.AddHPPercent(50f);
-                    soldier.HPvDMGvSPD.AddDMGPercent(10f);
-                }
+                soldier.HPvDMGvSPD.ResetHP();
+                soldier.HPvDMGvSPD.ResetDMG();
+
+                soldier.HPvDMGvSPD.AddHPPercent(PlusHP);
+                soldier.HPvDMGvSPD.AddDMGPercent(PlusDMG);
             }
         }
     }

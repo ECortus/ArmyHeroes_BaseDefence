@@ -48,6 +48,7 @@ public class GoldRewardPerWaveChest : ResourceDrop
 
         while(count > 0)
         {
+            ResourcePerBallMod = 1f + WaveRewardLVLs.WCRMod;
             DropAmount(1);
             await UniTask.Delay(50);
 

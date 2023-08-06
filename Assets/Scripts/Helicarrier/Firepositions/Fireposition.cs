@@ -23,7 +23,7 @@ public class Fireposition : Detection
     { 
         get
         {
-            return InputHP * (1 + upgrader.Progress);
+            return InputHP * (1 + upgrader.Progress + BuildingUpgradesLVLs.HPMod);
         }
     }
 

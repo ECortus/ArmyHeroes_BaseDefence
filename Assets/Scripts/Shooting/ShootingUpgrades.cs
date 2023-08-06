@@ -20,14 +20,14 @@ public class ShootingUpgrades : MonoBehaviour
         }
     }
 
-    [HideInInspector] public float DecreaseSC = 0f;
+    [HideInInspector] public float DecreaseSC = 100f;
     public void AddDecreaseSC(float sc)
     {
-        DecreaseSC += sc;
+        DecreaseSC *= 1f - sc / 100f;
     }
     public void ResetDecreaseSC()
     {
-        DecreaseSC = 0f;
+        DecreaseSC = 100f;
     }
 
     [HideInInspector] public int AmmoPerShotMultiple = 1;

@@ -6,6 +6,7 @@ public static class DataManager
 {
     public static string TutorialKey = "TutorialComplete";
     public static string LevelIndexKey = "LevelIndex";
+    public static string SkinKey = "PlayerSkinIndex";
 
     public static string ProgressKey = "PlayerProgress";
     public static string WeaponKey = "PlayerWeaponIndex";

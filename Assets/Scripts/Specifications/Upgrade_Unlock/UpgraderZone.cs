@@ -26,7 +26,7 @@ public class UpgraderZone : MonoBehaviour
 
     public string SaveName => PreName + "_Upgrade";
     public string AmountName => PreName + "_RequireAmount";
-    public int Cost => DefaultCost + UpCostPerProgress * (Progress - MinProgress);
+    public int Cost => (int)((DefaultCost + UpCostPerProgress * (Progress - MinProgress)) * BuildingUpgradesLVLs.CostMod);
 
     [Header("Info zone:")]
     [SerializeField] private Slider amountSlider;

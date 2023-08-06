@@ -42,7 +42,7 @@ public class Gun : MonoBehaviour
             float dmg = _Damage;
             if(hds != null)
             {
-                dmg *= (1f - hds.bonusDMG / 100f);
+                dmg *= (1f + hds.bonusDMG / 100f);
             }
             return dmg;
         }
@@ -55,7 +55,7 @@ public class Gun : MonoBehaviour
             float del = _Delay;
             if(ups != null)
             {
-                del *= (1f - ups.DecreaseSC / 100f);
+                del *= ups.DecreaseSC / 100f;
             }
             return del;
         }
