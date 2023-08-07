@@ -14,9 +14,14 @@ public class NewProgressBonusUI : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(OnButtonClick);
     }
 
-    public void OnButtonClick()
+    public void AddBonus()
     {
         bonus.Add();
+    }
+
+    public void OnButtonClick()
+    {
+        AddBonus();
         PlayerNewProgress.Instance.Off();
     }
 

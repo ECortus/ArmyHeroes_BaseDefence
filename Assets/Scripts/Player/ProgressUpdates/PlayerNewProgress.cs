@@ -15,6 +15,9 @@ public class PlayerNewProgress : MonoBehaviour
 
     [SerializeField] private List<NewProgressBonusUI> BonusesUI = new List<NewProgressBonusUI>();
     [SerializeField] private GameObject menu, tip;
+
+    [Space]
+    [SerializeField] private GameObject buttonTripleX;
     
     private int RequiredCount = 3;
 
@@ -51,6 +54,21 @@ public class PlayerNewProgress : MonoBehaviour
         RefrestButtons();
     }
 
+    public void OnWith3X()
+    {
+        buttonTripleX.SetActive(true);
+        On();
+    }
+
+    public void GetAll3XAbilities()
+    {
+        foreach(NewProgressBonus npb in Bonuses)
+        {
+            npb.Add();
+        }
+        Off();
+    }
+
     public void On()
     {
         menu.SetActive(true);
@@ -61,6 +79,7 @@ public class PlayerNewProgress : MonoBehaviour
 
     public async void Off()
     {
+        buttonTripleX.SetActive(false);
         menu.SetActive(false);
         tip.SetActive(true);
 

@@ -9,6 +9,9 @@ public class MechController : Target
     [SerializeField] private Fireposition fireposition;
 
     [Space]
+    [SerializeField] private Animation walk;
+
+    [Space]
     [SerializeField] private float rotateSpeed;
     [SerializeField] private float minDistanceToTarget;
     [SerializeField] private Transform[] Muzzles;
@@ -38,6 +41,21 @@ public class MechController : Target
 
             CorrectMuzzleRotation();
             Rotate();
+        }
+
+        UpdateAnimation();
+    }
+
+    void UpdateAnimation()
+    {
+        if(!fireposition.Busy || Agent.velocity.magnitude < 0.05f || !Agent.isActiveAndEnabled)
+        {
+            walk.Stop();
+        }
+
+        if(Agent.velocity.magnitude > 0.05f && !walk.isPlaying)
+        {
+            walk.Play();
         }
     }
 
