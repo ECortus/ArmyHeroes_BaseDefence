@@ -7,6 +7,7 @@ public class ResourcePool : MonoBehaviour
     public static ResourcePool Instance;
     void Awake() => Instance = this;
 
+    [SerializeField] private List<int> EachResourceLimit = new List<int>();
     [SerializeField] private List<ResourceBall> Balls = new List<ResourceBall>();
 
     public ResourceBall GetBallByType(ResourceType type)
@@ -83,28 +84,35 @@ public class ResourcePool : MonoBehaviour
         ResourceBall rec = null;
         List<ResourceBall> list = new List<ResourceBall>();
 
+        int limit = 0;
+
         switch(type)
         {
             case ResourceType.Exp:
                 list = ExpPool;
+                limit = EachResourceLimit[0];
                 break;
             case ResourceType.Gold:
                 list = GoldPool;
+                limit = EachResourceLimit[1];
                 break;
             case ResourceType.HealKit:
                 list = HealKitPool;
+                limit = EachResourceLimit[2];
                 break;
             case ResourceType.Magnit:
                 list = MagnitPool;
+                limit = EachResourceLimit[3];
                 break;
             case ResourceType.Dynamit:
                 list = DynamitPool;
+                limit = EachResourceLimit[4];
                 break;
             default:
                 break;
         }
 
-        if(list.Count > 0)
+        if(list.Count > 0 && list.Count <= limit)
         {
             foreach(ResourceBall rc in list)
             {
