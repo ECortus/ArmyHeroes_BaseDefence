@@ -29,7 +29,7 @@ public class WatchtowerController : Target
             }
             else
             {
-                dir = -(target.position - transform.position).normalized;
+                dir = -(target.position + new Vector3(0f, 1f, 0f) - transform.position).normalized;
 
                 toRotateMuzzle.rotation = Quaternion.LookRotation(dir);
                 

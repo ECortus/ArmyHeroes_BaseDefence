@@ -190,7 +190,7 @@ Rigidbody:
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!135 &7342528977530786445
@@ -244,6 +244,7 @@ MonoBehaviour:
     OnEffect: {fileID: 8681826607193092198}
     HitEffect: {fileID: 837741206080174964}
     OnHit: {fileID: 11400000, guid: a4c1fb34a4303574db17e4fca6f8b721, type: 2}
+  maxDistance: 100
   Specifics: 1
 --- !u!1 &1381991387212023156
 GameObject:

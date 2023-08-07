@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Target : MonoBehaviour
 {
     /* [Header("DEBUG: ")] */
-    public Transform _target;
+    [HideInInspector] public Transform _target;
 
     public Transform Transform { get { return transform; } }
     

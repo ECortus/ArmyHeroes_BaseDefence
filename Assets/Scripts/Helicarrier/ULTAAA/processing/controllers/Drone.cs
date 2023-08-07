@@ -89,7 +89,7 @@ public class Drone : Target
     {
         foreach(Transform muzzle in muzzles)
         {
-            muzzle.forward = (target.position + new Vector3(0f, 0.5f, 0f) - muzzle.position).normalized;
+            muzzle.forward = (target.position + new Vector3(0f, 1f, 0f) - muzzle.position).normalized;
         }
     }
 }

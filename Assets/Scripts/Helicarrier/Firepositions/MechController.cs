@@ -57,7 +57,7 @@ public class MechController : Target
         }
         else
         {
-            dir = (target.position - transform.position).normalized;
+            dir = (target.position + new Vector3(0f, 1f, 0f) - transform.position).normalized;
             dir.y = 0f;
         }
 
@@ -69,7 +69,6 @@ public class MechController : Target
     }
 
     Quaternion muzzleRotation;
-    Vector3 muzzleAngles;
 
     void CorrectMuzzleRotation()
     {
@@ -77,7 +76,9 @@ public class MechController : Target
         {
             foreach(Transform muzzle in Muzzles)
             {
-                muzzleRotation = Quaternion.LookRotation((target.position + new Vector3(0f, 0.5f, 0f) - muzzle.position));
+                muzzleRotation = Quaternion.LookRotation(
+                    (target.position + new Vector3(0f, 1f, 0f) - muzzle.position).normalized
+                );
                 muzzle.rotation = muzzleRotation;
             }
         }

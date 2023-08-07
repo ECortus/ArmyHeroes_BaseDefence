@@ -29284,6 +29284,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: ResourceDrops
       objectReference: {fileID: 0}
+    - target: {fileID: 2833472820093456619, guid: fde78f55641de174ea0d9d4af676058f,
+        type: 3}
+      propertyPath: BallAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2833472820093456619, guid: fde78f55641de174ea0d9d4af676058f,
+        type: 3}
+      propertyPath: ResourcePerBall
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2833472820093456620, guid: fde78f55641de174ea0d9d4af676058f,
+        type: 3}
+      propertyPath: dropProbality.Array.data[1].Probality
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2833472820093456620, guid: fde78f55641de174ea0d9d4af676058f,
+        type: 3}
+      propertyPath: dropProbality.Array.data[2].Probality
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2833472820093456620, guid: fde78f55641de174ea0d9d4af676058f,
+        type: 3}
+      propertyPath: dropProbality.Array.data[3].Probality
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2833472820093456621, guid: fde78f55641de174ea0d9d4af676058f,
         type: 3}
       propertyPath: m_RootOrder

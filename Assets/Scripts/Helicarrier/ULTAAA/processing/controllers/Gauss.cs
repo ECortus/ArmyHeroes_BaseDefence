@@ -12,7 +12,7 @@ public class Gauss : Target
 
     void Update()
     {
-        dir = (target.position - torotate.position).normalized;
+        dir = (target.position + new Vector3(0f, 1f, 0f) - torotate.position).normalized;
 
         targetRotation = Quaternion.LookRotation(dir);
 
