@@ -13,12 +13,12 @@ public class PermBuildingHPUP : UpgradeAction
 
     public override void RefreshUI()
     {
-        textInfo.text = $"+{Mathf.Round(BuildingUpgradesLVLs.HPMod)}%";
+        textInfo.text = $"+{Mathf.Round(BuildingUpgradesLVLs.HPMod * 100f)}%";
     }
 
     public override void RefreshGetUI()
     {
         infoImage.sprite = Sprite;
-        textGet.text = $"+{Mathf.Round(BuildingUpgradesLVLs.HPPercentUP)}%";
+        textGet.text = $"+{Mathf.Round(BuildingUpgradesLVLs.HPPercentUP * 100f)}%";
     }
 }

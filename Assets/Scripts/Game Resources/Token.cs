@@ -10,7 +10,7 @@ public static class Token
     {
         token += count;
 
-        TokenUI.Instance.Refresh();
+        if(TokenUI.Instance != null) TokenUI.Instance.Refresh();
     }
     
     public static void Minus(int count)
@@ -18,6 +18,6 @@ public static class Token
         token -= count;
         if(token < 0) token = 0;
 
-        TokenUI.Instance.Refresh();
+        if(TokenUI.Instance != null) TokenUI.Instance.Refresh();
     }
 }

@@ -19,6 +19,6 @@ public class PermUpSPD : UpgradeAction
     public override void RefreshGetUI()
     {
         infoImage.sprite = Sprite;
-        textGet.text = $"+{Mathf.Round(PlayerUpgradesLVLs.SPDPercentUP)}%";
+        textGet.text = $"+{Mathf.Round(PlayerUpgradesLVLs.SPDPercentUP * 100f)}%";
     }
 }

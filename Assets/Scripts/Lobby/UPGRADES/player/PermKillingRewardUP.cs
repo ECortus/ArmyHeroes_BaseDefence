@@ -13,12 +13,12 @@ public class PermKillingRewardUP : UpgradeAction
 
     public override void RefreshUI()
     {
-        textInfo.text = $"+{Mathf.Round(KillingRewardLVLs.EnemyKillingEXPRewardMod)}%";
+        textInfo.text = $"+{Mathf.Round(KillingRewardLVLs.EnemyKillingEXPRewardMod * 100f)}%";
     }
 
     public override void RefreshGetUI()
     {
         infoImage.sprite = Sprite;
-        textGet.text = $"+{Mathf.Round(KillingRewardLVLs.EnemyKillingEXPRewardPercentUP)}%";
+        textGet.text = $"+{Mathf.Round(KillingRewardLVLs.EnemyKillingEXPRewardPercentUP * 100f)}%";
     }
 }

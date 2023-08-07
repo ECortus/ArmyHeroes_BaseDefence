@@ -6,6 +6,7 @@ public class DoctorDetector : AllDetector
 {
     [Space]
     [SerializeField] private Doctor controller;
+    [SerializeField] private float HealTime = 5f;
     [SerializeField] private float HealRange = 2f;
     [SerializeField] private Transform HealPoint;
 
@@ -69,10 +70,10 @@ public class DoctorDetector : AllDetector
         controller.SetTarget(HealPoint);
         yield return new WaitUntil(() => controller.NearPoint(HealPoint.position, HealRange));
 
-        /* controller.Off(); */
-        yield return new WaitForSeconds(2f);
+        controller.Off();
+        yield return new WaitForSeconds(HealTime * WorkersUpgradesLVLs.DoctorHealTimeMod);
 
-        /* controller.On(HealPoint.position); */
+        controller.On(HealPoint.position);
 
         patient.On(HealPoint.position);
         data.Marked = false;

@@ -13,12 +13,12 @@ public class PermRegen : UpgradeAction
 
     public override void RefreshUI()
     {
-        textInfo.text = $"+{Mathf.Round(PlayerUpgradesLVLs.RegenMod)} h/s";
+        textInfo.text = $"+{Mathf.Round(PlayerUpgradesLVLs.RegenMod * 100f)} %/s";
     }
 
     public override void RefreshGetUI()
     {
         infoImage.sprite = Sprite;
-        textGet.text = $"+{Mathf.Round(PlayerUpgradesLVLs.RegenPercentPerSecond)} h/s";
+        textGet.text = $"+{Mathf.Round(PlayerUpgradesLVLs.RegenPercentPerSecond * 100f)} %/s";
     }
 }

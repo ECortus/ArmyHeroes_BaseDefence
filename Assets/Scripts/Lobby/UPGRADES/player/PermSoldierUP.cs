@@ -14,12 +14,12 @@ public class PermSoldierUP : UpgradeAction
 
     public override void RefreshUI()
     {
-        textInfo.text = $"+{Mathf.Round(SoldierUpgradesLVLs.HPMod)}%" + System.Environment.NewLine + $"+{Mathf.Round(SoldierUpgradesLVLs.HPMod)}%";
+        textInfo.text = $"+{Mathf.Round(SoldierUpgradesLVLs.HPMod)}%" + "\n" + $"+{Mathf.Round(SoldierUpgradesLVLs.DMGMod)}%";
     }
 
     public override void RefreshGetUI()
     {
         infoImage.sprite = Sprite;
-        textGet.text = $"+{Mathf.Round(SoldierUpgradesLVLs.HPPercentUP)}%" + System.Environment.NewLine + $"+{Mathf.Round(SoldierUpgradesLVLs.DMGPercentUP)}%";
+        textGet.text = $"+{Mathf.Round(SoldierUpgradesLVLs.HPPercentUP * 100f)}%" + "\n" + $"+{Mathf.Round(SoldierUpgradesLVLs.DMGPercentUP * 100f)}%";
     }
 }

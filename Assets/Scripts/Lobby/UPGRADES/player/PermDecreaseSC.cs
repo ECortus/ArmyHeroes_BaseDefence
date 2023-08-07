@@ -13,12 +13,12 @@ public class PermDecreaseSC : UpgradeAction
 
     public override void RefreshUI()
     {
-        textInfo.text = $"0{Mathf.Round(PlayerUpgradesLVLs.SCMod)} s.";
+        textInfo.text = $"-{Mathf.Round(PlayerUpgradesLVLs.SCMod)}%";
     }
 
     public override void RefreshGetUI()
     {
         infoImage.sprite = Sprite;
-        textGet.text = $"-{Mathf.Round(PlayerUpgradesLVLs.SCPercentDecrease)} s.";
+        textGet.text = $"-{Mathf.Round(PlayerUpgradesLVLs.SCPercentDecrease * 100f)}%";
     }
 }

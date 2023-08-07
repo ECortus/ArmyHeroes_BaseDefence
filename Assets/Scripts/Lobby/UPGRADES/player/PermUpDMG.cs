@@ -20,6 +20,6 @@ public class PermUpDMG : UpgradeAction
     public override void RefreshGetUI()
     {
         infoImage.sprite = Sprite;
-        textGet.text = $"+{Mathf.Round(PlayerUpgradesLVLs.DMGPercentUP)}%";
+        textGet.text = $"+{Mathf.Round(PlayerUpgradesLVLs.DMGPercentUP * 100f)}%";
     }
 }

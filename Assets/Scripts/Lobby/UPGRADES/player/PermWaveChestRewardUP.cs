@@ -13,12 +13,12 @@ public class PermWaveChestRewardUP : UpgradeAction
 
     public override void RefreshUI()
     {
-        textInfo.text = $"+{Mathf.Round(WaveRewardLVLs.WCRMod)}%";
+        textInfo.text = $"+{Mathf.Round(WaveRewardLVLs.WCRMod * 100f)}%";
     }
 
     public override void RefreshGetUI()
     {
         infoImage.sprite = Sprite;
-        textGet.text = $"+{Mathf.Round(WaveRewardLVLs.WCRPercentUP)}%";
+        textGet.text = $"+{Mathf.Round(WaveRewardLVLs.WCRPercentUP * 100f)}%";
     }
 }

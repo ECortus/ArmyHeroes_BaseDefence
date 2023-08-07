@@ -11,7 +11,6 @@ public class Health : MonoBehaviour
     [Header("HP Input: ")]
     public float InputHP = 25f;
     public HP_DMG_SPD HPvDMGvSPD;
-    public float Bonus => HPvDMGvSPD.bonusHP;
 
     [Header("HP UI ref-s: ")]
     [SerializeField] private HealthBarUI bar;
@@ -49,7 +48,7 @@ public class Health : MonoBehaviour
                 return InputHP;
             }
 
-            return InputHP * (1f + Bonus / 100f);
+            return InputHP * (1f + HPvDMGvSPD.bonusHP / 100f);
         }
     }
 

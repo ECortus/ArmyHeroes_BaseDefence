@@ -38,9 +38,9 @@ public class Roulette : MonoBehaviour
         else
         {
             rouletteButton.interactable = true;
-            rouletteButtonText.text = $"{TokenRequire}";
-
         }
+
+        rouletteButtonText.text = $"{TokenRequire}";
     }
 
     [Space]

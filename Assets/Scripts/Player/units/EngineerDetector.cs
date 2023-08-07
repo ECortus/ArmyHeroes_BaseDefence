@@ -89,7 +89,7 @@ public class EngineerDetector : AllDetector
                 Repairing = true;
                 controller.takeControl = true;
 
-                yield return new WaitForSeconds(RepairDelay);
+                yield return new WaitForSeconds(RepairDelay * WorkersUpgradesLVLs.EngineerRepairSpeedMod);
                 info.Repair(data);
             }
             else

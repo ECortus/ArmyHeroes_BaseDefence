@@ -13,12 +13,12 @@ public class PermBuildingCostDOWN : UpgradeAction
 
     public override void RefreshUI()
     {
-        textInfo.text = $"-{Mathf.Round(1f - BuildingUpgradesLVLs.CostMod)}%";
+        textInfo.text = $"-{Mathf.Round((1f - BuildingUpgradesLVLs.CostMod) * 100f)}%";
     }
 
     public override void RefreshGetUI()
     {
         infoImage.sprite = Sprite;
-        textGet.text = $"-{Mathf.Round(1f - BuildingUpgradesLVLs.CostPercentDown)}%";
+        textGet.text = $"-{Mathf.Round((1f - BuildingUpgradesLVLs.CostPercentDown) * 100f)}%";
     }
 }

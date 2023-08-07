@@ -145,7 +145,7 @@ public class PikemanDetector : AllDetector
             crystal.SetActive(false);
             Carring = false;
 
-            Crystal.Plus(1);
+            Crystal.Plus(1 + WorkersUpgradesLVLs.PikemanResourceMod);
             crstl.GetHit(1f);
 
             crstl.Marked = false;
