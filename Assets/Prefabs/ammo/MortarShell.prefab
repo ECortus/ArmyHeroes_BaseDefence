@@ -222,7 +222,7 @@ MonoBehaviour:
   rb: {fileID: -567914100534804488}
   sphere: {fileID: 7342528977530786445}
   ammoModel: {fileID: 4712012157403114994}
-  speed: 0
+  speed: 15
   trial: {fileID: 1101043061054565070}
   SpecificInfos:
   - Type: 2

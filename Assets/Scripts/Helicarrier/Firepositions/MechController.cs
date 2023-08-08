@@ -27,6 +27,11 @@ public class MechController : Target
 
     void Update()
     {
+        if(fireposition.upgrader.Progress > -1)
+        {
+            fireposition.upgrader.gameObject.SetActive(false);
+        }
+
         if(fireposition.Busy)
         {
             if(motor > 0 && Vector3.Distance(target.position, transform.position) > minDistanceToTarget)

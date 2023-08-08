@@ -35,11 +35,9 @@ public class Fireposition : Detection
         }
     }
 
-    [Inject]
     void Start()
     {
         On();
-        Heal(999f);
     }
 
     public void On()

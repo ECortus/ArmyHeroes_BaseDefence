@@ -25,7 +25,7 @@ public class MortarShell : Ammo
         transform.eulerAngles += new Vector3(-30f, 0f, 0f);
 
         g = G;
-        g *= Mathf.Pow(speed, 2) / (distance * G) * 0.75f;
+        g *= Mathf.Pow(speed, 2) / (distance * G) * 1.2f;
 
         rb.velocity = transform.forward * speed;
     }

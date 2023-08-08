@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class MortarController : Target
 {
-    /* [SerializeField] private Transform[] toRotates;
+    [SerializeField] private Transform[] toRotates;
     private Transform toRotate => toRotates[upgrader.Progress];
 
-    [SerializeField] private float rotateSpeed; */
+    [SerializeField] private float rotateSpeed;
 
     [Space]
     [SerializeField] private Fireposition fireposition;
@@ -17,7 +17,7 @@ public class MortarController : Target
     Vector3 angles;
     Quaternion targetRotation;
 
-    /* void Update()
+    void Update()
     {
         if(fireposition.Busy)
         {
@@ -33,11 +33,11 @@ public class MortarController : Target
 
             targetRotation = Quaternion.LookRotation(dir);
             angles = targetRotation.eulerAngles;
-            angles.x += -90f;
+            angles.x += 180f;
 
             toRotate.rotation = Quaternion.RotateTowards(
                 toRotate.rotation, Quaternion.Euler(angles), Time.deltaTime * rotateSpeed
             );
         }
-    } */
+    }
 }

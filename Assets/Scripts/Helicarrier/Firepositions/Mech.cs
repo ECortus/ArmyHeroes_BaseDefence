@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Mech : Fireposition
 {
+    [Space]
     [SerializeField] private MechController controller;
     [SerializeField] private RangeShootingDetector detector;
+
+    [Space]
+    [SerializeField] private GameObject unharmed;
+    [SerializeField] private GameObject harmed;
 
     protected override void EnableAction()
     {
@@ -21,6 +26,15 @@ public class Mech : Fireposition
 
     public override void RefreshModel()
     {
-
+        if(HP > 0f)
+        {
+            unharmed.SetActive(true);
+            harmed.SetActive(false);
+        }
+        else
+        {
+            unharmed.SetActive(false);
+            harmed.SetActive(true);
+        }
     }
 }

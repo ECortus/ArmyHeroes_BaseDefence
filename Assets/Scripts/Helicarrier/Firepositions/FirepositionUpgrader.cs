@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class FirepositionUpgrader : UpgraderZone
 {
+    [Space]
     [SerializeField] private Fireposition fireposition;
+    private GameObject firepositionObject => fireposition.gameObject;
 
     protected override bool ConditionToAllowInter 
     { 
@@ -23,12 +25,26 @@ public class FirepositionUpgrader : UpgraderZone
     protected override void Complete() 
     {
         base.Complete();
-        
-        fireposition.Heal(999f);
+
+        if(Progress > -1)
+        {
+            firepositionObject.SetActive(true);
+            fireposition.Heal(999f);
+        }
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
+
+        if(Progress > -1)
+        {
+            firepositionObject.SetActive(true);
+            fireposition.Heal(999f);
+        }
+        else
+        {
+            firepositionObject.SetActive(false);
+        }
     }
 }
