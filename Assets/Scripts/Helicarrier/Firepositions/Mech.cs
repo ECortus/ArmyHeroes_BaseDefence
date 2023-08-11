@@ -9,8 +9,9 @@ public class Mech : Fireposition
     [SerializeField] private RangeShootingDetector detector;
 
     [Space]
-    [SerializeField] private GameObject unharmed;
+    [SerializeField] private GameObject unbuild;
     [SerializeField] private GameObject harmed;
+    [SerializeField] private GameObject unharmed;
 
     protected override void EnableAction()
     {
@@ -26,15 +27,26 @@ public class Mech : Fireposition
 
     public override void RefreshModel()
     {
-        if(HP > 0f)
+        if(Builded)
         {
-            unharmed.SetActive(true);
-            harmed.SetActive(false);
+            unbuild.SetActive(false);
+
+            if(HP > 0f)
+            {
+                unharmed.SetActive(true);
+                harmed.SetActive(false);
+            }
+            else
+            {
+                unharmed.SetActive(false);
+                harmed.SetActive(true);
+            }
         }
         else
         {
+            unbuild.SetActive(true);
             unharmed.SetActive(false);
-            harmed.SetActive(true);
+            harmed.SetActive(false);
         }
     }
 }

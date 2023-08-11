@@ -10,6 +10,7 @@ public class UltOrbHit : Ulta
     public float damageUpPerLVL = 50f;
 
     public float Range = 4f;
+    public int ShootCount = 5;
 
     public float DamageMod
     {

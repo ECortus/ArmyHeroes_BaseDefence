@@ -51,12 +51,15 @@ public class Player : Target
     {
         detection.Resurrect();
 
-        TeleportToPoint(pos);
-        transform.rotation = rot;
+        if(pos != new Vector3())
+        {
+            TeleportToPoint(pos);
+            transform.rotation = rot;
+        }
 
-        gameObject.SetActive(true);
+        /* gameObject.SetActive(true);
         detection.Pool();
-        detector.On();
+        detector.On(); */
     }
 
     public void Death()
@@ -75,7 +78,7 @@ public class Player : Target
 
     void Update()
     {
-        if(Active)
+        if(Active && GameManager.Instance.isActive)
         {
             if(Agent.isActiveAndEnabled)
             {

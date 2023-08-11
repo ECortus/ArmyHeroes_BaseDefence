@@ -102,7 +102,11 @@ public class UpgraderZone : MonoBehaviour
 
     void StartReduce()
     {
-        if(coroutine == null) coroutine = StartCoroutine(ReduceRequiredAmount());
+        if(coroutine == null)
+        {
+            coroutine = StartCoroutine(ReduceRequiredAmount());
+            CoinThrow.Instance.On(transform);
+        }
     }
 
     void StopReduce()
@@ -112,6 +116,8 @@ public class UpgraderZone : MonoBehaviour
             StopCoroutine(coroutine);
             coroutine = null;
         }
+
+        CoinThrow.Instance?.Off();
     }
 
     IEnumerator ReduceRequiredAmount()

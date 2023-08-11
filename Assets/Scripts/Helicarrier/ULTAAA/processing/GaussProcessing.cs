@@ -8,6 +8,9 @@ public class GaussProcessing : UltProcessing_IEnumerator
 
     [Space]
     [SerializeField] private GameObject obj;
+    [SerializeField] private Animation anim;
+
+    [Space]
     [SerializeField] private Gun[] guns;
     [SerializeField] private GunHandler gunHandler;
     [SerializeField] private RangeShootingDetector gaussDetector;
@@ -15,6 +18,7 @@ public class GaussProcessing : UltProcessing_IEnumerator
     public override IEnumerator Process()
     {
         obj.SetActive(true);
+        anim.Play("bounceSpawn");
 
         foreach(var item in guns)
         {
@@ -30,6 +34,10 @@ public class GaussProcessing : UltProcessing_IEnumerator
     {
         gaussDetector.Off();
         gunHandler.Disable();
+
+        anim.Play("bounceSpawnReverse");
+
+        yield return new WaitForSeconds(anim.GetClip("bounceSpawnReverse").length);
 
         obj.SetActive(false);
 

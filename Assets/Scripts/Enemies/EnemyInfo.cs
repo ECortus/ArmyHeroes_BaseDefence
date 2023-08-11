@@ -15,7 +15,9 @@ public class EnemyInfo : Detection
     public override async void Death()
     {
         base.Death();
-        await UniTask.Delay(2000);
+        await UniTask.Delay(3000);
+
+        EndLevelStats.Instance.PlusKillingCount();
 
         gameObject.SetActive(false);
     }

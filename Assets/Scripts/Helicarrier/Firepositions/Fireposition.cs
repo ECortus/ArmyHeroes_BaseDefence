@@ -35,16 +35,21 @@ public class Fireposition : Detection
         }
     }
 
-    void Start()
+    /* void Start()
     {
         On();
-    }
+    } */
+
+    [HideInInspector] public bool Builded = false;
 
     public void On()
     {
         gameObject.SetActive(true);
 
-        Resurrect();
+        /* Resurrect(); */
+        Died = false;
+        ResurrectEvent?.Invoke();
+        
         Pool();
 
         FirepositionsOperator.Instance.PoolFireposition(this);
@@ -54,7 +59,16 @@ public class Fireposition : Detection
 
     public override void Heal(float mnt)
     {
-        base.Heal(mnt);
+        Builded = true;
+
+        if(HP <= 0 && mnt > 0f)
+        {
+            On();
+        }
+
+        HP += mnt;
+        if(HP > MaxHP) HP = MaxHP;
+
         RefreshModel();
     }
 

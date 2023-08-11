@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Zenject;
 
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager Instance { get; set; }
+    [Inject] public static LevelManager Instance { get; set; }
 
     [SerializeField] private List<Level> Levels = new List<Level>();
 
@@ -19,7 +20,7 @@ public class LevelManager : MonoBehaviour
 
     public Level ActualLevel => Levels[GetIndex()];
 
-    void Awake() => Instance = this;
+    [Inject] void Awake() => Instance = this;
 
     void Start()
     {
@@ -85,7 +86,7 @@ public class LevelManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        ActualLevel.ResetLevel();
+        ActualLevel.RestartLevel();
         LandScene.Instance.On();
     }
 

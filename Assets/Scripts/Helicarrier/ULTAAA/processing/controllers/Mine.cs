@@ -12,19 +12,29 @@ public class Mine : MonoBehaviour
     }
 
     [SerializeField] private GameObject model;
+    [SerializeField] private Rigidbody Rb;
+    public void Force(Vector3 dir, float force)
+    {
+        Rb.AddForce(dir * force, ForceMode.Force);
+    }
+
     [SerializeField] private SphereCollider sphere;
+
+    [Space]
     [SerializeField] private ParticleSystem destroy;
 
     bool Hited = false;
     public bool Active => gameObject.activeSelf;
 
-    public void On(float radius)
+    public void On(float radius, Vector3 pos)
     {
         sphere.radius = radius;
         Hited = false;
 
         model.SetActive(true);
         gameObject.SetActive(true);
+
+        transform.position = pos;
     }
 
     public async void Off()

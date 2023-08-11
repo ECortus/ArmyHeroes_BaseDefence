@@ -19,6 +19,8 @@ public class FloatingJoystick : Joystick
 
     public override void OnPointerDown(PointerEventData eventData)
     {
+        if(!GameManager.Instance.isActive) return;
+
         background.anchoredPosition = ScreenPointToAnchoredPosition(eventData.position);
         background.gameObject.SetActive(true);
         base.OnPointerDown(eventData);
@@ -43,6 +45,8 @@ public class FloatingJoystick : Joystick
 
     protected override void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
     {
+        if(!GameManager.Instance.isActive) return;
+
         if (magnitude > moveThreshold)
         {
             var difference = normalised * (magnitude - moveThreshold) * radius;

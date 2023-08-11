@@ -54,7 +54,7 @@ public class MeleeAttacker : NearestDetector
 
     void StartAttack()
     {
-        if(coroutine == null) coroutine = StartCoroutine(Attack());
+        coroutine ??= StartCoroutine(Attack());
     }
 
     void StopAttack()

@@ -13,7 +13,7 @@ public class FirepositionUpgrader : UpgraderZone
         get
         {
             return Statistics.Gold > 0 && Player.Instance.Direction == Vector3.zero 
-                && (Input.touchCount == 0 && !Input.GetMouseButton(0));
+                && Input.touchCount == 0 && !Input.GetMouseButton(0);
         }
     }
 
@@ -28,8 +28,7 @@ public class FirepositionUpgrader : UpgraderZone
 
         if(Progress > -1)
         {
-            firepositionObject.SetActive(true);
-            fireposition.Heal(999f);
+            ActivateFP();
         }
     }
 
@@ -39,12 +38,21 @@ public class FirepositionUpgrader : UpgraderZone
 
         if(Progress > -1)
         {
-            firepositionObject.SetActive(true);
-            fireposition.Heal(999f);
+            ActivateFP();
         }
         else
         {
             firepositionObject.SetActive(false);
         }
+    }
+
+    void ActivateFP()
+    {
+        fireposition.Builded = false;
+
+        firepositionObject.SetActive(true);
+        fireposition.GetHit(999f);
+
+        fireposition.Pool();
     }
 }

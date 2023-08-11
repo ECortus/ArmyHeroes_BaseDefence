@@ -36,6 +36,8 @@ public class EngineerDetector : AllDetector
 
     protected override void Set()
     {
+        data.SetMarkedBy(detection);
+
         controller.SetTarget(data.transform);
     }
 
@@ -53,7 +55,7 @@ public class EngineerDetector : AllDetector
             StartRepair();
         }
 
-        Debug.Log($"{gameObject.name}: {data != null} {(data != null ? ", data: " + data.transform.parent.name + ": " + data.name : "")}");
+        /* Debug.Log($"{gameObject.name}: {data != null} {(data != null ? ", data: " + data.transform.parent.name + ": " + data.name : "")}"); */
     }
 
     void StartRepair()
@@ -69,13 +71,14 @@ public class EngineerDetector : AllDetector
             coroutine = null;
         }
 
+        data?.ResetMarkedBy();
+        Repairing = false;
         controller.takeControl = false;
     }
 
     IEnumerator Repair()
     {
         Stop();
-        data.Marked = true;
 
         while(true)
         {
@@ -84,7 +87,7 @@ public class EngineerDetector : AllDetector
                 break;
             }
 
-            if(InColWithTargetMask || controller.NearPoint(data.transform.position, RepairRange))
+            if(/* InColWithTargetMask ||  */controller.NearPoint(data.transform.position, RepairRange))
             {
                 Repairing = true;
                 controller.takeControl = true;
@@ -102,9 +105,9 @@ public class EngineerDetector : AllDetector
         }
 
         Repairing = false;
-        data.Marked = false;
+        data.ResetMarkedBy();
 
-        On();
         Reset();
+        On();
     }
 }

@@ -5,8 +5,8 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-    /* [Header("DEBUG: ")]
-    [SerializeField]  */float _HP;
+    [Header("DEBUG: ")]
+    [SerializeField] float _HP;
 
     [Header("HP Input: ")]
     public float InputHP = 25f;
@@ -66,9 +66,10 @@ public class Health : MonoBehaviour
     public virtual void GetHit(float mnt)
     {
         HP -= mnt;
-        if(HP <= 0f && !Died)
+        if(HP <= 0f)
         {
-            Death();
+            HP = 0f;
+            if(!Died) Death();
         }
     }
 
@@ -77,14 +78,15 @@ public class Health : MonoBehaviour
         Died = false;
         Heal(9999f);
 
+        bar?.gameObject.SetActive(true);
         ResurrectEvent?.Invoke();
     }
 
     public virtual void Death()
     {
         Died = true;
-        HP = 0f;
 
+        bar?.gameObject.SetActive(false);
         DeathEvent?.Invoke();
     }
 }

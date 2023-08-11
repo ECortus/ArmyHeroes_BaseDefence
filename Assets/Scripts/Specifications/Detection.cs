@@ -7,18 +7,32 @@ public class Detection : Health
 {   
     private DetectionPool Pools => DetectionPool.Instance;
     public DetectType Type;
-    public bool Marked;
+    
+    public bool Marked => MarkedBy != null;
+    private Detection MarkedBy;
+
+    public Detection GetMarkedBy() => MarkedBy;
+
+    public void SetMarkedBy(Detection mark)
+    {
+        MarkedBy = mark;
+    }
+
+    public void ResetMarkedBy()
+    {
+        MarkedBy = null;
+    }
 
     public void Pool()
     {
         DetectionPool.Instance.AddInPool(this, Type);
-        Marked = false;
+        MarkedBy = null;
     }
 
     public void Depool()
     {
         DetectionPool.Instance.RemoveFromPool(this, Type);
-        Marked = false;
+        MarkedBy = null;
     }
 
     public bool AllAround(DetectType priority, DetectType essential, float prioriryDistance, float essentialDistance, IAdditionalCondition ac, out Detection[] data)

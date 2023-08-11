@@ -6,6 +6,7 @@ using System.Linq;
 public class OrbHitProcessing : UltProcessing_IEnumerator
 {
     [SerializeField] private UltOrbHit info;
+    [SerializeField] private Animation anim;
     [SerializeField] private ParticleSystem effect;
 
     private float Damage => info.Damage;
@@ -21,7 +22,21 @@ public class OrbHitProcessing : UltProcessing_IEnumerator
     public override IEnumerator Process()
     {
         yield return null;
+        anim.Play("bounceSpawn");
 
+        int count = info.ShootCount;
+
+        while(count > 0)
+        {
+            Shoot();
+            yield return new WaitForSeconds(info.Duration / info.ShootCount);
+
+            count--;
+        }
+    }
+
+    void Shoot()
+    {
         targets = DetectionPool.Instance.RequirePools(TargetTypes).ToList();
         index = Random.Range(0, targets.Count);
         target = targets[index];
@@ -44,10 +59,13 @@ public class OrbHitProcessing : UltProcessing_IEnumerator
 
             trg.GetHit(Damage / 2f);
         }
+
+        CameraShake.Instance.On(1f);
     }
     
     public override IEnumerator Deprocess()
     {
+        anim.Play("bounceSpawnReverse");
         yield return null;
     }
 }

@@ -31,8 +31,9 @@ public class Watchtower : Fireposition
     {
         int t = -1;
 
-        if(HP <= 0f) t = upgrader.Progress * 2;
-        else t = upgrader.Progress * 2 + 1;
+        if(!Builded) t = upgrader.Progress * 2;
+        else if(HP <= 0f) t = upgrader.Progress * 2 + 1;
+        else t = upgrader.Progress * 2 + 2;
 
         t = Mathf.Clamp(t, 0, models.Count - 1);
 
@@ -42,16 +43,16 @@ public class Watchtower : Fireposition
             {
                 if(i == t)
                 {
-                    gunsObjects[i / 2].SetActive(HP > 0f && Busy);
+                    gunsObjects[i / 3].SetActive(HP > 0f && Busy);
                     
                     models[i].SetActive(true);
 
-                    if(HP > 0f && Busy) gunHandler.SetGunPair(i / 2);
+                    if(HP > 0f && Busy) gunHandler.SetGunPair(i / 3);
                     else gunHandler.Disable();
                 }
                 else
                 {
-                    gunsObjects[i / 2].SetActive(false);
+                    gunsObjects[i / 3].SetActive(false);
 
                     gunHandler.Disable();
                     models[i].SetActive(false);
@@ -61,7 +62,7 @@ public class Watchtower : Fireposition
 
         if(!Busy)
         {
-            gunsObjects[t / 2].SetActive(false);
+            gunsObjects[t / 3].SetActive(false);
         }
 
         prevT = t;

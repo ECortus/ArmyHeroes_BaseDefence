@@ -6,8 +6,10 @@ using Cysharp.Threading.Tasks;
 public class EnemiesGenerator : MonoBehaviour
 {
     private LevelWavesInfo info => LevelManager.Instance.ActualLevel.WavesInfo;
+    
     [SerializeField] private Transform MainTargetForEnemies;
     [SerializeField] private float Radius = 30f;
+
     private Vector3 Center
     {
         get
@@ -16,20 +18,20 @@ public class EnemiesGenerator : MonoBehaviour
         }
     }
 
-    private int _wi = 0;
     public int WaveIndex
     {
         get
         {
-            return _wi;
+            return EndLevelStats.Instance.WaveIndex;
         }
         set
         {
-            _wi = value;
+            EndLevelStats.Instance.WaveIndex = value;
             GeneratorUI.Instance.Refresh();
         }
     }
-    public int WavesCount => info.Waves.Count;
+
+    public int WavesCount => EndLevelStats.Instance.WaveCount;
 
     Coroutine coroutine;
 
@@ -49,12 +51,14 @@ public class EnemiesGenerator : MonoBehaviour
 
     IEnumerator Working()
     {
+        Wave wave;
         Enemy enemy = null;
         Vector3 position = Vector3.zero;
-        WaveIndex = 0;
 
-        foreach(Wave wave in info.Waves)
+        for(int w = 0; w < WavesCount; w++)
         {
+            wave = info.Waves[WaveIndex];
+
             foreach(Slot slot in wave.Slots)
             {
                 foreach(Call call in slot.Calls)

@@ -53,12 +53,13 @@ public class MechController : Target
 
     void UpdateAnimation()
     {
-        if(!fireposition.Busy || Agent.velocity.magnitude < 0.05f || !Agent.isActiveAndEnabled)
+        if(!fireposition.Busy || (Agent.velocity.magnitude < 0.05f && (transform.eulerAngles - targetRotation.eulerAngles).magnitude < 0.05f) || !Agent.isActiveAndEnabled)
         {
             walk.Stop();
         }
 
-        if(Agent.velocity.magnitude > 0.05f && !walk.isPlaying)
+        if((Agent.velocity.magnitude > 0.05f || (transform.eulerAngles - targetRotation.eulerAngles).magnitude > 0.05f) 
+            && !walk.isPlaying)
         {
             walk.Play();
         }

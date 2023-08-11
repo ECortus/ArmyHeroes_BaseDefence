@@ -71,7 +71,7 @@ public class HumanoidController : Target
 
     void Update()
     {
-        if(!Died && Active)
+        if(!Died && Active && GameManager.Instance.isActive)
         {
             if(Agent.isActiveAndEnabled && Agent.isOnNavMesh)
             {

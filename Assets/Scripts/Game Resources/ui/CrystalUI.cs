@@ -7,5 +7,5 @@ public class CrystalUI : FloatingCounter
     public static CrystalUI Instance { get; set; }
     void Awake() => Instance = this;
 
-    protected override int recource { get => Statistics.Crystal; }
+    protected override int resource { get => Statistics.Crystal; }
 }

@@ -9,7 +9,7 @@ public class FloatingCounter : MonoBehaviour
     [SerializeField] private float bound = 3;
     [SerializeField] private bool forced = false;
 
-    protected virtual int recource { get; }
+    protected virtual int resource { get; }
     int currentMoneyCount = 0;
 
     Coroutine coroutine;
@@ -17,8 +17,8 @@ public class FloatingCounter : MonoBehaviour
     {
         get
         {
-            if(currentMoneyCount > recource) return -1;
-            else if (currentMoneyCount < recource) return 1;
+            if(currentMoneyCount > resource) return -1;
+            else if (currentMoneyCount < resource) return 1;
             else return 0;
         }
     }
@@ -35,18 +35,18 @@ public class FloatingCounter : MonoBehaviour
             return;
         }
 
-        if(currentMoneyCount != recource) 
+        if(currentMoneyCount == resource) 
         {
             Reset(); 
             return;
         }
 
-        if(coroutine == null) coroutine = StartCoroutine(Coroutine());
+        coroutine ??= StartCoroutine(Coroutine());
     }
 
     public void Reset()
     {
-        currentMoneyCount = recource;
+        currentMoneyCount = resource;
         IntoText(currentMoneyCount);
     }
 
@@ -54,16 +54,16 @@ public class FloatingCounter : MonoBehaviour
     {
         WaitForSeconds wait = new WaitForSeconds(0.014f);
 
-        while(currentMoneyCount != recource)
+        while(currentMoneyCount != resource)
         {
-            currentMoneyCount = (int)Mathf.Lerp(currentMoneyCount, recource, counterPlusBySecond * Time.deltaTime);
-            if (Mathf.Abs(currentMoneyCount - recource) <= bound) break;
+            currentMoneyCount = (int)Mathf.Lerp(currentMoneyCount, resource, counterPlusBySecond * Time.deltaTime);
+            if (Mathf.Abs(currentMoneyCount - resource) <= bound) break;
 
             IntoText(currentMoneyCount);
             yield return wait;
         }
 
-        currentMoneyCount = recource;
+        currentMoneyCount = resource;
         IntoText(currentMoneyCount);
         yield return null;
 

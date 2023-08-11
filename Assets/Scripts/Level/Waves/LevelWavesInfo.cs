@@ -5,20 +5,25 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Level", fileName = "lvl00")]
 public class LevelWavesInfo : ScriptableObject
 {
-    public List<Wave> Waves = new List<Wave>(); 
+    public Wave[] Waves = new Wave[0];
     public float DelayBetweenCalls = 1f, DelayBetweenSlots = 1f;
+
+    public int Count => Waves.Length;
+
+    [Header("Rewards: ")]
+    public int TokenReward = 100;
 }
 
 [System.Serializable]
 public class Wave
 {
-    public List<Slot> Slots = new List<Slot>();
+    public Slot[] Slots = new Slot[0];
 }
 
 [System.Serializable]
 public class Slot
 {
-    public List<Call> Calls = new List<Call>();
+    public Call[] Calls = new Call[0];
 }
 
 [System.Serializable]

@@ -15,6 +15,25 @@ public class DoctorDetector : AllDetector
         return !dt.Marked && dt.Died && dt.Active;
     }
 
+    protected override void Reset()
+    {
+        StopHeal();
+
+        data = null;
+        controller.ResetTarget();
+        controller.ResetDestination();
+    }
+
+    protected override void Change()
+    {
+
+    }
+
+    protected override void Set()
+    {
+        data.SetMarkedBy(detection);
+    }
+
     private Coroutine coroutine;
     public bool Carring { get; set; }
 
@@ -41,7 +60,7 @@ public class DoctorDetector : AllDetector
 
     void StartHeal()
     {
-        if(coroutine == null) coroutine = StartCoroutine(Heal());
+        coroutine ??= StartCoroutine(Heal());
     }
 
     void StopHeal()
@@ -52,7 +71,7 @@ public class DoctorDetector : AllDetector
             coroutine = null;
         }
 
-        if(data != null) data.Marked = false;
+        data?.ResetMarkedBy();
         data = null;
     }
 
@@ -60,7 +79,6 @@ public class DoctorDetector : AllDetector
     {
         Stop();
         HumanoidController patient = data.GetComponentInParent<HumanoidController>();
-        data.Marked = true;
 
         controller.SetTarget(data.transform);
         yield return new WaitUntil(() => controller.NearPoint(data.transform.position, HealRange));
@@ -70,23 +88,16 @@ public class DoctorDetector : AllDetector
         controller.SetTarget(HealPoint);
         yield return new WaitUntil(() => controller.NearPoint(HealPoint.position, HealRange));
 
+        Carring = false;
         controller.Off();
         yield return new WaitForSeconds(HealTime * WorkersUpgradesLVLs.DoctorHealTimeMod);
 
         controller.On(HealPoint.position);
 
         patient.On(HealPoint.position);
-        data.Marked = false;
 
-        controller.ResetTarget();
-        controller.ResetDestination();
-        Carring = false;
-
-        yield return new WaitForSeconds(1f);
-
+        Reset();
         On();
-
-        StopHeal();
 
         yield return null;
     }

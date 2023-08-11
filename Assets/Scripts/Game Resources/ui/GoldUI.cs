@@ -9,5 +9,5 @@ public class GoldUI : FloatingCounter
     public static GoldUI Instance { get; set; }
     void Awake() => Instance = this;
 
-    protected override int recource { get => Statistics.Gold; }
+    protected override int resource { get => Statistics.Gold; }
 }

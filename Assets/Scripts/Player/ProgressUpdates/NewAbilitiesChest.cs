@@ -7,6 +7,9 @@ public class NewAbilitiesChest : MonoBehaviour
 {
     bool Opened = false;
 
+    [SerializeField] private Animation anim;
+    [SerializeField] private ParticleSystem particle;
+
     public bool Active => gameObject.activeSelf;
 
     public void On()
@@ -17,6 +20,9 @@ public class NewAbilitiesChest : MonoBehaviour
 
     public void Off()
     {
+        anim.Stop();
+        particle.Stop();
+
         gameObject.SetActive(false);
     }
 
@@ -38,6 +44,11 @@ public class NewAbilitiesChest : MonoBehaviour
     async void Open()
     {
         Opened = true;
+
+        anim.Play();
+        particle.Play();
+
+        await UniTask.Delay((int)(anim.GetClip("chestOpen").length * 1000));
 
         PlayerNewProgress.Instance.OnWith3X();
         await UniTask.WaitUntil(() => !PlayerNewProgress.Instance.Active);

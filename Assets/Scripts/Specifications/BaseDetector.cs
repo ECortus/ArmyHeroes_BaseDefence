@@ -13,6 +13,8 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
     public DetectType detectTypes;
     public float range;
 
+    public bool isOn => coroutine != null;
+
     protected virtual void Reset() { }
     protected virtual void Change() { }
     protected virtual void Set() { }
@@ -71,19 +73,20 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
         }
         else
         {
-            if(data != null)
+            /* if(data != null)
             {
                 if(priorityTypes.HasFlag(data.Type))
                 {
                     InColWithTargetMask = false;
                     return;
                 }
-            }
+            } */
 
             if(detectTypes.HasFlag(nf.Type) && AdditionalCondition(nf))
             {
                 InColWithTargetMask = true;
                 data = nf;
+                Stop();
                 
                 Change();
             }

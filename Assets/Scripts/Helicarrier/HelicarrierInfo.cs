@@ -6,7 +6,6 @@ public class HelicarrierInfo : Detection
 {
     void Start()
     {
-        Heal(99999f);
-        Pool();
+        Resurrect();
     }
 }

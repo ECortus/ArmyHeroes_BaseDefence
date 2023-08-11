@@ -12,5 +12,5 @@ public class TokenUI : FloatingCounter
         Refresh();
     }
 
-    protected override int recource { get => Statistics.Token; }
+    protected override int resource { get => Statistics.Token; }
 }

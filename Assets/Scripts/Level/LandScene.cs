@@ -32,7 +32,7 @@ public class LandScene : MonoBehaviour
         cmr.SetTarget(player.Transform);
         player.On(spawnDot.position, Quaternion.Euler(0f, -90f, 0f));
 
-        LevelManager.Instance.ActualLevel.StartLevel();
+        OnStartUI.Instance.On();
     }
 
     IEnumerator Process()

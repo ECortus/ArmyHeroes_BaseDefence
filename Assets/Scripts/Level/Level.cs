@@ -26,13 +26,19 @@ public class Level : MonoBehaviour
         GameManager.Instance.SetActive(false);
     }
 
-    public void ResetLevel()
+    public void RestartLevel()
     {
         Time.timeScale = 1f;
 
         Generator.Stop();
         EnemiesPool.Instance.KillAllEnemies();
 
+        ResetLevel();
+    }
+
+    public void ResetLevel()
+    {
+        EndLevelStats.Instance.Reset();
         PlayerNewProgress.Instance.ResetAllBonuses();
     }
 } 

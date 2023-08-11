@@ -46,11 +46,11 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         transform.position = Vector3.MoveTowards(
-            transform.position, position, speedMove * Time.deltaTime
+            transform.position, position, speedMove * Time.unscaledDeltaTime
         );
 
         transform.rotation = Quaternion.Slerp(
-            transform.rotation, Quaternion.Euler(rotation), speedRotate * Time.deltaTime
+            transform.rotation, Quaternion.Euler(rotation), speedRotate * Time.unscaledDeltaTime
         );
     }
 }

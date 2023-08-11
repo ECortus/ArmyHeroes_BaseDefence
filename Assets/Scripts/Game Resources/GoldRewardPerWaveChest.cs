@@ -8,6 +8,9 @@ public class GoldRewardPerWaveChest : ResourceDrop
     public static GoldRewardPerWaveChest Instance { get; set; }
     void Awake() => Instance = this;
 
+    [SerializeField] private Animation anim;
+    [SerializeField] private ParticleSystem particle;
+
     bool Opened = false;
 
     void Start()
@@ -23,6 +26,9 @@ public class GoldRewardPerWaveChest : ResourceDrop
 
     public void Off()
     {
+        anim.Stop();
+        particle.Stop();
+
         gameObject.SetActive(false);
     }
 
@@ -45,6 +51,11 @@ public class GoldRewardPerWaveChest : ResourceDrop
     {
         Opened = true;
         int count = BallAmount;
+
+        anim.Play();
+        particle.Play();
+
+        await UniTask.Delay((int)(anim.GetClip("chestOpen").length * 1000));
 
         while(count > 0)
         {

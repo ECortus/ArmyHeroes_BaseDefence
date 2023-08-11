@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cysharp.Threading.Tasks;
 public class Drone : Target
 {
     [SerializeField] private float height = 4f;
@@ -15,6 +15,10 @@ public class Drone : Target
     [Space]
     [SerializeField] private Transform[] gunBones;
     [SerializeField] private Transform[] muzzles;
+
+    [Space]
+    [SerializeField] private Animation anim;
+    [SerializeField] private ParticleSystem particle;
  
     public bool Active => gameObject.activeSelf;
 
@@ -23,13 +27,23 @@ public class Drone : Target
         gameObject.SetActive(true);
         transform.position = new Vector3(spawn.x, height, spawn.z);
 
+        anim.Play();
+        particle.Play();
+
         detector.On();
     }
 
-    public void Off()
+    public async void Off()
     {
         detector.Off();
         gunHandler.Disable();
+
+        SetTarget(Helicarrier.Instance.Transform);
+
+        await UniTask.WaitUntil(() => (target.position - transform.position).magnitude < 0.5f);
+
+        anim.Play("bounceSpawnReverse");
+        await UniTask.Delay((int)(anim.GetClip("bounceSpawnReverse").length * 1000));
 
         gameObject.SetActive(false);
     }

@@ -20,15 +20,6 @@ public class PikemanDetector : AllDetector
     public bool Carring { get; set; }
 
     [Space]
-    [SerializeField] private Transform[] entersToRecycle;
-
-    private Transform GetClosest(Transform[] array)
-    {
-        List<Transform> list = array.ToList();
-        list = list.OrderBy(x => (x.transform.position - transform.position).magnitude).ToList();
-
-        return list[0];
-    }
 
     [SerializeField] private Transform recycle;
 
@@ -52,6 +43,8 @@ public class PikemanDetector : AllDetector
 
     protected override void Set()
     {
+        data.SetMarkedBy(detection);
+
         controller.SetTarget(data.transform);
     }
 
@@ -72,7 +65,7 @@ public class PikemanDetector : AllDetector
 
     void StartMine()
     {
-        if(coroutine == null) coroutine = StartCoroutine(Mine());
+        coroutine ??= StartCoroutine(Mine());
     }
 
     void StopMine()
@@ -85,11 +78,14 @@ public class PikemanDetector : AllDetector
 
         Mining = false;
         Carring = false;
-        if(data != null) data.Marked = false;
+        
+        data?.ResetMarkedBy();
 
         controller.takeControl = false;
         InColWithTargetMask = false;
     }
+
+    Transform point;
 
     IEnumerator Mine()
     {
@@ -100,61 +96,75 @@ public class PikemanDetector : AllDetector
 
         Stop();
         Detection crstl = data;
-        Transform point = null;
 
-        if(!crstl.Marked)
+        if(crstl.GetMarkedBy() == detection)
         {
-            point = crstl.transform;
+            SendToCrystal(crstl);
 
-            controller.SetTarget(point);
-            controller.takeControl = false;
+            yield return new WaitUntil(() => controller.NearPoint(point.position, mineRange));
 
-            crstl.Marked = true;
-
-            yield return new WaitUntil(() => controller.NearPoint(point.position, mineRange) || InColWithTargetMask);
-
-            controller.takeControl = true;
-
-            Mining = true;
-            pickaxe.SetActive(true);
-
-            controller.ResetTarget();
+            StartMining();
             yield return new WaitForSeconds(2f);
 
-            pickaxe.SetActive(false);
-            Mining = false;
+            StopMining(crstl);
 
-            crystal.SetActive(true);
-            Carring = true;
-
-            controller.takeControl = false;
-
-            point = GetClosest(entersToRecycle);
-
-            controller.SetTarget(point);
+            SendToRecycle();
             yield return new WaitUntil(() => controller.NearPoint(point.position, 1f));
 
-            point = recycle;
-
-            controller.SetTarget(point);
-            yield return new WaitUntil(() => controller.NearPoint(point.position, 1f));
-
-            controller.ResetTarget();
-            yield return new WaitForSeconds(1f);
-
-            crystal.SetActive(false);
-            Carring = false;
-
-            Crystal.Plus(1 + WorkersUpgradesLVLs.PikemanResourceMod);
-            crstl.GetHit(1f);
-
-            crstl.Marked = false;
+            Recycle();
         }
 
         Reset();
-        StopMine();
         On();
 
         yield return null;
+    }
+
+    void SendToCrystal(Detection crstl)
+    {
+        point = crstl.transform;
+
+        controller.SetTarget(point);
+        controller.takeControl = false;
+    }
+
+    void StartMining()
+    {
+        controller.takeControl = true;
+
+        Mining = true;
+        pickaxe.SetActive(true);
+
+        controller.ResetTarget();
+    }
+
+    void StopMining(Detection crstl)
+    {
+        pickaxe.SetActive(false);
+        Mining = false;
+
+        crstl.ResetMarkedBy();
+    }
+
+    void SendToRecycle()
+    {
+        crystal.SetActive(true);
+        Carring = true;
+
+        controller.takeControl = false;
+
+        point = recycle;
+
+        controller.SetTarget(point);
+    }
+
+    void Recycle()
+    {
+        controller.ResetTarget();
+
+        crystal.SetActive(false);
+        Carring = false;
+
+        Crystal.Plus(1 + WorkersUpgradesLVLs.PikemanResourceMod);
     }
 }
