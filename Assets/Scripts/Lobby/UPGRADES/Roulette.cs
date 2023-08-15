@@ -49,6 +49,7 @@ public class Roulette : MonoBehaviour
 
     [Space]
     [SerializeField] private Button rouletteButton;
+    [SerializeField] private Button closeButton;
     [SerializeField] private TextMeshProUGUI rouletteButtonText;
     [SerializeField] private GameObject getGameObject;
 
@@ -86,6 +87,10 @@ public class Roulette : MonoBehaviour
         time = duration;
         float mod = duration / 2f;
 
+        closeButton.interactable = false;
+
+        Token.Minus(TokenRequire);
+
         while(time > 0f)
         {
             ChoisedIndex = Random.Range(0, Buttons.Length);
@@ -104,6 +109,7 @@ public class Roulette : MonoBehaviour
 
         yield return new WaitUntil(() => !getGameObject.activeSelf);
 
+        closeButton.interactable = true;
         Off();
     }
 
@@ -131,11 +137,11 @@ public class Roulette : MonoBehaviour
         RollCount++;
         
         Buttons[ChoisedIndex].RefreshGetUI();
-        Token.Minus(TokenRequire);
     }
 
     public void OffChoisedInfo()
     {
+        RefreshMainButton();
         getGameObject.SetActive(false);
     }
 

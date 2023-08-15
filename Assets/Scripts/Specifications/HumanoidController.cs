@@ -36,8 +36,8 @@ public class HumanoidController : Target
     }
     
     public bool Active => detection.Active;
-    public bool Died => detection.Died;
 
+    public bool Died => detection.Died ;
     public virtual void On(Vector3 pos, Quaternion rot = new Quaternion())
     {
         Agent.enabled = true;

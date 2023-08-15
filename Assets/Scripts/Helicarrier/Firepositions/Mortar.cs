@@ -31,9 +31,9 @@ public class Mortar : Fireposition
     {
         int t = -1;
 
-        if(!Builded) t = upgrader.Progress * 2;
-        else if(HP <= 0f) t = upgrader.Progress * 2 + 1;
-        else t = upgrader.Progress * 2 + 2;
+        if(!Builded) t = upgrader.Progress * 3;
+        else if(HP <= 0f) t = upgrader.Progress * 3 + 1;
+        else t = upgrader.Progress * 3 + 2;
 
         t = Mathf.Clamp(t, 0, models.Count - 1);
 

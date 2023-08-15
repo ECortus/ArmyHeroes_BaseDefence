@@ -31,7 +31,7 @@ public class EnemiesGenerator : MonoBehaviour
         }
     }
 
-    public int WavesCount => EndLevelStats.Instance.WaveCount;
+    public int WavesCount => info.Count;
 
     Coroutine coroutine;
 
@@ -55,9 +55,10 @@ public class EnemiesGenerator : MonoBehaviour
         Enemy enemy = null;
         Vector3 position = Vector3.zero;
 
-        for(int w = 0; w < WavesCount; w++)
+        for(int w = Mathf.Clamp(WaveIndex, 0, WavesCount - 1); w < WavesCount; w++)
         {
-            wave = info.Waves[WaveIndex];
+            WaveIndex = w;
+            wave = info.Waves[w];
 
             foreach(Slot slot in wave.Slots)
             {
@@ -78,17 +79,20 @@ public class EnemiesGenerator : MonoBehaviour
             }
 
             yield return new WaitUntil(() => EnemiesPool.Instance.AllDied);
+            
             WaveIndex++;
-
             GoldRewardPerWaveChest.Instance.On();
         }
+
+        /* UI.Instance.EndLevel(); */
+        Helicarrier.Instance.OnExit();
 
         bool infinity = true;
         if(infinity)
         {
             while(true)
             {
-                enemy = Spawn(enemy, GetPosition());
+                enemy = Spawn(GetRandomEnemy(), GetPosition());
                             
                 enemy.SetMainTarget(MainTargetForEnemies);
                 enemy.SetAdditionalTarget(MainTargetForEnemies);
@@ -98,6 +102,17 @@ public class EnemiesGenerator : MonoBehaviour
         }
 
         Stop();
+    }
+
+    Enemy GetRandomEnemy()
+    {
+        int wave = Random.Range(0, WavesCount);
+        int slot = Random.Range(0, info.Waves[wave].Slots.Length);
+        int call = Random.Range(0, info.Waves[wave].Slots[slot].Calls.Length);
+        Enemy enemy = info.Waves[wave].Slots[slot].
+            Calls[Random.Range(0, info.Waves[wave].Slots[slot].Calls.Length)].enemy;
+
+        return enemy;
     }
 
     Enemy Spawn(Enemy nm, Vector3 pos)

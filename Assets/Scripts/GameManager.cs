@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     public void SetActive(bool value) => _GameActive = value;
     public bool isActive => _GameActive;
 
-    [SerializeField] private float TimeScale = 3f;
     public FloatingJoystick Joystick;
 
     void Awake() => Instance = this;
@@ -18,11 +17,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
-        Time.timeScale = TimeScale;
     }
 
-    public void SetFollowTarget(Transform tf)
+    public void SetTimeScale(float time)
     {
-        
+        Time.timeScale = time;
     }
 }

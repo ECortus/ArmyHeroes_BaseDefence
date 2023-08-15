@@ -83,8 +83,9 @@ public class MeleeAttacker : NearestDetector
                 controller.takeControl = true;
                 Fighting = true;
 
-                yield return new WaitForSeconds(attackDelay);
+                yield return new WaitForSeconds(attackDelay / 2f);
                 info.Attack(data);
+                yield return new WaitForSeconds(attackDelay / 2f);
             }
             else
             {

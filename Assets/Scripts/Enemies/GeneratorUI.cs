@@ -11,6 +11,11 @@ public class GeneratorUI : MonoBehaviour
     private EnemiesGenerator gen => LevelManager.Instance.ActualLevel.Generator;
     [SerializeField] private TextMeshProUGUI counter;
 
+    void OnEnable()
+    {
+        Refresh();
+    }
+
     public void Refresh()
     {
         counter.text = $"{Mathf.Clamp(gen.WaveIndex + 1, 0, gen.WavesCount)}/{gen.WavesCount}";

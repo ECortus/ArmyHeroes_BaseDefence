@@ -23,6 +23,6 @@ public class BattleButton : MonoBehaviour
 
     public void Refresh()
     {
-        waveCounter.text = $"{waveIndex}/{waveCount}";
+        waveCounter.text = $"{Mathf.Clamp(waveIndex, 0, waveCount - 1)}/{waveCount}";
     }
 }

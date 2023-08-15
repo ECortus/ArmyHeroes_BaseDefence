@@ -7,7 +7,7 @@ public class EnemiesPool : MonoBehaviour
     public static EnemiesPool Instance;
     void Awake() => Instance = this;
 
-    private List<Enemy> Enemy00Pool = new List<Enemy>();
+    public List<Enemy> Enemy00Pool = new List<Enemy>();
 
     public void GetHitAllLowEnemies(Vector3 center, float distance, float hit)
     {
@@ -75,7 +75,7 @@ public class EnemiesPool : MonoBehaviour
             {
                 if(nm == null) continue;
 
-                if(nm.Died)
+                if(nm.Died && !nm.Active)
                 {
                     enm = nm;
                     enm.On(pos, rot);
@@ -116,9 +116,9 @@ public class EnemiesPool : MonoBehaviour
 
             enemies.AddRange(Enemy00Pool);
             
-            foreach(Enemy enemy in enemies)
+            for(int i = 0; i < enemies.Count; i++)
             {
-                if(!enemy.Died && enemy.Active)
+                if(!enemies[i].Died && enemies[i].Active)
                 {
                     allDied = false;
                     break;

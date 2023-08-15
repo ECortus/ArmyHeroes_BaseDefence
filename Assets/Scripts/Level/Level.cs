@@ -40,5 +40,9 @@ public class Level : MonoBehaviour
     {
         EndLevelStats.Instance.Reset();
         PlayerNewProgress.Instance.ResetAllBonuses();
+
+        Statistics.Gold = 0;
+        Statistics.Crystal = 0;
+        Statistics.Experience = 0;
     }
 } 

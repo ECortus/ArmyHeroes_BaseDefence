@@ -8,23 +8,29 @@ public class DefeatedScenes : MonoBehaviour
     [SerializeField] private Transform playerDeathCamera;
     [SerializeField] private Transform helicarrierDeathCamera;
 
-    public async void PlayerDefeat()
+    public void PlayerDefeat()
     {
-        Time.timeScale = 0.5f;
+        Time.timeScale = 0.1f;
+        playerDeathCamera.position = new Vector3(
+            playerDeathCamera.parent.position.x,
+            playerDeathCamera.position.y, 
+            playerDeathCamera.parent.position.z + 2f
+        );
         CameraController.Instance.SetTarget(playerDeathCamera);
 
-        await UniTask.Delay(2500);
-
-        UI.Instance.LoseLevel();
+        ReviveUI.Instance.On();
     }
 
-    public async void HelicarrierDestroyed()
+    public void HelicarrierDestroyed()
     {
-        Time.timeScale = 0.5f;
+        Time.timeScale = 0.1f;
+        helicarrierDeathCamera.transform.position = new Vector3(
+            helicarrierDeathCamera.position.x, 
+            helicarrierDeathCamera.position.y, 
+            helicarrierDeathCamera.position.z + 6f
+        );
         CameraController.Instance.SetTarget(helicarrierDeathCamera);
 
-        await UniTask.Delay(2500);
-
-        UI.Instance.LoseLevel();
+        ReviveUI.Instance.On();
     }
 }

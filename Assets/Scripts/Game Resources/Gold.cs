@@ -10,7 +10,7 @@ public static class Gold
     {
         gold += count;
 
-        GoldUI.Instance.Refresh();
+        GoldUI.Instance?.Refresh();
     }
     
     public static void Minus(int count)
@@ -18,6 +18,6 @@ public static class Gold
         gold -= count;
         if(gold < 0) gold = 0;
 
-        GoldUI.Instance.Refresh();
+        GoldUI.Instance?.Refresh();
     }
 }

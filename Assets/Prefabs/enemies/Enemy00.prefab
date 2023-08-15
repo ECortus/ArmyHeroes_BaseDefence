@@ -10715,7 +10715,7 @@ MonoBehaviour:
   controller: {fileID: 1767988619501561688}
   info: {fileID: 4421525919233014343}
   attackRange: 2.2
-  attackDelay: 1.25
+  attackDelay: 1
   Fighting: 0
 --- !u!114 &4421525919233014343
 MonoBehaviour:
@@ -10729,24 +10729,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b261fe0c42345654a96fda6c5e7f7be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _HP: 0
   InputHP: 100
   HPvDMGvSPD: {fileID: 0}
   bar: {fileID: 1767988619558764581}
   ResurrectEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 216533382}
-        m_TargetAssemblyTypeName: BaseDetector, Assembly-CSharp
-        m_MethodName: On
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1767988619501561687}
         m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
         m_MethodName: set_isKinematic
@@ -10770,6 +10759,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 216533382}
+        m_TargetAssemblyTypeName: BaseDetector, Assembly-CSharp
+        m_MethodName: On
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
   DeathEvent:
     m_PersistentCalls:
@@ -10835,7 +10836,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   Type: 512
-  Marked: 0
   Damage: 2
 --- !u!1 &1767988619558764579
 GameObject:

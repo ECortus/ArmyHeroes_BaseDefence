@@ -10,6 +10,7 @@ public class LoadLobbyManager : MonoBehaviour, ILoading
     public void LoadLobby()
     {
         loadingScreen.LoadScene(this);
+        Time.timeScale = 1f;
     }
     
     public AsyncOperation LoadFunction()

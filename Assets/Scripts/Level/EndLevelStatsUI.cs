@@ -7,6 +7,11 @@ public class EndLevelStatsUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI wavesText, timeText, killingText, tokenText;
 
+    void OnEnable()
+    {
+        Refresh();
+    }
+
     public void Refresh()
     {
         wavesText.text = $"{EndLevelStats.Instance.WaveIndex}/{EndLevelStats.Instance.WaveCount}";

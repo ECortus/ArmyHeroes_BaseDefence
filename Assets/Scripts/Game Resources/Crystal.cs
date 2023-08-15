@@ -10,8 +10,8 @@ public static class Crystal
     {
         crystal += count;
 
-        CrystalUI.Instance.Refresh();
-        UltaActivator.Instance.UpdateAllActivators();
+        CrystalUI.Instance?.Refresh();
+        UltaActivator.Instance?.UpdateAllActivators();
     }
     
     public static void Minus(int count)
@@ -19,7 +19,7 @@ public static class Crystal
         crystal -= count;
         if(crystal < 0) crystal = 0;
 
-        CrystalUI.Instance.Refresh();
-        UltaActivator.Instance.UpdateAllActivators();
+        CrystalUI.Instance?.Refresh();
+        UltaActivator.Instance?.UpdateAllActivators();
     }
 }

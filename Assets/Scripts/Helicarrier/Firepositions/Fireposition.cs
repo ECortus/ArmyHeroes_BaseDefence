@@ -47,7 +47,6 @@ public class Fireposition : Detection
         gameObject.SetActive(true);
 
         /* Resurrect(); */
-        Died = false;
         ResurrectEvent?.Invoke();
         
         Pool();

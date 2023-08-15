@@ -59,7 +59,7 @@ public class Ammo : MonoBehaviour
     public virtual async void Off(Transform pos = null)
     {
         rb.isKinematic = true;
-        rb.velocity = Vector3.zero;
+        /*rb.velocity = Vector3.zero;*/
 
         ammoModel.SetActive(false);
         sphere.enabled = false;
@@ -99,7 +99,7 @@ public class Ammo : MonoBehaviour
         }
         else
         {
-            rb.velocity = Vector3.zero;
+            /*rb.velocity = Vector3.zero;*/
         }
     }
 

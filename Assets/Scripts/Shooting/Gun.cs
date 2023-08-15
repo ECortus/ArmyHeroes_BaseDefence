@@ -170,7 +170,7 @@ public class Gun : MonoBehaviour
     Vector3 GetCorrectTargetPoint(Vector3 target)
     {
         Vector3 point = target;
-        point.y += 0.5f;
+        /* point.y += 0.5f; */
         return point;
     }
  

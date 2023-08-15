@@ -84,6 +84,11 @@ public class LevelManager : MonoBehaviour
         StartLevel();
     }
 
+    public void ResetLevel()
+    {
+        ActualLevel.ResetLevel();
+    }
+
     public void RestartLevel()
     {
         ActualLevel.RestartLevel();

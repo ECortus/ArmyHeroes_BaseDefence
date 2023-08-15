@@ -8,7 +8,7 @@ public class UI : MonoBehaviour
 {
     public static UI Instance { get; set; }
 
-    [SerializeField] private EndLevelUI End, Lose, Revive;
+    [SerializeField] private OpenCloseObjectLevelUI End, Lose;
     [SerializeField] private LoadLobbyManager loadLobbyManager;
 
     void Awake()
@@ -34,11 +34,6 @@ public class UI : MonoBehaviour
     public void EndLevel()
     {
         End.Open();
-    }
-
-    public void OpenRevive()
-    {
-        Revive.Open();
     }
 
     public void LoseLevel()

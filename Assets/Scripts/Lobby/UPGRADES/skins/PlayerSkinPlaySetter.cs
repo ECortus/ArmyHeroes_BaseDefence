@@ -6,7 +6,7 @@ public class PlayerSkinPlaySetter : MonoBehaviour
 {
     [SerializeField] private GameObject[] skinsMeshes;
 
-    void Start()
+    void OnEnable()
     {
         for(int i = 0; i < skinsMeshes.Length; i++)
         {

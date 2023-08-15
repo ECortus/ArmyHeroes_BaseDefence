@@ -13,14 +13,14 @@ public class Health : MonoBehaviour
     public HP_DMG_SPD HPvDMGvSPD;
 
     [Header("HP UI ref-s: ")]
-    [SerializeField] private HealthBarUI bar;
+    [SerializeField] HealthBarUI bar;
 
     [Header("HP Events: ")]
     public UnityEvent ResurrectEvent;
     [SerializeField] private UnityEvent DeathEvent;
 
     public bool Active => gameObject.activeSelf;
-    public bool Died { get; set; }
+    public bool Died => HP <= 0f;
 
     public float HP
     {
@@ -65,17 +65,18 @@ public class Health : MonoBehaviour
     
     public virtual void GetHit(float mnt)
     {
+        if(HP <= 0f) return;
+
         HP -= mnt;
         if(HP <= 0f)
         {
             HP = 0f;
-            if(!Died) Death();
+            Death();
         }
     }
 
     public virtual void Resurrect()
     {
-        Died = false;
         Heal(9999f);
 
         bar?.gameObject.SetActive(true);
@@ -84,8 +85,6 @@ public class Health : MonoBehaviour
 
     public virtual void Death()
     {
-        Died = true;
-
         bar?.gameObject.SetActive(false);
         DeathEvent?.Invoke();
     }

@@ -9,19 +9,22 @@ public class OnStartUI : MonoBehaviour
     public static OnStartUI Instance { get; set; }
     void Awake() => Instance = this;
 
+    private EnemiesGenerator gen => LevelManager.Instance.ActualLevel.Generator;
+
     [SerializeField] private GameObject start, main;
 
     [Space]
     [SerializeField] private TextMeshProUGUI chapterText;
-    [SerializeField] private TextMeshProUGUI gold, crystal;
+    [SerializeField] private TextMeshProUGUI wave, gold, crystal;
 
     public async void On()
     {
         main.SetActive(false);
         start.SetActive(true);
 
-        chapterText.text = $"Chapter {LevelManager.Instance.GetIndex()}";
+        chapterText.text = $"Chapter {LevelManager.Instance.GetIndex() + 1}";
         gold.text = $"{Statistics.Gold}";
+        wave.text = $"{Mathf.Clamp(gen.WaveIndex + 1, 0, gen.WavesCount)}/{gen.WavesCount}";
         crystal.text = $"{Statistics.Crystal}";
 
         Time.timeScale = 0f;
