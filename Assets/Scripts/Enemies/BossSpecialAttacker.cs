@@ -15,10 +15,13 @@ public class BossSpecialAttacker : MonoBehaviour
     
     [Header("Long attack: ")]
     [SerializeField] private string longAttackAnimName;
+    [SerializeField] private ParticleSystem longEffect;
     [SerializeField] private AttackHitBox longHitBox;
     
     [Header("Run attack: ")]
     [SerializeField] private string runAttackAnimName;
+
+    [SerializeField] private ParticleSystem runEffect;
     [SerializeField] private AttackHitBox runHitBox;
     [SerializeField] private float runTime = 1;
     [SerializeField] private float runSpeed = 15;
@@ -109,18 +112,24 @@ public class BossSpecialAttacker : MonoBehaviour
 
     IEnumerator LongAttack()
     {
-        Debug.Log("long attack!!!");
         float time = attackAnim.GetClip(longAttackAnimName).length;
 
         controller.takeControl = true;
         longHitBox.On();
         attackAnim.Play(longAttackAnimName);
         
+        yield return new WaitForSeconds(time / 2f);
+        time /= 2f;
+        
+        longEffect.Play();
+        
         while (time > 0f)
         {
             time -= Time.deltaTime;
             yield return null;
         }
+        
+        longEffect.Stop();
         
         attackAnim.Stop();
         longHitBox.Off();
@@ -140,6 +149,7 @@ public class BossSpecialAttacker : MonoBehaviour
         Vector3 direction;
         
         yield return new WaitForSeconds(attackAnim.GetClip(runAttackAnimName).length);
+        runEffect.Play();
         
         while (time > 0f)
         {
@@ -152,6 +162,7 @@ public class BossSpecialAttacker : MonoBehaviour
             yield return null;
         }
         
+        runEffect.Stop();
         attackAnim.Stop();
         runHitBox.Off();
         

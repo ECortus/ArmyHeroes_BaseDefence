@@ -6,7 +6,7 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Boss00
+  m_Name: Boss_godzilla
   m_Controller: {fileID: 9100000, guid: 1a9b741c820360b49bd652c05034bca0, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: -203655887218126122, guid: 3bf7ba1a6c5d8f643ab8b792a00b2644,
@@ -19,5 +19,5 @@ AnimatorOverrideController:
       type: 3}
   - m_OriginalClip: {fileID: -203655887218126122, guid: 8e3267e795bab15418ca4ac390144801,
       type: 3}
-    m_OverrideClip: {fileID: -5656851896723902442, guid: 8f7f1b673f9262b4caeeaadc408470bd,
+    m_OverrideClip: {fileID: 3700167370831566760, guid: 8b883f4eeae96ce4f9064e7e6641491a,
       type: 3}

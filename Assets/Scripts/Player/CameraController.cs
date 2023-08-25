@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
 
     public float speedMove, speedRotate = 2f;
 
-    private Vector3 defaultPosition, defaultRotation;
+    [SerializeField] private Vector3 defaultPosition, defaultRotation;
 
     private Vector3 position => target.position + defaultPosition;
     private Vector3 rotation => defaultRotation;
@@ -32,8 +32,8 @@ public class CameraController : MonoBehaviour
     {
         ResetTarget();
 
-        defaultPosition = transform.position - target.position;
-        defaultRotation = transform.eulerAngles;
+        /*defaultPosition = transform.position - target.position;
+        defaultRotation = transform.eulerAngles;*/
 
         Reset();
     }

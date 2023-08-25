@@ -42,7 +42,7 @@ public class LandScene : MonoBehaviour
         player.On(spawnDot.position, Quaternion.Euler(0f, -90f, 0f));
 
         hpbar.SetActive(true);
-        if(recycle != null) recycle.SetActive(true);
+        if(Statistics.LevelIndex > 0) recycle?.SetActive(true);
         OnStartUI.Instance.On();
     }
 

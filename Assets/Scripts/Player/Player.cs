@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Cysharp.Threading.Tasks;
+using Zenject;
 
 public class Player : Target
 {
-    public static Player Instance { get; set; }
-    void Awake() => Instance = this;
+    [Inject] public static Player Instance { get; set; }
+    [Inject] void Awake() => Instance = this;
 
     [Space]
     [SerializeField] private float defaultSpeed;
