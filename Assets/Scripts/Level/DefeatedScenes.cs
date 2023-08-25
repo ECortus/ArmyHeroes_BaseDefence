@@ -6,7 +6,11 @@ using Cysharp.Threading.Tasks;
 public class DefeatedScenes : MonoBehaviour
 {
     [SerializeField] private Transform playerDeathCamera;
+    
+    [Space]
     [SerializeField] private Transform helicarrierDeathCamera;
+    [SerializeField] private ParticleSystem explosion;
+    [SerializeField] private GameObject mainHeli, brokenHeli;
 
     public void PlayerDefeat()
     {
@@ -21,15 +25,23 @@ public class DefeatedScenes : MonoBehaviour
         ReviveUI.Instance.On();
     }
 
-    public void HelicarrierDestroyed()
+    public async void HelicarrierDestroyed()
     {
         Time.timeScale = 0.1f;
+        explosion.Play();
+        
         helicarrierDeathCamera.transform.position = new Vector3(
             helicarrierDeathCamera.position.x, 
             helicarrierDeathCamera.position.y, 
-            helicarrierDeathCamera.position.z + 6f
+            helicarrierDeathCamera.position.z + 1f
         );
         CameraController.Instance.SetTarget(helicarrierDeathCamera);
+        
+        await UniTask.Delay((int)(explosion.totalTime * 750), DelayType.UnscaledDeltaTime);
+        
+        mainHeli.SetActive(false);
+        brokenHeli.SetActive(true);
+        await UniTask.Delay(1000);
 
         ReviveUI.Instance.On();
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,107 +7,73 @@ using Cysharp.Threading.Tasks;
 public class Tutorial : MonoBehaviour
 {
     public static Tutorial Instance { get; set; }
+    void Awake() => Instance = this;
 
-    [SerializeField] private HandShowHide MOVE;
-    public bool MOVE_isDone;
+    [SerializeField] private TutorialArrow Arrow;
+    private LevelWavesInfo info => LevelManager.Instance.ActualLevel.WavesInfo;
+    private EnemiesGenerator Generator => LevelManager.Instance.ActualLevel.Generator;
 
-    public bool Complete
-    {
-        get
-        {
-            return PlayerPrefs.GetInt(DataManager.TutorialKey, 0) == 1;
-        }
-        set
-        {
-            int val = value ? 1 : 0;
-            PlayerPrefs.SetInt(DataManager.TutorialKey, val);
-            PlayerPrefs.Save();
-            /* Condition(); */
-        }
-    }
-
+    [Header("TUTOR TARGETS: ")]
+    [SerializeField] private Transform heli;
+    [SerializeField] private Transform soldierUnlock, chest, exit;
+    [SerializeField] private GameObject ultaUI;
+    
     [Space]
-    public TutorialState State = TutorialState.NONE;
+    [SerializeField] private NewAbilitiesChest newAbilitiesChest;
+    
+    private Coroutine coroutine;
 
-    void Awake()
-    {   
-        Instance = this;
-    }
-
-    void Start()
+    private void Start()
     {
-        if(Complete)
-        {
-            MOVE_isDone = true;
-            /* ACCELERATION_isDone = true; */
-            return;
-        }
-
-        if(!Complete) 
-        {
-
-        }
-        else
-        {
-            Off();
-        }
+        StartTutorial();
     }
 
-    void Update()
+    void StartTutorial()
     {
-        if(Complete) return;
+        coroutine ??= StartCoroutine(Process());
     }
 
-    public void SetState(TutorialState _state, bool done = false)
+    IEnumerator Process()
     {
-        if(_state == TutorialState.NONE) OffAll();
+        ultaUI.SetActive(false);
+        
+        LevelManager.Instance.ActualLevel.ResetLevel();
+        
+        Arrow.Off();
+        yield return new WaitUntil(() => Generator.Active);
+        Generator.Stop();
+        EnemiesPool.Instance.KillAllEnemies();
 
-        if(_state == State) return;
+        yield return Generator.PullOutWave(info.Waves[0]);
+        Arrow.On();
+        Arrow.SetTarget(EnemiesPool.Instance.EnemyTutorPool[0].Transform);
+        yield return new WaitUntil(() => EnemiesPool.Instance.AllDied);
+        
+        LevelManager.Instance.ActualLevel.Chest.On();
+        Arrow.SetTarget(chest);
+        yield return new WaitUntil(() => !LevelManager.Instance.ActualLevel.Chest.gameObject.activeSelf);
+        
+        soldierUnlock.gameObject.SetActive(true);
+        Arrow.SetTarget(soldierUnlock);
+        DetectType type = DetectType.Soldier;
+        yield return new WaitUntil(() => DetectionPool.Instance.RequirePools(type).Length > 0);
+        
+        newAbilitiesChest.On();
+        Arrow.SetTarget(newAbilitiesChest.transform);
+        
+        yield return new WaitUntil(() => !newAbilitiesChest.gameObject.activeSelf);
+        Arrow.Off();
+        
+        yield return Generator.PullOutWave(info.Waves[1]);
+        yield return new WaitUntil(() => EnemiesPool.Instance.AllDied);
+        
+        Helicarrier.Instance.OnExit();
+        Arrow.On();
+        Arrow.SetTarget(exit);
 
-        OffAll();
-        State = _state;
-
-        switch(State)
-        {
-            case TutorialState.MOVE:
-                MOVE.Open();
-                break;
-            default:
-                Debug.Log("looser");
-                break;
-        }
+        yield return new WaitUntil(() => !Player.Instance.Active);
+        
+        Arrow.Off();
+        LevelManager.Instance.ActualLevel.ResetLevel();
     }
-
-    public void Off()
-    {
-        Complete = true;
-        MOVE_isDone = true;
-        SetState(TutorialState.NONE);
-
-        this.enabled = false;
-    }
-
-    void OffAll()
-    {
-        MOVE.Close();
-    }
-
-    public async void Condition()
-    {
-        if(Complete)
-        {
-            await UniTask.Delay(1500);
-            gameObject.SetActive(false);
-            Instance = null;
-        }
-        else
-        {
-            gameObject.SetActive(true);
-        }
-    }
-}
-
-public enum TutorialState
-{
-    NONE, MOVE
 }

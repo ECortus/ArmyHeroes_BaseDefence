@@ -19,6 +19,8 @@ public class Health : MonoBehaviour
     public UnityEvent ResurrectEvent;
     [SerializeField] private UnityEvent DeathEvent;
 
+    [Header("Misc ref-s:")] public EmojiesController EmojiesController;
+
     public bool Active => gameObject.activeSelf;
     public bool Died => HP <= 0f;
 
@@ -66,6 +68,8 @@ public class Health : MonoBehaviour
     public virtual void GetHit(float mnt)
     {
         if(HP <= 0f) return;
+        
+        EmojiesController?.PlayWounded();
 
         HP -= mnt;
         if(HP <= 0f)

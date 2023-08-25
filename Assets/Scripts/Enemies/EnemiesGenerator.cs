@@ -33,11 +33,12 @@ public class EnemiesGenerator : MonoBehaviour
 
     public int WavesCount => info.Count;
 
+    public bool Active => coroutine != null;
     Coroutine coroutine;
 
     public void Launch()
     {
-        if(coroutine == null) coroutine = StartCoroutine(Working());
+        coroutine ??= StartCoroutine(Working());
     }
 
     public void Stop()
@@ -60,28 +61,16 @@ public class EnemiesGenerator : MonoBehaviour
             WaveIndex = w;
             wave = info.Waves[w];
 
-            foreach(Slot slot in wave.Slots)
-            {
-                foreach(Call call in slot.Calls)
-                {
-                    for(int i = 0; i < call.Count; i++)
-                    {
-                        enemy = Spawn(call.enemy, GetPosition());
-                        
-                        enemy.SetMainTarget(MainTargetForEnemies);
-                        enemy.SetAdditionalTarget(MainTargetForEnemies);
-                    }
-
-                    yield return new WaitForSeconds(info.DelayBetweenCalls);
-                }
-
-                yield return new WaitForSeconds(Mathf.Clamp(info.DelayBetweenSlots - info.DelayBetweenCalls, 0f, 999f));
-            }
-
+            yield return PullOutWave(wave);
             yield return new WaitUntil(() => EnemiesPool.Instance.AllDied);
             
             WaveIndex++;
-            GoldRewardPerWaveChest.Instance.On();
+            PlayAllHappy();
+            
+            if (w + 1 < WavesCount)
+            {
+                LevelManager.Instance.ActualLevel.Chest.On();
+            }
         }
 
         /* UI.Instance.EndLevel(); */
@@ -93,15 +82,42 @@ public class EnemiesGenerator : MonoBehaviour
             while(true)
             {
                 enemy = Spawn(GetRandomEnemy(), GetPosition());
-                            
-                enemy.SetMainTarget(MainTargetForEnemies);
-                enemy.SetAdditionalTarget(MainTargetForEnemies);
-
                 yield return new WaitForSeconds(1f);
             }
         }
 
         Stop();
+    }
+
+    public IEnumerator PullOutWave(Wave wave)
+    {
+        Enemy enemy = null;
+        Vector3 position = Vector3.zero;
+        
+        foreach(Slot slot in wave.Slots)
+        {
+            foreach(Call call in slot.Calls)
+            {
+                for(int i = 0; i < call.Count; i++)
+                {
+                    enemy = Spawn(call.enemy, GetPosition());
+                }
+                yield return new WaitForSeconds(info.DelayBetweenCalls);
+            }
+
+            yield return new WaitForSeconds(Mathf.Clamp(info.DelayBetweenSlots - info.DelayBetweenCalls, 0f, 999f));
+        }
+    }
+
+    public void PlayAllHappy()
+    {
+        DetectType types = DetectType.Engineer | DetectType.Pikeman | DetectType.Soldier | DetectType.Doctor;
+        Detection[] allies = DetectionPool.Instance.RequirePools(types);
+
+        foreach(var VARIABLE in allies)
+        {
+            VARIABLE.EmojiesController.PlayHappy();
+        }
     }
 
     Enemy GetRandomEnemy()
@@ -115,10 +131,15 @@ public class EnemiesGenerator : MonoBehaviour
         return enemy;
     }
 
-    Enemy Spawn(Enemy nm, Vector3 pos)
+    public Enemy Spawn(Enemy nm, Vector3 pos)
     {
         Quaternion rot = Quaternion.Euler(0f, Vector3.Angle((pos - Center).normalized, transform.forward), 0f);
-        return EnemiesPool.Instance.Insert(nm.Type, nm, pos, rot);
+        Enemy enemy = EnemiesPool.Instance.Insert(nm.Type, nm, pos, rot);
+        
+        enemy.SetMainTarget(MainTargetForEnemies);
+        enemy.SetAdditionalTarget(MainTargetForEnemies);
+        
+        return enemy;
     }
 
     Vector3 GetPosition()

@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DoctorDetector : AllDetector
 {
     [Space]
     [SerializeField] private Doctor controller;
+
+    [SerializeField] private GameObject toOnOff;
     [SerializeField] private float HealTime = 5f;
     [SerializeField] private float HealRange = 2f;
     [SerializeField] private Transform HealPoint;
+
+    [Space] [SerializeField] private DoctorHealSlider healSlider;
 
     public override bool AdditionalCondition(Detection dt)
     {
@@ -71,9 +76,14 @@ public class DoctorDetector : AllDetector
             coroutine = null;
         }
 
+        CurrentHealTime = 0;
+        
         data?.ResetMarkedBy();
         data = null;
     }
+
+    [HideInInspector] public float CurrentHealTime = 0;
+    public float MaxHealTime => HealTime * WorkersUpgradesLVLs.DoctorHealTimeMod;
 
     IEnumerator Heal()
     {
@@ -89,10 +99,26 @@ public class DoctorDetector : AllDetector
         yield return new WaitUntil(() => controller.NearPoint(HealPoint.position, HealRange));
 
         Carring = false;
-        controller.Off();
-        yield return new WaitForSeconds(HealTime * WorkersUpgradesLVLs.DoctorHealTimeMod);
+        /*controller.Off();*/
+        
+        toOnOff.SetActive(false);
+        CurrentHealTime = MaxHealTime;
+        healSlider.On();
 
+        controller.takeControl = true;
+
+        while (CurrentHealTime > 0)
+        {
+            CurrentHealTime -= Time.deltaTime;
+            healSlider.Refresh();
+            
+            yield return null;
+        }
+
+        healSlider.Off();
+        toOnOff.SetActive(true);
         controller.On(HealPoint.position);
+        controller.takeControl = false;
 
         patient.On(HealPoint.position);
 

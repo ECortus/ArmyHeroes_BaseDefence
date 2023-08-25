@@ -40,6 +40,7 @@ public class NewAbilitiesChestSpawner : MonoBehaviour
         else
         {
             SpawnOneRandom();
+            time = secondsDelay;
         }
     }
 }

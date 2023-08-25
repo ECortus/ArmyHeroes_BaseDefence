@@ -21,7 +21,7 @@ public class MeleeAttacker : NearestDetector
     protected override void Reset()
     {
         data = null;
-        controller.SetMainTarget(controller.MainTarget);
+        controller.SetAdditionalTarget(controller.MainTarget);
 
         StopAttack();
     }

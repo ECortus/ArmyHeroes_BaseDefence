@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Ally
   - Ground
+  - Wall
+  - Fireposition
   layers:
   - Default
   - TransparentFX

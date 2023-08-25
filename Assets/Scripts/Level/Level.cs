@@ -10,8 +10,11 @@ public class Level : MonoBehaviour
     public void Off() => gameObject.SetActive(false);
     public void Eliminate() => Destroy(gameObject);
 
+    public GoldRewardPerWaveChest Chest;
     public EnemiesGenerator Generator;
     public LevelWavesInfo WavesInfo;
+
+    [SerializeField] private UpgraderZone[] upgraderZones;
 
     public void StartLevel()
     {
@@ -38,11 +41,18 @@ public class Level : MonoBehaviour
 
     public void ResetLevel()
     {
+        foreach(var VARIABLE in upgraderZones)
+        {
+            VARIABLE.Reset();
+        }
+
+        PlayerInfo.Instance.SetWeapon(0);
+        
         EndLevelStats.Instance.Reset();
         PlayerNewProgress.Instance.ResetAllBonuses();
 
-        Statistics.Gold = 0;
-        Statistics.Crystal = 0;
-        Statistics.Experience = 0;
+        Gold.Minus(9999999);
+        Crystal.Minus(9999999);
+        Experience.Minus(9999999);
     }
 } 

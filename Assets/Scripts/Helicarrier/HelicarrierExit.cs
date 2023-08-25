@@ -10,7 +10,7 @@ public class HelicarrierExit : MonoBehaviour
 
         if(go.tag == "Player")
         {
-            UI.Instance.EndLevel();
+            Helicarrier.Instance.Exit();
         }
     }
 }

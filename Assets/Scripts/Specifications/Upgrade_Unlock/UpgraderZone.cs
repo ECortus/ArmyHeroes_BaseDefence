@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using Zenject;
 
 public class UpgraderZone : MonoBehaviour
 {
@@ -24,8 +23,8 @@ public class UpgraderZone : MonoBehaviour
         Refresh();
     }
 
-    public string SaveName => PreName + "_Upgrade";
-    public string AmountName => PreName + "_RequireAmount";
+    public string SaveName => PreName + "_Upgrade_" + Statistics.LevelIndex;
+    public string AmountName => PreName + "_RequireAmount_" + Statistics.LevelIndex;
     public int Cost => (int)((DefaultCost + UpCostPerProgress * (Progress - MinProgress)) * BuildingUpgradesLVLs.CostMod);
 
     [Header("Info zone:")]
@@ -37,10 +36,11 @@ public class UpgraderZone : MonoBehaviour
     {
         get
         {
-            return PlayerPrefs.GetInt(AmountName, 0);
+            return Mathf.Clamp(PlayerPrefs.GetInt(AmountName, 0), 0, Cost);
         }
         set
         {
+            value = Mathf.Clamp(value, 0, Cost);
             PlayerPrefs.SetInt(AmountName, value);
             PlayerPrefs.Save();
         }
@@ -59,7 +59,6 @@ public class UpgraderZone : MonoBehaviour
         }
     }
 
-    [Inject]
     protected virtual void OnEnable()
     {
         Refresh();

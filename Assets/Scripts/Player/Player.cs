@@ -38,6 +38,8 @@ public class Player : Target
     [SerializeField] private Detection detection;
 
     [HideInInspector] public Vector3 Direction;
+
+    [Space] [SerializeField] private Transform[] Weapons;
     
     public bool Active => detection.Active;
     public bool Died => detection.Died;
@@ -139,16 +141,32 @@ public class Player : Target
 
     private void Rotate()
     {
-        Vector3 dir = Vector3.zero;
-        if(target != transform) dir = DirectionToTarget;
-        else dir = Direction;
-
-        if (Agent.isActiveAndEnabled && dir != Vector3.zero)
+        Vector3 direction = _target != null ? DirectionToTarget : Direction;
+        
+        if (direction != Vector3.zero)
         {
-            dir.y = 0f;
-
-            var targetRotation = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * Agent.angularSpeed);
+            direction.y = 0f;
+            
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation, 
+                Quaternion.LookRotation(direction), 
+                Time.deltaTime * Agent.angularSpeed
+            );
+            
+            foreach (Transform weapon in Weapons)
+            {
+                if (weapon.gameObject.activeInHierarchy)
+                {
+                    direction = _target != null ? (target.position - weapon.position).normalized : transform.forward;
+                    direction.y = 0f;
+                    
+                    weapon.rotation = Quaternion.RotateTowards(
+                        weapon.rotation, 
+                        Quaternion.LookRotation(direction), 
+                        Time.deltaTime * Agent.angularSpeed * 1.25f
+                    );
+                }
+            }
         }
     }
 

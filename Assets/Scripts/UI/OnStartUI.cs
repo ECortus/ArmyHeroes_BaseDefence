@@ -11,7 +11,7 @@ public class OnStartUI : MonoBehaviour
 
     private EnemiesGenerator gen => LevelManager.Instance.ActualLevel.Generator;
 
-    [SerializeField] private GameObject start, main;
+    [SerializeField] private GameObject start, main, info;
 
     [Space]
     [SerializeField] private TextMeshProUGUI chapterText;
@@ -22,10 +22,19 @@ public class OnStartUI : MonoBehaviour
         main.SetActive(false);
         start.SetActive(true);
 
-        chapterText.text = $"Chapter {LevelManager.Instance.GetIndex() + 1}";
-        gold.text = $"{Statistics.Gold}";
-        wave.text = $"{Mathf.Clamp(gen.WaveIndex + 1, 0, gen.WavesCount)}/{gen.WavesCount}";
-        crystal.text = $"{Statistics.Crystal}";
+        if (Statistics.LevelIndex > 0)
+        {
+            info.SetActive(true);
+            
+            chapterText.text = $"Chapter {LevelManager.Instance.GetIndex()}";
+            gold.text = $"{Statistics.Gold}";
+            wave.text = $"{Mathf.Clamp(gen.WaveIndex + 1, 0, gen.WavesCount)}/{gen.WavesCount}";
+            crystal.text = $"{Statistics.Crystal}";
+        }
+        else
+        {
+            info.SetActive(false);
+        }
 
         Time.timeScale = 0f;
 

@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 public class WinLevelUI : OpenCloseObjectLevelUI
 {
     [SerializeField] private EndLevelStatsUI statsUI;
+    [SerializeField] private LoadLobbyManager loadLobby;
     [SerializeField] private StateMapOnWinLevelUI map;
 
     [Space]
@@ -18,10 +19,17 @@ public class WinLevelUI : OpenCloseObjectLevelUI
     {
         GameManager.Instance.SetActive(false);
 
-        base.Open();
-        statsUI.Refresh();
+        if (Statistics.LevelIndex - 1 <= 0)
+        {
+            loadLobby.LoadLobby();
+        }
+        else
+        {
+            base.Open();
+            statsUI.Refresh();
 
-        StartCoroutine(Listing());
+            StartCoroutine(Listing());
+        }
     }
 
     IEnumerator Listing()

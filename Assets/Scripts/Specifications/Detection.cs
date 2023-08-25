@@ -6,6 +6,7 @@ using System.Linq;
 public class Detection : Health
 {   
     private DetectionPool Pools => DetectionPool.Instance;
+    [Space]
     public DetectType Type;
     
     public bool Marked => MarkedBy != null;

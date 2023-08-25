@@ -98,9 +98,12 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
 
             if((enemies[0].transform.position - current.position).magnitude < maxDistanceBetweenTargets)
             {
-                DamageByElectric(enemies[0], damage);
+                if (!enemies[0].Died && enemies[0].Active)
+                {
+                    DamageByElectric(enemies[0], damage);
+                }
+                
                 enemies.Remove(enemies[0]);
-
                 if(enemies.Count > 0)
                 {
                     current = enemies[0].transform;

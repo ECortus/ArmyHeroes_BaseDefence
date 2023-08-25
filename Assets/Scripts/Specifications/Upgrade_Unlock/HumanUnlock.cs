@@ -30,7 +30,9 @@ public class HumanUnlock : UpgraderZone
 
     protected override void OnEnable()
     {
-        SpawnOnStart();
+        if (Statistics.LevelIndex > 0) SpawnOnStart();
+        else Progress = 0;
+        
         base.OnEnable();
     }
 

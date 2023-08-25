@@ -48,7 +48,7 @@ public class NewAbilitiesChest : MonoBehaviour
         anim.Play();
         particle.Play();
 
-        await UniTask.Delay((int)(anim.GetClip("chestOpen").length * 1000));
+        await UniTask.Delay((int)(anim.GetClip("lootOpen").length * 1000));
 
         PlayerNewProgress.Instance.OnWith3X();
         await UniTask.WaitUntil(() => !PlayerNewProgress.Instance.Active);

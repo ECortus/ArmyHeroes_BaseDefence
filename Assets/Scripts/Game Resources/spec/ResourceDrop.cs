@@ -26,7 +26,7 @@ public class ResourceDrop : MonoBehaviour
             dir.y = 1f;
 
             ball = ResourcePool.Instance.Insert(type, transform.position + Vector3.up * 1.25f);
-            ball.SetRecource(ResourcePerBall * ResourcePerBallMod);
+            ball.SetRecource(ResourcePerBall * (1f + ResourcePerBallMod));
             ball.Force(dir, 300f * Random.Range(0.35f, 1f));
         }
     }

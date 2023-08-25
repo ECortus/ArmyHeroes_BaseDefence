@@ -22,7 +22,7 @@ public class RandomEnemyResourceDrop : MonoBehaviour
         {
             t = RandomIndex();
 
-            if(t == 0) dropProbality[t].Resource.ResourcePerBallMod = 1f + KillingRewardLVLs.EnemyKillingEXPRewardMod;
+            if(t == 0) dropProbality[t].Resource.ResourcePerBallMod = KillingRewardLVLs.EnemyKillingEXPRewardMod;
 
             dropProbality[t].Resource.Drop();
         }

@@ -10,19 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7675e40dea7ffaf4cb1a2ce169223166, type: 3}
-  m_Name: 01_test
+  m_Name: 00
   m_EditorClassIdentifier: 
   Waves:
   - Slots:
     - Calls:
-      - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
+      - enemy: {fileID: 1767988619501561688, guid: 6859ec4489fd44e458eff26bd9abcc9b,
           type: 3}
         Count: 1
   - Slots:
     - Calls:
-      - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
+      - enemy: {fileID: 1767988619501561688, guid: 6859ec4489fd44e458eff26bd9abcc9b,
           type: 3}
-        Count: 1
-  DelayBetweenCalls: 1
-  DelayBetweenSlots: 2
-  TokenReward: 95
+        Count: 3
+    - Calls:
+      - enemy: {fileID: 1767988619501561688, guid: 6859ec4489fd44e458eff26bd9abcc9b,
+          type: 3}
+        Count: 3
+  DelayBetweenCalls: 0
+  DelayBetweenSlots: 0
+  TokenReward: 25

@@ -7,7 +7,11 @@ public class EnemiesPool : MonoBehaviour
     public static EnemiesPool Instance;
     void Awake() => Instance = this;
 
-    public List<Enemy> Enemy00Pool = new List<Enemy>();
+    public List<Enemy> 
+        EnemyTutorPool = new List<Enemy>(),
+        Enemy00Pool = new List<Enemy>(),
+        Enemy000Pool = new List<Enemy>(),
+        EnemyBossPool = new List<Enemy>();
 
     public void GetHitAllLowEnemies(Vector3 center, float distance, float hit)
     {
@@ -62,8 +66,17 @@ public class EnemiesPool : MonoBehaviour
 
         switch(type)
         {
+            case EnemyType.EnemyTutor:
+                list = EnemyTutorPool;
+                break;
             case EnemyType.Enemy00:
                 list = Enemy00Pool;
+                break;
+            case EnemyType.Enemy000:
+                list = Enemy000Pool;
+                break;
+            case EnemyType.EnemyBoss:
+                list = EnemyBossPool;
                 break;
             default:
                 break;
@@ -99,8 +112,17 @@ public class EnemiesPool : MonoBehaviour
     {
         switch(type)
         {
+            case EnemyType.EnemyTutor:
+                EnemyTutorPool.Add(nm);
+                break;
             case EnemyType.Enemy00:
                 Enemy00Pool.Add(nm);
+                break;
+            case EnemyType.Enemy000:
+                Enemy000Pool.Add(nm);
+                break;
+            case EnemyType.EnemyBoss:
+                EnemyBossPool.Add(nm);
                 break;
             default:
                 break;
@@ -114,15 +136,26 @@ public class EnemiesPool : MonoBehaviour
             bool allDied = true;
             List<Enemy> enemies = new List<Enemy>();
 
-            enemies.AddRange(Enemy00Pool);
+            if (Statistics.LevelIndex > 0)
+            {
+                enemies.AddRange(Enemy00Pool);
+                enemies.AddRange(Enemy000Pool);
+                enemies.AddRange(EnemyBossPool);
+            }
+            else
+            {
+                enemies.AddRange(EnemyTutorPool);
+            }
             
             for(int i = 0; i < enemies.Count; i++)
             {
-                if(!enemies[i].Died && enemies[i].Active)
+                if(enemies[i].Died || !enemies[i].Active)
                 {
-                    allDied = false;
-                    break;
+                    continue;
                 }
+                
+                allDied = false;
+                break;
             }
 
             return allDied;
@@ -138,5 +171,5 @@ public class EnemiesPool : MonoBehaviour
 [System.Serializable]
 public enum EnemyType
 {
-    Default, Enemy00
+    Default, EnemyTutor, Enemy00, Enemy000, EnemyBoss
 }

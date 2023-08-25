@@ -84,6 +84,10 @@ public class EngineerDetector : AllDetector
         {
             if(data == null || data.HP >= data.MaxHP || !data.Active)
             {
+                if (data.HP >= data.MaxHP)
+                {
+                    info.EmojiesController.PlayBuilded();
+                }
                 break;
             }
 

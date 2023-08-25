@@ -40,11 +40,11 @@ public class LevelManager : MonoBehaviour
 
     public void EndLevel()
     {
-        ActualLevel.EndLevel();
-
         int index = _Index;
         index += 1;
         SetIndex(index);
+        
+        ActualLevel.EndLevel();
     }
 
     void LoadLevel()

@@ -29,15 +29,9 @@ public class FloatingCounter : MonoBehaviour
 
     public void Refresh()
     {
-        if(forced)
+        if(forced || !gameObject.activeInHierarchy || currentMoneyCount == resource)
         {
             Reset();
-            return;
-        }
-
-        if(currentMoneyCount == resource) 
-        {
-            Reset(); 
             return;
         }
 

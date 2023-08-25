@@ -9,6 +9,7 @@ public class Soldier : HumanoidController
     public static readonly int _Death = Animator.StringToHash("Death");
 
     [SerializeField] private GunHandler shooting;
+    [SerializeField] private Transform weapon;
 
     void Start()
     {
@@ -22,5 +23,33 @@ public class Soldier : HumanoidController
         Animator.SetFloat(_Speed, Agent.velocity.magnitude);
         Animator.SetBool(_Shooting, shooting.isEnable);
         Animator.SetBool(_Death, Died);
+    }
+    
+    protected override void Rotate()
+    {
+        Vector3 dir;
+
+        if(Agent.velocity.magnitude < 0.05f)
+        {
+            dir = (target.position - transform.position).normalized;
+        }
+        else
+        {
+            dir = Agent.velocity.normalized;
+        }
+
+        if (Agent.isActiveAndEnabled && dir != Vector3.zero)
+        {
+            dir.y = 0f;
+            
+            var targetRotation = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * Agent.angularSpeed);
+
+            dir = (target.position - weapon.position).normalized;
+            dir.y = 0f;
+            
+            targetRotation = Quaternion.LookRotation(dir);
+            weapon.rotation = Quaternion.RotateTowards(weapon.rotation, targetRotation, Time.deltaTime * Agent.angularSpeed * 1.25f);
+        }
     }
 }

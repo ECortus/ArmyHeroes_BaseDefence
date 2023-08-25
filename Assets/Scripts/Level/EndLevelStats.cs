@@ -18,7 +18,7 @@ public class EndLevelStats : MonoBehaviour
         }
         set
         {
-            Debug.Log("Wave index set: " + value);
+            /*Debug.Log("Wave index set: " + value);*/
             PlayerPrefs.SetInt(DataManager.WaveIndexKey, value);
             PlayerPrefs.Save();
         }

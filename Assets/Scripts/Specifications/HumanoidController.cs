@@ -133,7 +133,7 @@ public class HumanoidController : Target
         return Vector3.Distance(Center, point) <= distance;
     }
 
-    private void Rotate()
+    protected virtual void Rotate()
     {
         Vector3 dir;
 

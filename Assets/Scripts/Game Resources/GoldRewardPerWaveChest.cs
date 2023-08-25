@@ -5,9 +5,6 @@ using Cysharp.Threading.Tasks;
 
 public class GoldRewardPerWaveChest : ResourceDrop
 {
-    public static GoldRewardPerWaveChest Instance { get; set; }
-    void Awake() => Instance = this;
-
     [SerializeField] private Animation anim;
     [SerializeField] private ParticleSystem particle;
 
@@ -59,7 +56,7 @@ public class GoldRewardPerWaveChest : ResourceDrop
 
         while(count > 0)
         {
-            ResourcePerBallMod = 1f + WaveRewardLVLs.WCRMod;
+            ResourcePerBallMod = WaveRewardLVLs.WCRMod;
             DropAmount(1);
             await UniTask.Delay(50);
 
