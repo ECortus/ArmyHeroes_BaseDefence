@@ -8,8 +8,9 @@ public class UpgraderZone : MonoBehaviour
 {
     private string Tags = "Player";
 
-    [Header("Info: ")]
-    [SerializeField] private string PreName;
+    private string PreName => name;
+    
+    [Header("Info: ")] 
     [SerializeField] private int MinProgress;
     [SerializeField] private int MaxProgress;
     [SerializeField] private int DefaultCost;
@@ -23,8 +24,8 @@ public class UpgraderZone : MonoBehaviour
         Refresh();
     }
 
-    public string SaveName => PreName + "_Upgrade_" + Statistics.LevelIndex;
-    public string AmountName => PreName + "_RequireAmount_" + Statistics.LevelIndex;
+    public string SaveName => PreName + "_Upgrade_level_" + Statistics.LevelIndex;
+    public string AmountName => PreName + "_RequireAmount_level_" + Statistics.LevelIndex;
     public int Cost => (int)((DefaultCost + UpCostPerProgress * (Progress - MinProgress)) * BuildingUpgradesLVLs.CostMod);
 
     [Header("Info zone:")]

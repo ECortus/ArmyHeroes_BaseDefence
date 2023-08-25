@@ -34,7 +34,7 @@ public class BossSpecialAttacker : MonoBehaviour
     [SerializeField] private float distanceFromBossCenter = 2f;
     [SerializeField] private Enemy unitSpawnPrefab;
 
-    public float time = 0;
+    float time = 0;
     void SetTime()
     {
         time = Random.Range(minDelay, maxDelay);
