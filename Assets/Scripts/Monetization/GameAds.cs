@@ -7,11 +7,11 @@ public static class GameAds
 {
     public static bool NoAds => NoAdsObjectBuyed || Subcribed;
 
-    static bool NoAdsObjectBuyed
+    public static bool NoAdsObjectBuyed
     {
         get
         {
-            return PlayerPrefs.GetInt("NoAds", 0) > 0;
+            return PlayerPrefs.GetInt("NoAds", 0) != 0;
         }
         set
         {
@@ -25,11 +25,11 @@ public static class GameAds
         NoAdsObjectBuyed = true;
     }
     
-    static bool Subcribed 
+    public static bool Subcribed 
     {
         get
         {
-            return PlayerPrefs.GetInt("NoAds", 0) > 0;
+            return PlayerPrefs.GetInt("NoAds", 0) != 0;
         }
         set
         {
@@ -46,10 +46,5 @@ public static class GameAds
     public static void DeactivateSub()
     {
         Subcribed = false;
-    }
-
-    public static void ShowInterstation()
-    {
-        
     }
 }

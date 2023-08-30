@@ -8,6 +8,7 @@ public class WinLevelUI : OpenCloseObjectLevelUI
     [SerializeField] private EndLevelStatsUI statsUI;
     [SerializeField] private LoadLobbyManager loadLobby;
     [SerializeField] private StateMapOnWinLevelUI map;
+    [SerializeField] private ProgressiveTokenReward TokenReward;
 
     [Space]
     [SerializeField] private RectTransform toMove;
@@ -49,5 +50,7 @@ public class WinLevelUI : OpenCloseObjectLevelUI
 
             yield return null;
         }
+        
+        TokenReward.On();
     }
 }

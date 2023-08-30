@@ -583,6 +583,7 @@ MonoBehaviour:
   DeathEvent:
     m_PersistentCalls:
       m_Calls: []
+  EmojiesController: {fileID: 0}
   Type: 0
 --- !u!114 &6392795355964255521
 MonoBehaviour:
@@ -600,7 +601,7 @@ MonoBehaviour:
   detection: {fileID: 6392795355964255523}
   priorityTypes: 0
   detectTypes: 1536
-  range: 25
+  range: 50
   CheckCollisionWithTarget: 0
   InColWithTargetMask: 0
   trg: {fileID: 6392795355964255549}

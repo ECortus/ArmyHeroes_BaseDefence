@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class DoctorHealSlider : BarUI
 {
-    [SerializeField] private Transform parentGrid;
+    private Transform parentGrid => LevelManager.Instance.ActualLevel.HealTimersGridParent;
     [SerializeField] private DoctorDetector Detector;
 
     public void On()
     {
         transform.parent = parentGrid;
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         
         gameObject.SetActive(true);
         Refresh();

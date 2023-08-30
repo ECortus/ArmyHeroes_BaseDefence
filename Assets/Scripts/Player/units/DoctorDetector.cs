@@ -11,7 +11,9 @@ public class DoctorDetector : AllDetector
     [SerializeField] private GameObject toOnOff;
     [SerializeField] private float HealTime = 5f;
     [SerializeField] private float HealRange = 2f;
-    [SerializeField] private Transform HealPoint;
+    
+    private DoctorPatientTimers Timers => LevelManager.Instance.ActualLevel.PatientTimers;
+    private Transform HealPoint => LevelManager.Instance.ActualLevel.HealPoint;
 
     [Space] [SerializeField] private DoctorHealSlider healSlider;
 
@@ -104,14 +106,18 @@ public class DoctorDetector : AllDetector
         toOnOff.SetActive(false);
         CurrentHealTime = MaxHealTime;
         healSlider.On();
+        
+        Timers.RefreshHealAllZone();
 
         controller.takeControl = true;
 
         while (CurrentHealTime > 0)
         {
             CurrentHealTime -= Time.deltaTime;
-            healSlider.Refresh();
             
+            if (Timers.AllHealed) CurrentHealTime = 0;
+            
+            healSlider.Refresh();
             yield return null;
         }
 
@@ -119,6 +125,8 @@ public class DoctorDetector : AllDetector
         toOnOff.SetActive(true);
         controller.On(HealPoint.position);
         controller.takeControl = false;
+        
+        Timers.RefreshHealAllZone();
 
         patient.On(HealPoint.position);
 

@@ -9921,7 +9921,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 0}
   detection: {fileID: 4421525919233014343}
-  priorityTypes: 97
+  priorityTypes: 32
   detectTypes: 383
   range: 12
   CheckCollisionWithTarget: 1

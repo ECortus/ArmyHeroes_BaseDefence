@@ -14,7 +14,10 @@ public class Level : MonoBehaviour
     public EnemiesGenerator Generator;
     public LevelWavesInfo WavesInfo;
 
-    [SerializeField] private UpgraderZone[] upgraderZones;
+    [Space] public DoctorPatientTimers PatientTimers;
+    public Transform HealPoint, HealTimersGridParent;
+
+    [Space] [SerializeField] private UpgraderZone[] upgraderZones;
 
     public void StartLevel()
     {

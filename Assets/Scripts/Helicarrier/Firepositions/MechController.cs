@@ -36,12 +36,12 @@ public class MechController : Target
         {
             if(motor > 0 && Vector3.Distance(target.position, transform.position) > minDistanceToTarget)
             {
-                Agent.enabled = true;
+                Agent.isStopped = false;
                 Move();
             }
             else
             {
-                Agent.enabled = false;
+                Agent.isStopped = true;
             }
 
             CorrectMuzzleRotation();
