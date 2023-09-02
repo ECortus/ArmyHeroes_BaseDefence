@@ -17,6 +17,8 @@ public class Level : MonoBehaviour
     [Space] public DoctorPatientTimers PatientTimers;
     public Transform HealPoint, HealTimersGridParent;
 
+    [Space] public Transform[] SoldiersGoDots;
+
     [Space] [SerializeField] private UpgraderZone[] upgraderZones;
 
     public void StartLevel()

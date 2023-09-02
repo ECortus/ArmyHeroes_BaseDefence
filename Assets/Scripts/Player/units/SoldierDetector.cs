@@ -45,36 +45,38 @@ public class SoldierDetector : NearestDetector
         }
     }
 
-    /* [Range(0, 100)]
-    [SerializeField] private int ChanceToChangePosition = 0;
+    [Space] [SerializeField] private bool EnableGo = true;
+    [SerializeField] private float GoDelay = 10f;
+
+    private Transform[] GoDots => LevelManager.Instance.ActualLevel.SoldiersGoDots;
     float time = 0f;
 
     void Update()
     {
+        if (data != null || !EnableGo) return;
+        
         time -= Time.deltaTime;
 
-        if(data == null && time <= 0f)
+        if(time <= 0f)
         {
-            TryGo();
-            time = 1f;
+            Go();
+            time = 9999f;
         }
     }
 
-    public void TryGo()
+    public void Go()
     {
-        int i = Random.Range(0, 100);
-        if(ChanceToChangePosition >= i)
-        {
-            GoToRandomPoint();
-        }
+        GoToRandomPoint();
     }
 
     public void GoToRandomPoint()
     {
-        Vector3 point = transform.position;
+        /*Vector3 point = transform.position;
         point += Random.insideUnitSphere.normalized * Random.Range(1f, 5f);
-        point.y = transform.position.y;
+        point.y = transform.position.y;*/
 
+        Vector3 point = GoDots[Random.Range(0, GoDots.Length)].position;
+        
         GoToPoint(point);
     }
 
@@ -92,5 +94,7 @@ public class SoldierDetector : NearestDetector
 
         await UniTask.WaitUntil(() => controller.NearPoint(point, 0.5f));
         On();
-    } */
+
+        time = GoDelay;
+    } 
 }

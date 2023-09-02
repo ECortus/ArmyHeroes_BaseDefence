@@ -27,7 +27,7 @@ public class HelicarrierInfo : Detection
         }
     }
 
-    void StartMech()
+    public void StartMech()
     {
         playerMechCoroutine ??= StartCoroutine(Mech());
     }
@@ -36,6 +36,8 @@ public class HelicarrierInfo : Detection
     {
         Player.Off();
         PlayerMech.On(Player.Transform.position);
+        CameraController.Instance.SetTarget(PlayerMech.Transform);
+        
         float time = mechDelay;
 
         while (time > 0f)
@@ -46,5 +48,6 @@ public class HelicarrierInfo : Detection
         
         PlayerMech.Off();
         Player.On(PlayerMech.Transform.position);
+        CameraController.Instance.SetTarget(Player.Transform);
     }
 }

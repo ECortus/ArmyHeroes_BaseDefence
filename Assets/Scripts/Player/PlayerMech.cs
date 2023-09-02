@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class PlayerMech : Target
 {
     [SerializeField] private NavMeshAgent Agent;
+    [SerializeField] private Detection detection;
 
     [Space]
     [SerializeField] private Animation walk;
@@ -22,11 +23,15 @@ public class PlayerMech : Target
     public void On(Vector3 pos)
     {
         gameObject.SetActive(true);
-        transform.position = pos;
+        TeleportToPoint(pos);
+        
+        detection.Resurrect();
     }
 
     public void Off() 
     {
+        detection.Death();
+        
         gameObject.SetActive(false);
     }
 
@@ -46,12 +51,12 @@ public class PlayerMech : Target
 
     void UpdateAnimation()
     {
-        if((Agent.velocity.magnitude < 0.05f && (transform.eulerAngles - targetRotation.eulerAngles).magnitude < 0.05f) || !Agent.isActiveAndEnabled)
+        if((Direction == Vector3.zero && (transform.eulerAngles - targetRotation.eulerAngles).magnitude < 0.05f) || !Agent.isActiveAndEnabled)
         {
             walk.Stop();
         }
 
-        if((Agent.velocity.magnitude > 0.05f || (transform.eulerAngles - targetRotation.eulerAngles).magnitude > 0.05f) 
+        if((Direction != Vector3.zero || (transform.eulerAngles - targetRotation.eulerAngles).magnitude > 0.05f) 
             && !walk.isPlaying)
         {
             walk.Play();
@@ -83,7 +88,8 @@ public class PlayerMech : Target
     {
         if(target == transform)
         {
-            dir = transform.forward;
+            if (Direction != Vector3.zero) dir = Direction;
+            else dir = transform.forward;
         }
         else
         {
@@ -111,6 +117,19 @@ public class PlayerMech : Target
                 );
                 muzzle.rotation = muzzleRotation;
             }
+        }
+    }
+    
+    public void TeleportToPoint(Vector3 point)
+    {
+        int mask = LayerMask.NameToLayer("NavMesh");
+        NavMesh.SamplePosition(point, out var hit, 5f, mask);
+
+        if (hit.hit)
+        {
+            Agent.enabled = false;
+            transform.position = point;
+            Agent.enabled = true;
         }
     }
 }

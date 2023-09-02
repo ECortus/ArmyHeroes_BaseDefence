@@ -28,8 +28,11 @@ public class WinLevelUI : OpenCloseObjectLevelUI
         {
             base.Open();
             statsUI.Refresh();
+            
+            map.Refresh();
+            TokenReward.On();
 
-            StartCoroutine(Listing());
+            /*StartCoroutine(Listing());*/
         }
     }
 
