@@ -19,7 +19,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private GameObject ultaUI;
     
     [Space]
-    [SerializeField] private NewAbilitiesChest newAbilitiesChest;
+    [SerializeField] private NewAbilitiesChestSpawner newAbilitiesChestSpawner;
     
     private Coroutine coroutine;
 
@@ -58,10 +58,10 @@ public class Tutorial : MonoBehaviour
         DetectType type = DetectType.Soldier;
         yield return new WaitUntil(() => DetectionPool.Instance.RequirePools(type).Length > 0);
         
-        newAbilitiesChest.On();
-        Arrow.SetTarget(newAbilitiesChest.transform);
+        Transform abChest = newAbilitiesChestSpawner.SpawnOneByIndex(0);
+        Arrow.SetTarget(abChest.transform);
         
-        yield return new WaitUntil(() => !newAbilitiesChest.gameObject.activeSelf);
+        yield return new WaitUntil(() => !abChest.gameObject.activeSelf);
         Arrow.Off();
         
         yield return Generator.PullOutWave(info.Waves[1]);

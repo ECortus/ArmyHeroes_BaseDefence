@@ -10,15 +10,17 @@ public class NewAbilitiesChestSpawner : MonoBehaviour
     private float time = 0f;
     private NewAbilitiesChest ActiveChest = null;
 
-    public void SpawnOneRandom()
+    public Transform SpawnOneRandom()
     {
-        SpawnOneByIndex(Random.Range(0, newAbilitiesChests.Length));
+        return SpawnOneByIndex(Random.Range(0, newAbilitiesChests.Length));
     }
 
-    public void SpawnOneByIndex(int index)
+    public Transform SpawnOneByIndex(int index)
     {
         ActiveChest = newAbilitiesChests[index];
-        ActiveChest.On();
+        ActiveChest.On(Player.Instance.transform.position + Vector3.forward);
+
+        return ActiveChest.transform;
     }
 
     void Start()
@@ -28,6 +30,8 @@ public class NewAbilitiesChestSpawner : MonoBehaviour
 
     void Update()
     {
+        if (Statistics.LevelIndex <= 0) return;
+        
         if(ActiveChest != null)
         {
             if(ActiveChest.Active) return;
@@ -39,7 +43,7 @@ public class NewAbilitiesChestSpawner : MonoBehaviour
         }
         else
         {
-            SpawnOneRandom();
+            SpawnOneByIndex(0);
             time = secondsDelay;
         }
     }

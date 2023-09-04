@@ -92,7 +92,7 @@ public class SoldierDetector : NearestDetector
 
         controller.SetDestination(point);
 
-        await UniTask.WaitUntil(() => controller.NearPoint(point, 0.5f));
+        await UniTask.WaitUntil(() => controller.NearPoint(point, 2f));
         On();
 
         time = GoDelay;

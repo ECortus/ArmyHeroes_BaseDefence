@@ -7,15 +7,28 @@ public class NewAbilitiesChest : MonoBehaviour
 {
     bool Opened = false;
 
-    [SerializeField] private Animation anim;
+    [SerializeField] private Collider col;
+    [SerializeField] private Animation spawnAnim, anim;
     [SerializeField] private ParticleSystem particle;
+    
+    [Space] [SerializeField] private Transform head;
 
     public bool Active => gameObject.activeSelf;
 
-    public void On()
+    public async void On(Vector3 pos)
     {
+        col.enabled = false;
+        head.eulerAngles = new Vector3(-90f, 0f, 0f);
+        
         Opened = false;
         gameObject.SetActive(true);
+
+        transform.position = pos;
+
+        /*spawnAnim.Play();
+
+        await UniTask.Delay(1000);*/
+        col.enabled = true;
     }
 
     public void Off()

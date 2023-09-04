@@ -20,11 +20,13 @@ public class Gun : MonoBehaviour
     [SerializeField] private Transform Muzzle;
     [SerializeField] private Ammo Ammo;
 
+    [Space] [SerializeField] private bool MultipleOn = true;
+
     public int AmmoMultiple
     {
         get
         {
-            if(ups != null)
+            if(ups != null && MultipleOn)
             {
                 return ups.AmmoPerShotMultiple;
             }

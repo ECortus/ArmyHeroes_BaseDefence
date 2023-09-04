@@ -5,20 +5,32 @@ using Cysharp.Threading.Tasks;
 
 public class GoldRewardPerWaveChest : ResourceDrop
 {
-    [SerializeField] private Animation anim;
+    [SerializeField] private Collider col;
+    [SerializeField] private Animation spawnAnim, anim;
     [SerializeField] private ParticleSystem particle;
+
+    [Space] [SerializeField] private Transform head;
 
     bool Opened = false;
 
     void Start()
     {
+        OpenedIndex = CurrentIndex;
         Off();
     }
 
-    public void On()
+    public async void On()
     {
+        head.eulerAngles = Vector3.zero;
+        col.enabled = false;
+        
         Opened = false;
         gameObject.SetActive(true);
+
+        /*spawnAnim.Play();
+        
+        await UniTask.Delay(1000);*/
+        col.enabled = true;
     }
 
     public void Off()
@@ -44,10 +56,13 @@ public class GoldRewardPerWaveChest : ResourceDrop
         }
     }
 
+    private int OpenedIndex = 0;
+    private int CurrentIndex => EndLevelStats.Instance.WaveIndex;
+
     async void Open()
     {
         Opened = true;
-        int count = BallAmount;
+        int count = BallAmount * (CurrentIndex - OpenedIndex);
 
         anim.Play();
         particle.Play();
@@ -63,6 +78,7 @@ public class GoldRewardPerWaveChest : ResourceDrop
             count--;
         }
 
+        OpenedIndex = CurrentIndex;
         Off();
     }
 }
