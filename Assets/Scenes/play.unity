@@ -2754,7 +2754,7 @@ MonoBehaviour:
   recourceText: {fileID: 101535873}
   counterPlusBySecond: 15
   bound: 3
-  forced: 0
+  forced: 1
 --- !u!114 &101535873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36866,7 +36866,7 @@ MonoBehaviour:
   recourceText: {fileID: 1251210840}
   counterPlusBySecond: 10
   bound: 2
-  forced: 0
+  forced: 1
 --- !u!114 &1251210840
 MonoBehaviour:
   m_ObjectHideFlags: 0

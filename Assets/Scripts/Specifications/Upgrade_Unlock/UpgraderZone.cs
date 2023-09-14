@@ -144,7 +144,7 @@ public class UpgraderZone : MonoBehaviour
                 break; */
             }
 
-            yield return new WaitForSeconds(0.075f / (1f + iter / 4f));
+            yield return new WaitForSeconds(0.05f / (1f + iter / 4f));
             iter++;
         }
 
