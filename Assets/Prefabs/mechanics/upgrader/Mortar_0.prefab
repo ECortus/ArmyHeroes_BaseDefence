@@ -1918,6 +1918,7 @@ MonoBehaviour:
   _Delay: 2
   Muzzle: {fileID: 7878947838789086638}
   Ammo: {fileID: 4240046442133345707, guid: 89acd5e47a1aaa1429ca0fefbf5ebc9c, type: 3}
+  MultipleOn: 1
   Handler: {fileID: 6326341131575348413}
   AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &884691138066814256
@@ -5601,6 +5602,7 @@ MonoBehaviour:
   _Delay: 3
   Muzzle: {fileID: 0}
   Ammo: {fileID: 4240046442133345707, guid: 89acd5e47a1aaa1429ca0fefbf5ebc9c, type: 3}
+  MultipleOn: 1
   Handler: {fileID: 6326341131575348413}
   AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &3194450729342460782
@@ -6185,8 +6187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinProgress: -1
   MaxProgress: 2
-  DefaultCost: 175
-  UpCostPerProgress: 50
+  DefaultCost: 250
+  UpCostPerProgress: 250
   amountSlider: {fileID: 5762966409687395895}
   amountText: {fileID: 3026989657160886843}
   fireposition: {fileID: 265723447047020677}
@@ -10876,6 +10878,7 @@ MonoBehaviour:
   _Delay: 2.3
   Muzzle: {fileID: 6930481074543654310}
   Ammo: {fileID: 4240046442133345707, guid: 89acd5e47a1aaa1429ca0fefbf5ebc9c, type: 3}
+  MultipleOn: 1
   Handler: {fileID: 6326341131575348413}
   AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &7325321778086647459

@@ -7,28 +7,30 @@ public class NewAbilitiesChest : MonoBehaviour
 {
     bool Opened = false;
 
-    [SerializeField] private Collider col;
-    [SerializeField] private Animation spawnAnim, anim;
-    [SerializeField] private ParticleSystem particle;
+    [SerializeField] private Animation anim;
+    [SerializeField] private ParticleSystem particle, spawnpart;
     
     [Space] [SerializeField] private Transform head;
 
+    private bool Available = false;
     public bool Active => gameObject.activeSelf;
 
     public async void On(Vector3 pos)
     {
-        col.enabled = false;
-        head.eulerAngles = new Vector3(-90f, 0f, 0f);
+        Available = false;
+        head.localEulerAngles = new Vector3(-90f, 0f, 0f);
         
         Opened = false;
         gameObject.SetActive(true);
 
-        transform.position = pos;
+        transform.position = pos + new Vector3(0, 0.5f, 0);
 
-        /*spawnAnim.Play();
+        anim.Play("chestSpawn");
 
-        await UniTask.Delay(1000);*/
-        col.enabled = true;
+        await UniTask.Delay((int)(anim.GetClip("chestSpawn").length * 1000));
+        
+        spawnpart.Play();
+        Available = true;
     }
 
     public void Off()
@@ -39,9 +41,9 @@ public class NewAbilitiesChest : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnTriggerStay(Collider col)
     {
-        if(Opened) return;
+        if(Opened || !Available) return;
         GameObject go = col.gameObject;
 
         switch(go.tag)
@@ -58,7 +60,7 @@ public class NewAbilitiesChest : MonoBehaviour
     {
         Opened = true;
 
-        anim.Play();
+        anim.Play("lootOpen");
         particle.Play();
 
         await UniTask.Delay((int)(anim.GetClip("lootOpen").length * 1000));

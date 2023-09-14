@@ -53,6 +53,8 @@ public class BossSpecialAttacker : MonoBehaviour
     
     void Update()
     {
+        if (!GameManager.Instance.isActive) return;
+        
         time -= Time.deltaTime;
         if (time < 0f && attack == null)
         {

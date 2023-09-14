@@ -481,8 +481,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2130550727693595193}
   - component: {fileID: 3683234324318124625}
-  - component: {fileID: 7016737466393977379}
   - component: {fileID: 9116149041676828594}
+  - component: {fileID: 2414877011744277588}
   m_Layer: 0
   m_Name: DoctorUnlock
   m_TagString: Untagged
@@ -528,28 +528,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 6, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7016737466393977379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2187943397576801396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f701c12c64049464bb208af1c9d0723d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MinProgress: 0
-  MaxProgress: 3
-  DefaultCost: 15
-  UpCostPerProgress: 25
-  amountSlider: {fileID: 8015833221647940405}
-  amountText: {fileID: 5327018500446467502}
-  human: {fileID: 0}
-  spawnDots:
-  - {fileID: 9155300751118751869}
-  - {fileID: 1736052256958446117}
 --- !u!114 &9116149041676828594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,6 +544,30 @@ MonoBehaviour:
   spawnDots:
   - {fileID: 9155300751118751869}
   - {fileID: 1736052256958446117}
+--- !u!114 &2414877011744277588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187943397576801396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe39a2c8266b67242aa7a87c100eae4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinProgress: 0
+  MaxProgress: 3
+  DefaultCost: 87
+  UpCostPerProgress: 48
+  amountSlider: {fileID: 8015833221647940405}
+  amountText: {fileID: 5327018500446467502}
+  human: {fileID: 0}
+  spawnDots:
+  - {fileID: 9155300751118751869}
+  - {fileID: 1736052256958446117}
+  unbuilded: {fileID: 0}
+  builded: {fileID: 0}
 --- !u!1 &4360714734782069753
 GameObject:
   m_ObjectHideFlags: 0

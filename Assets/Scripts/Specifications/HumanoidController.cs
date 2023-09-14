@@ -81,7 +81,6 @@ public class HumanoidController : Target
                 if(!takeControl) 
                 {
                     Agent.isStopped = false;
-
                     Move();
                 }
                 else
@@ -117,7 +116,7 @@ public class HumanoidController : Target
 
     public void SetDestination(Vector3 point)
     {
-        if(Agent.destination != point)
+        /*if(Agent.destination != point)*/
         {
             Agent.SetDestination(point);
         }

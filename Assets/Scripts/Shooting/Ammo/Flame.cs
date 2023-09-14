@@ -17,24 +17,4 @@ public class Flame : Ammo
     {
         base.Update();
     }
-
-    void OnTriggerEnter(Collider col)
-    {
-        GameObject go = col.gameObject;
-
-        switch(go.tag)
-        {
-            case "Enemy":
-                OnHit(col.GetComponent<Detection>());
-                break;
-            case "Ground":
-                Off();
-                break;
-            case "Building":
-                Off();
-                break;
-            default:
-                break;
-        }
-    }
 }

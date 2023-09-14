@@ -13,7 +13,7 @@ public class OrbHitProcessing : UltProcessing_IEnumerator
     private float Range => info.Range;
 
     private DetectType TargetTypes = DetectType.Enemy | DetectType.Boss;
-    private List<Detection> targets;
+    private Detection[] targets;
 
     Detection target;
     Vector3 point;
@@ -37,18 +37,20 @@ public class OrbHitProcessing : UltProcessing_IEnumerator
 
     void Shoot()
     {
-        targets = DetectionPool.Instance.RequirePools(TargetTypes).ToList();
-        index = Random.Range(0, targets.Count);
+        targets = DetectionPool.Instance.RequirePools(TargetTypes);
+        index = Random.Range(0, targets.Length);
         target = targets[index];
 
         point = target.transform.position;
         target.GetHit(Damage);
-        targets.Remove(target);
-
+        targets = targets[1..targets.Length];
+        
+        effect.Stop();
+        effect.transform.position = new Vector3(point.x, 0.75f, point.z);
+        /*Debug.Log($"Orb hit: {point}");*/
         effect.Play();
-        effect.transform.position = new Vector3(point.x, 0.75f, point.y);
 
-        targets = targets.OrderBy(x => Vector3.Distance(point, x.transform.position)).ToList();
+        /*targets = targets.OrderBy(x => Vector3.Distance(point, x.transform.position)).ToArray();*/
 
         foreach(Detection trg in targets)
         {
@@ -60,7 +62,7 @@ public class OrbHitProcessing : UltProcessing_IEnumerator
             trg.GetHit(Damage / 2f);
         }
 
-        CameraShake.Instance.On(1f);
+        CameraShake.Instance.On(0.6f);
     }
     
     public override IEnumerator Deprocess()

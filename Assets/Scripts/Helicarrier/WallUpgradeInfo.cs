@@ -29,7 +29,7 @@ public class WallUpgradeInfo : UpgraderZone
 
         foreach(Detection wall in wallsPool)
         {   
-            wall.GetComponent<WallInfo>().Heal(999f);
+            wall.GetComponent<WallInfo>().RefreshWallModel();
         }
     }
 

@@ -44,8 +44,7 @@ public class NearestDetector : BaseDetector
                     }
                 } */
 
-                if(detection.NearestAround(priorityTypes, detectTypes, range, distanceToData, this, out previous)
-                    || InColWithTargetMask)
+                if(detection.NearestAround(priorityTypes, detectTypes, range, distanceToData, this, out previous))
                 {
                     if(data != previous)
                     {

@@ -5,12 +5,13 @@ using Cysharp.Threading.Tasks;
 
 public class GoldRewardPerWaveChest : ResourceDrop
 {
-    [SerializeField] private Collider col;
-    [SerializeField] private Animation spawnAnim, anim;
-    [SerializeField] private ParticleSystem particle;
+    [SerializeField] private Animation anim;
+    [SerializeField] private ParticleSystem particle, spawnpart;
 
     [Space] [SerializeField] private Transform head;
+    private TutorialArrow Arrow => LevelManager.Instance.TutorArrow;
 
+    private bool Available = false;
     bool Opened = false;
 
     void Start()
@@ -21,29 +22,36 @@ public class GoldRewardPerWaveChest : ResourceDrop
 
     public async void On()
     {
-        head.eulerAngles = Vector3.zero;
-        col.enabled = false;
+        Available = false;
+        head.localEulerAngles = Vector3.zero;
         
         Opened = false;
         gameObject.SetActive(true);
 
-        /*spawnAnim.Play();
+        anim.Play("chestSpawn");
         
-        await UniTask.Delay(1000);*/
-        col.enabled = true;
+        await UniTask.Delay((int)(anim.GetClip("chestSpawn").length * 1000));
+        
+        spawnpart.Play();
+        Available = true;
+
+        Arrow.On();
+        Arrow.SetTarget(transform);
     }
 
     public void Off()
     {
         anim.Stop();
         particle.Stop();
+        
+        Arrow.Off();
 
         gameObject.SetActive(false);
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnTriggerStay(Collider col)
     {
-        if(Opened) return;
+        if(Opened || !Available) return;
         GameObject go = col.gameObject;
 
         switch(go.tag)
@@ -62,18 +70,18 @@ public class GoldRewardPerWaveChest : ResourceDrop
     async void Open()
     {
         Opened = true;
-        int count = BallAmount * (CurrentIndex - OpenedIndex);
+        int count = BallAmount;
 
-        anim.Play();
+        anim.Play("chestOpen");
         particle.Play();
 
         await UniTask.Delay((int)(anim.GetClip("chestOpen").length * 1000));
 
         while(count > 0)
         {
-            ResourcePerBallMod = WaveRewardLVLs.WCRMod;
+            ResourcePerBallMod = WaveRewardLVLs.WCRMod + Mathf.Clamp(CurrentIndex - OpenedIndex, 0, 999);
             DropAmount(1);
-            await UniTask.Delay(50);
+            await UniTask.Delay(40);
 
             count--;
         }

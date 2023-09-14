@@ -24,7 +24,10 @@ public class Level : MonoBehaviour
     public void StartLevel()
     {
         GameManager.Instance.SetActive(true);
-        Generator.Launch();
+        if (LevelManager.Instance.GetIndex() > 0)
+        {
+            Generator.Launch();
+        }
     }
 
     public void EndLevel()

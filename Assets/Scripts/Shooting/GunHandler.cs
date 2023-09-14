@@ -10,6 +10,8 @@ public class GunHandler : MonoBehaviour
         public List<GunPair> Pair = new List<GunPair>();
     }
 
+    public GunComplex CurrentComplex => Guns[Index];
+
     [System.Serializable]
     public class GunPair
     {
@@ -104,9 +106,10 @@ public class GunHandler : MonoBehaviour
                 list = Guns[i].Pair;
                 foreach(GunPair pair in list)
                 {
+                    pair.Gun.Transform.parent = pair.Point;
                     pair.Gun.gameObject.SetActive(true);
-                    
-                    pair.Gun.Transform.localPosition = pair.Point.localPosition;
+
+                    pair.Gun.Transform.localPosition = Vector3.zero;
                 }
             }
         }

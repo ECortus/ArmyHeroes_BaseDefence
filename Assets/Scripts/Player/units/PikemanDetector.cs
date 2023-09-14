@@ -34,6 +34,8 @@ public class PikemanDetector : AllDetector
         data = null;
         controller.ResetTarget();
         controller.ResetDestination();
+        
+        crystal.SetActive(false);
     }
 
     protected override void Change()
@@ -56,8 +58,7 @@ public class PikemanDetector : AllDetector
             return;
         }
 
-        if(data == null) return;
-        else
+        if(data != null)
         {
             StartMine();
         }
@@ -83,6 +84,8 @@ public class PikemanDetector : AllDetector
 
         controller.takeControl = false;
         InColWithTargetMask = false;
+        
+        crystal.SetActive(false);
     }
 
     Transform point;
@@ -99,72 +102,47 @@ public class PikemanDetector : AllDetector
 
         if(crstl.GetMarkedBy() == detection)
         {
-            SendToCrystal(crstl);
+            point = crstl.transform;
+
+            controller.SetTarget(point);
+            controller.takeControl = false;
 
             yield return new WaitUntil(() => controller.NearPoint(point.position, mineRange));
 
-            StartMining();
+            controller.takeControl = true;
+
+            Mining = true;
+            pickaxe.SetActive(true);
+
+            controller.ResetTarget();
             yield return new WaitForSeconds(2f);
 
-            StopMining(crstl);
+            pickaxe.SetActive(false);
+            Mining = false;
 
-            SendToRecycle();
+            crstl.ResetMarkedBy();
+
+            crystal.SetActive(true);
+            Carring = true;
+
+            controller.takeControl = false;
+
+            point = recycle;
+
+            controller.SetTarget(point);
             yield return new WaitUntil(() => controller.NearPoint(point.position, 1f));
 
-            Recycle();
+            controller.ResetTarget();
+
+            crystal.SetActive(false);
+            Carring = false;
+
+            Crystal.Plus(1 + WorkersUpgradesLVLs.PikemanResourceMod);
         }
 
         Reset();
         On();
 
         yield return null;
-    }
-
-    void SendToCrystal(Detection crstl)
-    {
-        point = crstl.transform;
-
-        controller.SetTarget(point);
-        controller.takeControl = false;
-    }
-
-    void StartMining()
-    {
-        controller.takeControl = true;
-
-        Mining = true;
-        pickaxe.SetActive(true);
-
-        controller.ResetTarget();
-    }
-
-    void StopMining(Detection crstl)
-    {
-        pickaxe.SetActive(false);
-        Mining = false;
-
-        crstl.ResetMarkedBy();
-    }
-
-    void SendToRecycle()
-    {
-        crystal.SetActive(true);
-        Carring = true;
-
-        controller.takeControl = false;
-
-        point = recycle;
-
-        controller.SetTarget(point);
-    }
-
-    void Recycle()
-    {
-        controller.ResetTarget();
-
-        crystal.SetActive(false);
-        Carring = false;
-
-        Crystal.Plus(1 + WorkersUpgradesLVLs.PikemanResourceMod);
     }
 }

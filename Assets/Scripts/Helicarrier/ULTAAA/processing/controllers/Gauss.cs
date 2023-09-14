@@ -7,13 +7,20 @@ public class Gauss : Target
     [SerializeField] private Transform torotate;
     [SerializeField] private float rotateSpeed;
 
-    Vector3 dir;
+    Vector3 dir, angles;
     Quaternion targetRotation;
 
     void Update()
     {
-        dir = (target.position + new Vector3(0f, 1f, 0f) - torotate.position).normalized;
-
+        if (target != transform)
+        {
+            dir = (target.position + new Vector3(0f, 1f, 0f) - torotate.position).normalized;
+        }
+        else
+        {
+            dir = Vector3.forward;
+        }
+        
         targetRotation = Quaternion.LookRotation(dir);
 
         torotate.rotation = Quaternion.RotateTowards(

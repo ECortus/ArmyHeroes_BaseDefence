@@ -7,6 +7,8 @@ public class Drone : Target
     [SerializeField] private float height = 4f;
     [SerializeField] private float moveSpeed, rotateSpeed;
 
+    private float speed = 0f;
+
     [Space]
     [SerializeField] private Transform body;
     [SerializeField] private RangeShootingDetector detector;
@@ -22,6 +24,8 @@ public class Drone : Target
  
     public bool Active => gameObject.activeSelf;
 
+    private bool toSpawn = false;
+
     public void On(Vector3 spawn)
     {
         gameObject.SetActive(true);
@@ -31,6 +35,8 @@ public class Drone : Target
         particle.Play();
 
         detector.On();
+        toSpawn = false;
+        speed = moveSpeed;
     }
 
     public async void Off()
@@ -39,8 +45,10 @@ public class Drone : Target
         gunHandler.Disable();
 
         SetTarget(Helicarrier.Instance.Transform);
-
-        await UniTask.WaitUntil(() => (target.position - transform.position).magnitude < 0.5f);
+        toSpawn = true;
+        speed = moveSpeed * 2f;
+        
+        await UniTask.WaitUntil(() => (movePoint - transform.position).magnitude < 2f);
 
         anim.Play("bounceSpawnReverse");
         await UniTask.Delay((int)(anim.GetClip("bounceSpawnReverse").length * 1000));
@@ -71,9 +79,9 @@ public class Drone : Target
 
     void Move()
     {
-        if(Vector3.Distance(transform.position, movePoint) > 5f)
+        if(Vector3.Distance(transform.position, movePoint) > (toSpawn ? 2f : 5f))
         {
-            transform.position = Vector3.MoveTowards(transform.position, movePoint, moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, movePoint, speed * Time.deltaTime);
         }
     }
 

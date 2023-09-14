@@ -13,21 +13,22 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
     [SerializeField] private List<ParticleSystem> Effects = new List<ParticleSystem>();
 
     Coroutine poison, fire, freeze;
+    private float poisonTime, fireTime, freezeTime;
 
     public void TurnOnPoison(float damage, float time)
     {
+        poisonTime = time;
         if(poison == null)
         {
-            poison = StartCoroutine(Poisoning(damage, time));
+            poison = StartCoroutine(Poisoning(damage));
         }
     }
 
-    IEnumerator Poisoning(float dmg, float duration)
+    IEnumerator Poisoning(float dmg)
     {
-        float time = duration;
         Effects[0].Play();
 
-        while(time > 0f)
+        while(poisonTime > 0f)
         {
             if(detection.Died || !detection.Active)
             {
@@ -37,7 +38,7 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
             detection.GetHit(dmg);
             yield return new WaitForSeconds(1f);
 
-            time -= 1f;
+            poisonTime -= 1f;
         }
 
         Effects[0].Stop();
@@ -46,18 +47,18 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
 
     public void TurnOnFire(float damage, float time)
     {
+        fireTime = time;
         if(fire == null)
         {
-            fire = StartCoroutine(Firing(damage, time));
+            fire = StartCoroutine(Firing(damage));
         }
     }
 
-    IEnumerator Firing(float dmg, float duration)
+    IEnumerator Firing(float dmg)
     {
-        float time = duration;
         Effects[1].Play();
 
-        while(time > 0f)
+        while(fireTime > 0f)
         {
             if(detection.Died || !detection.Active)
             {
@@ -67,7 +68,7 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
             detection.GetHit(dmg);
             yield return new WaitForSeconds(1f);
 
-            time -= 1f;
+            fireTime -= 1f;
         }
 
         Effects[1].Stop();
@@ -122,27 +123,27 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
 
     public void TurnOnFreeze(float decreaseOnPercent, float time)
     {
+        freezeTime = time;
         if(freeze == null)
         {
-            freeze = StartCoroutine(Freezing(decreaseOnPercent, time));
+            freeze = StartCoroutine(Freezing(decreaseOnPercent));
         }
     }
 
-    IEnumerator Freezing(float decrease, float duration)
+    IEnumerator Freezing(float decrease)
     {
-        float time = duration;
         Effects[3].Play();
 
         detection.HPvDMGvSPD.AddSPDPercent(-decrease);
 
-        while(time > 0f)
+        while(freezeTime > 0f)
         {
             if(detection.Died || !detection.Active)
             {
                 break;
             }
 
-            time -= Time.deltaTime;
+            freezeTime -= Time.deltaTime;
             yield return null;
         }
 

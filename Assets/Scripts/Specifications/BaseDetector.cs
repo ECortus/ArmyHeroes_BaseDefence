@@ -86,7 +86,7 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
             {
                 InColWithTargetMask = true;
                 data = nf;
-                Stop();
+                /*Stop();*/
                 
                 Change();
             }

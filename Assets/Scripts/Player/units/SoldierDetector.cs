@@ -49,11 +49,11 @@ public class SoldierDetector : NearestDetector
     [SerializeField] private float GoDelay = 10f;
 
     private Transform[] GoDots => LevelManager.Instance.ActualLevel.SoldiersGoDots;
-    float time = 0f;
+    float time = 10f;
 
     void Update()
     {
-        if (data != null || !EnableGo) return;
+        if (data != null || !EnableGo || !isOn) return;
         
         time -= Time.deltaTime;
 

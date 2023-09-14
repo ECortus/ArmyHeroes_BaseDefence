@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour
 
     public Level ActualLevel => Levels[GetIndex()];
 
+    public TutorialArrow TutorArrow;
+
     [Inject] void Awake() => Instance = this;
 
     void Start()
@@ -38,12 +40,15 @@ public class LevelManager : MonoBehaviour
         ActualLevel.StartLevel();
     }
 
-    public void EndLevel()
+    public void PlusLevelIndex()
     {
         int index = _Index;
         index += 1;
         SetIndex(index);
-        
+    }
+
+    public void EndLevel()
+    {
         ActualLevel.EndLevel();
     }
 

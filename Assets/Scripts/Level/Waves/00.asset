@@ -22,11 +22,11 @@ MonoBehaviour:
     - Calls:
       - enemy: {fileID: 1767988619501561688, guid: 6859ec4489fd44e458eff26bd9abcc9b,
           type: 3}
-        Count: 3
+        Count: 2
     - Calls:
       - enemy: {fileID: 1767988619501561688, guid: 6859ec4489fd44e458eff26bd9abcc9b,
           type: 3}
-        Count: 3
+        Count: 2
   DelayBetweenCalls: 0
   DelayBetweenSlots: 0
   TokenReward: 25

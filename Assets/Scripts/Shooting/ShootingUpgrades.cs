@@ -23,7 +23,7 @@ public class ShootingUpgrades : MonoBehaviour
     [HideInInspector] public float DecreaseSC = 100f;
     public void AddDecreaseSC(float sc)
     {
-        DecreaseSC *= (100f - sc) / 100f;
+        DecreaseSC *= 1f - sc / 100f;
     }
     public void ResetDecreaseSC()
     {

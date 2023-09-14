@@ -9,7 +9,7 @@ public class Tutorial : MonoBehaviour
     public static Tutorial Instance { get; set; }
     void Awake() => Instance = this;
 
-    [SerializeField] private TutorialArrow Arrow;
+    private TutorialArrow Arrow => LevelManager.Instance.TutorArrow;
     private LevelWavesInfo info => LevelManager.Instance.ActualLevel.WavesInfo;
     private EnemiesGenerator Generator => LevelManager.Instance.ActualLevel.Generator;
 
@@ -36,24 +36,27 @@ public class Tutorial : MonoBehaviour
     IEnumerator Process()
     {
         ultaUI.SetActive(false);
+        Generator.WaveIndex = 0;
         
         LevelManager.Instance.ActualLevel.ResetLevel();
         
         Arrow.Off();
-        yield return new WaitUntil(() => Generator.Active);
-        Generator.Stop();
-        EnemiesPool.Instance.KillAllEnemies();
+        yield return new WaitUntil(() => GameManager.Instance.isActive);
 
         yield return Generator.PullOutWave(info.Waves[0]);
         Arrow.On();
         Arrow.SetTarget(EnemiesPool.Instance.EnemyTutorPool[0].Transform);
         yield return new WaitUntil(() => EnemiesPool.Instance.AllDied);
+
+        Generator.WaveIndex++;
         
         LevelManager.Instance.ActualLevel.Chest.On();
-        Arrow.SetTarget(chest);
+        /*Arrow.SetTarget(chest);*/
         yield return new WaitUntil(() => !LevelManager.Instance.ActualLevel.Chest.gameObject.activeSelf);
         
         soldierUnlock.gameObject.SetActive(true);
+        
+        Arrow.On();
         Arrow.SetTarget(soldierUnlock);
         DetectType type = DetectType.Soldier;
         yield return new WaitUntil(() => DetectionPool.Instance.RequirePools(type).Length > 0);
@@ -74,6 +77,8 @@ public class Tutorial : MonoBehaviour
         yield return new WaitUntil(() => !Player.Instance.Active);
         
         Arrow.Off();
+        
+        LevelManager.Instance.PlusLevelIndex();
         LevelManager.Instance.ActualLevel.ResetLevel();
     }
 }

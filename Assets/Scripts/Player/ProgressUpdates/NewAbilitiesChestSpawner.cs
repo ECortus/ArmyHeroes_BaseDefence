@@ -18,7 +18,7 @@ public class NewAbilitiesChestSpawner : MonoBehaviour
     public Transform SpawnOneByIndex(int index)
     {
         ActiveChest = newAbilitiesChests[index];
-        ActiveChest.On(Player.Instance.transform.position + Vector3.forward);
+        ActiveChest.On(Player.Instance.transform.position + Vector3.forward * 1.5f);
 
         return ActiveChest.transform;
     }

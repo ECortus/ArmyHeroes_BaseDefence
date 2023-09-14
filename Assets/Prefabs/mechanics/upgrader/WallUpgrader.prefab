@@ -351,8 +351,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinProgress: 0
   MaxProgress: 4
-  DefaultCost: 50
-  UpCostPerProgress: 100
+  DefaultCost: 125
+  UpCostPerProgress: 175
   amountSlider: {fileID: 8920302770884153598}
   amountText: {fileID: 2173307512654183577}
 --- !u!1 &4025271119879315064

@@ -60,24 +60,4 @@ public class Rocket : Ammo
             rb.velocity -= new Vector3(0f, g * Time.deltaTime, 0f);
         }
     }
-
-    void OnTriggerEnter(Collider col)
-    {
-        GameObject go = col.gameObject;
-
-        switch(go.tag)
-        {
-            case "Enemy":
-                OnHit(col.GetComponent<Detection>());
-                break;
-            case "Ground":
-                Off();
-                break;
-            case "Building":
-                Off();
-                break;
-            default:
-                break;
-        }
-    }
 }

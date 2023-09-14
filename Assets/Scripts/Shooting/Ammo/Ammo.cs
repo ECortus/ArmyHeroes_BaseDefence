@@ -143,6 +143,21 @@ public class Ammo : MonoBehaviour
             }
         }
     }
+    
+    void OnCollisionEnter(Collision col)
+    {
+        GameObject go = col.gameObject;
+
+        switch(go.tag)
+        {
+            case "Enemy":
+                OnHit(col.gameObject.GetComponent<Detection>());
+                break;
+            default:
+                Off();
+                break;
+        }
+    }
 }
 
 [System.Serializable]
