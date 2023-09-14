@@ -13,7 +13,7 @@ public class RandomEnemyResourceDrop : MonoBehaviour
         public ResourceDrop Resource;
     }
 
-    [SerializeField] private List<ProbalityDrop> dropProbality = new List<ProbalityDrop>();
+    [SerializeField] private ProbalityDrop[] dropProbality;
 
     public void Drop(int count)
     {

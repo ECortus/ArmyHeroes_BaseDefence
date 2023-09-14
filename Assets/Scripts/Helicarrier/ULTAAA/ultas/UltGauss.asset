@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: UltGauss
   m_EditorClassIdentifier: 
   defCost: 100
-  costDownPerLvlOnPercent: 25
-  defDuration: 15
+  costDownPerLvlOnPercent: 5
+  defDuration: 35
   durationUpPerLvl: 50
   damage: 125
   damageUpPerLVL: 25

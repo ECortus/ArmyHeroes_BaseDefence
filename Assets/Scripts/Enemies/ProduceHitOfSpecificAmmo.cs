@@ -9,8 +9,7 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
     [SerializeField] private Detection detection;
     private HP_DMG_SPD spd => detection.HPvDMGvSPD;
 
-    [Space]
-    [SerializeField] private List<ParticleSystem> Effects = new List<ParticleSystem>();
+    [Space] [SerializeField] private ParticleSystem[] Effects;
 
     Coroutine poison, fire, freeze;
     private float poisonTime, fireTime, freezeTime;
@@ -26,6 +25,7 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
 
     IEnumerator Poisoning(float dmg)
     {
+        Effects[0].gameObject.SetActive(true);
         Effects[0].Play();
 
         while(poisonTime > 0f)
@@ -42,6 +42,7 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
         }
 
         Effects[0].Stop();
+        Effects[0].gameObject.SetActive(false);
         poison = null;
     }
 
@@ -56,6 +57,7 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
 
     IEnumerator Firing(float dmg)
     {
+        Effects[1].gameObject.SetActive(true);
         Effects[1].Play();
 
         while(fireTime > 0f)
@@ -72,6 +74,8 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
         }
 
         Effects[1].Stop();
+        Effects[1].gameObject.SetActive(false);
+        
         fire = null;
     }
 
@@ -118,6 +122,8 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
         target.GetHit(dmg);
 
         ParticleSystem effect = Effects[2];
+        
+        /*effect.gameObject.SetActive(true);*/
         ParticlePool.Instance.Insert(ParticleType.ElectricHit, effect, target.transform.position);
     }
 
@@ -132,6 +138,7 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
 
     IEnumerator Freezing(float decrease)
     {
+        Effects[3].gameObject.SetActive(true);
         Effects[3].Play();
 
         detection.HPvDMGvSPD.AddSPDPercent(-decrease);
@@ -150,12 +157,16 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
         detection.HPvDMGvSPD.ResetSPD();
 
         Effects[3].Stop();
+        Effects[3].gameObject.SetActive(true);
+        
         freeze = null;
     }
 
     public void TurnOnImpulse(float force)
     {
+        /*Effects[4].gameObject.SetActive(true);*/
         Effects[4].Play();
+        
         enemy.ForceBack(force);
     }
 }

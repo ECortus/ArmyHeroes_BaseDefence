@@ -57,7 +57,7 @@ public class Gun : MonoBehaviour
             float del = _Delay;
             if(ups != null)
             {
-                del *= ups.DecreaseSC / 100f;
+                del *= ups.DecreaseSC;
             }
             return del;
         }

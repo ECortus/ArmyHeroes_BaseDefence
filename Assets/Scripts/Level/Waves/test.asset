@@ -15,6 +15,11 @@ MonoBehaviour:
   Waves:
   - Slots:
     - Calls:
+      - enemy: {fileID: 1767988619501561688, guid: 54bd0c1e940bf3a47ae7211cca7b92fd,
+          type: 3}
+        Count: 1
+  - Slots:
+    - Calls:
       - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
           type: 3}
         Count: 2
@@ -40,11 +45,6 @@ MonoBehaviour:
       - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
           type: 3}
         Count: 5
-  - Slots:
-    - Calls:
-      - enemy: {fileID: 1767988619501561688, guid: 54bd0c1e940bf3a47ae7211cca7b92fd,
-          type: 3}
-        Count: 1
   DelayBetweenCalls: 1
   DelayBetweenSlots: 2
   TokenReward: 200

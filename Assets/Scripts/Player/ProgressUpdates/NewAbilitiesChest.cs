@@ -27,7 +27,8 @@ public class NewAbilitiesChest : MonoBehaviour
 
         anim.Play("chestSpawn");
 
-        await UniTask.Delay((int)(anim.GetClip("chestSpawn").length * 1000));
+        float del = anim.GetClip("chestSpawn").length;
+        await UniTask.Delay((int)(del * 1000));
         
         spawnpart.Play();
         Available = true;

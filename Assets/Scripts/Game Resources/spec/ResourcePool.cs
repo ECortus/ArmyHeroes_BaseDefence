@@ -70,11 +70,11 @@ public class ResourcePool : MonoBehaviour
                 break;
         }
 
-        foreach(ResourceBall ball in list)
+        for(int i = 0; i < list.Count; i++)
         {
-            if(ball.Active)
+            if(list[i].Active)
             {
-                ball.SetMove(true);
+                list[i].SetMove(true);
             }
         }
     }
@@ -114,8 +114,12 @@ public class ResourcePool : MonoBehaviour
 
         if(list.Count > 0 && list.Count <= limit)
         {
-            foreach(ResourceBall rc in list)
+            ResourceBall rc;
+            
+            for(int i = 0; i < list.Count; i++)
             {
+                rc = list[i];
+                
                 if(rc == null) continue;
 
                 if(!rc.Active)

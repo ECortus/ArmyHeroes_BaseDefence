@@ -23,7 +23,7 @@ public class GoldRewardPerWaveChest : ResourceDrop
     public async void On()
     {
         Available = false;
-        head.localEulerAngles = Vector3.zero;
+        head.localEulerAngles = new Vector3(-90f, 0f, 0f);
         
         Opened = false;
         gameObject.SetActive(true);
@@ -72,10 +72,11 @@ public class GoldRewardPerWaveChest : ResourceDrop
         Opened = true;
         int count = BallAmount;
 
-        anim.Play("chestOpen");
+        anim.Play("lootOpen");
         particle.Play();
 
-        await UniTask.Delay((int)(anim.GetClip("chestOpen").length * 1000));
+        float del = anim.GetClip("lootOpen").length;
+        await UniTask.Delay((int)(del * 1000));
 
         while(count > 0)
         {

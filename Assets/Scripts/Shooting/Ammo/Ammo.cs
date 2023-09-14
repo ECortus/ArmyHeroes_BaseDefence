@@ -53,7 +53,7 @@ public class Ammo : MonoBehaviour
         transform.position = spawn;
         transform.rotation = rot;
 
-        trial.Clear();
+        trial?.Clear();
     }
 
     public virtual async void Off(Transform pos = null)
@@ -121,18 +121,18 @@ public class Ammo : MonoBehaviour
 
     void EffectOnOn()
     {
-        foreach(SpecificAmmoArray array in SpecificInfos)
+        /*foreach(SpecificAmmoArray array in SpecificInfos)
         {
             if(Specifics.HasFlag(array.Type))
             {
                 array.OnEffect.Play();
             }
-        }
+        }*/
     }
 
     void EffectOnHit(Detection det)
     {
-        foreach(SpecificAmmoArray array in SpecificInfos)
+        /*foreach(SpecificAmmoArray array in SpecificInfos)
         {
             if(Specifics.HasFlag(array.Type))
             {
@@ -141,7 +141,7 @@ public class Ammo : MonoBehaviour
 
                 array.OnHit.Action(det);
             }
-        }
+        }*/
     }
     
     void OnCollisionEnter(Collision col)

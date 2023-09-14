@@ -11173,7 +11173,7 @@ MonoBehaviour:
   Muzzle: {fileID: 458754450}
   Ammo: {fileID: 1979780703808915262, guid: 7898a3a6a62c1df45ada3a494d6ecbb4, type: 3}
   MultipleOn: 1
-  Handler: {fileID: 52332421}
+  Handler: {fileID: 1643586264}
   AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &410518528
 GameObject:
@@ -14587,7 +14587,7 @@ MonoBehaviour:
   Muzzle: {fileID: 2100530984}
   Ammo: {fileID: 8133454355906393383, guid: 9d4e972f60357b44c9d691f708a81bbf, type: 3}
   MultipleOn: 1
-  Handler: {fileID: 52332421}
+  Handler: {fileID: 1643586264}
   AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &531082112
 GameObject:
@@ -15730,7 +15730,7 @@ MonoBehaviour:
   Muzzle: {fileID: 992991054}
   Ammo: {fileID: -4908016652517735666, guid: 39b5cfb214d947e4aa5c982cbaf727dc, type: 3}
   MultipleOn: 1
-  Handler: {fileID: 52332421}
+  Handler: {fileID: 1643586264}
   AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &604369739
 GameObject:
@@ -17636,7 +17636,7 @@ MonoBehaviour:
   Muzzle: {fileID: 96822200}
   Ammo: {fileID: -4908016652517735666, guid: 39b5cfb214d947e4aa5c982cbaf727dc, type: 3}
   MultipleOn: 1
-  Handler: {fileID: 52332421}
+  Handler: {fileID: 1643586264}
   AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &701408385
 GameObject:
@@ -18686,7 +18686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newAbilitiesChests:
   - {fileID: 339194014}
-  secondsDelay: 30
+  secondsDelay: 45
 --- !u!1001 &735963205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21928,7 +21928,7 @@ MonoBehaviour:
   Muzzle: {fileID: 2128278014}
   Ammo: {fileID: -7276396716251652542, guid: 434f8340a52748a48ab61cd8e55925df, type: 3}
   MultipleOn: 1
-  Handler: {fileID: 52332421}
+  Handler: {fileID: 1643586264}
   AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &846237872
 GameObject:
@@ -24939,7 +24939,7 @@ MonoBehaviour:
   Muzzle: {fileID: 1126722216}
   Ammo: {fileID: -4908016652517735666, guid: 39b5cfb214d947e4aa5c982cbaf727dc, type: 3}
   MultipleOn: 1
-  Handler: {fileID: 52332421}
+  Handler: {fileID: 1643586264}
   AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &996623890
 GameObject:
@@ -44780,7 +44780,7 @@ MonoBehaviour:
   Muzzle: {fileID: 1821712233}
   Ammo: {fileID: -4908016652517735666, guid: 39b5cfb214d947e4aa5c982cbaf727dc, type: 3}
   MultipleOn: 1
-  Handler: {fileID: 52332421}
+  Handler: {fileID: 1643586264}
   AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &1533486935
 GameObject:

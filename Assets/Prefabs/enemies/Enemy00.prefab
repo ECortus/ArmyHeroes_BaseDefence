@@ -758,6 +758,21 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.033954646
       objectReference: {fileID: 0}
+    - target: {fileID: -8743768780697587657, guid: fec63517689e2304a95522fecd258f16,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8743768780697587657, guid: fec63517689e2304a95522fecd258f16,
+        type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8743768780697587657, guid: fec63517689e2304a95522fecd258f16,
+        type: 3}
+      propertyPath: m_SkinnedMotionVectors
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fec63517689e2304a95522fecd258f16,
         type: 3}
       propertyPath: m_LocalScale.x

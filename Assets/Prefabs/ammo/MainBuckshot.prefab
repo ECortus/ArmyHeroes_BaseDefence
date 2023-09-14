@@ -334,8 +334,8 @@ MonoBehaviour:
   maxDistance: 100
   Specifics: 1
   sub: {fileID: 1352633785117740976, guid: cfaed5e572e5c9e488966151908d3299, type: 3}
-  buckCount: 6
-  angleBetweenBucks: 2
+  buckCount: 4
+  angleBetweenBucks: 4
 --- !u!1 &1381991387212023156
 GameObject:
   m_ObjectHideFlags: 0

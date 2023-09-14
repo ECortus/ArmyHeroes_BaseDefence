@@ -18,7 +18,7 @@ public class ResourceBall : MonoBehaviour
     float spawnDelay = 0.5f;
     float time = 0f;
 
-    public void On(Vector3 pos = new Vector3())
+    public virtual void On(Vector3 pos = new Vector3())
     {
         if(pos != new Vector3()) transform.position = pos;
 
@@ -28,7 +28,7 @@ public class ResourceBall : MonoBehaviour
         time = spawnDelay;
     }
 
-    public void Off()
+    public virtual void Off()
     {
         gameObject.SetActive(false);
     }
@@ -53,17 +53,17 @@ public class ResourceBall : MonoBehaviour
         Off();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if(time > 0f)
         {
-            time -= Time.deltaTime;
+            time -= Time.fixedDeltaTime;
             return;
         }
 
         if(move)
         {
-            transform.position = Vector3.Lerp(transform.position, target.position, speed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, target.position, speed * Time.fixedDeltaTime);
             return;
         }
 
@@ -77,13 +77,9 @@ public class ResourceBall : MonoBehaviour
     {
         GameObject go = col.gameObject;
 
-        switch(go.tag)
+        if (col.tag == "Player")
         {
-            case "Player":
-                AddRecourceToPlayer();
-                break;
-            default:
-                break;
+            AddRecourceToPlayer();
         }
     }
 }

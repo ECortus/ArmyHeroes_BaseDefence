@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: UltEconomy
   m_EditorClassIdentifier: 
   defCost: 150
-  costDownPerLvl: 15
-  defDuration: 15
+  costDownPerLvlOnPercent: 5
+  defDuration: 10
   durationUpPerLvl: 50
   DefaultGoldPerCrystal: 10
   GoldAmountUpPerLVL: 15

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UltShield
   m_EditorClassIdentifier: 
   defCost: 50
-  costDownPerLvl: 3
+  costDownPerLvlOnPercent: 5
   defDuration: 15
   durationUpPerLvl: 50
-  ImpulseForce: 200
+  ImpulseForce: 250
