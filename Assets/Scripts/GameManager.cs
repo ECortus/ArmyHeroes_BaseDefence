@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public void SetActive(bool value) => _GameActive = value;
     public bool isActive => _GameActive;
 
+    public Transform Camera;
     public FloatingJoystick Joystick;
 
     void Awake() => Instance = this;
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     public void SetTimeScale(float time)

@@ -19,11 +19,13 @@ public class HP_DMG_SPD : MonoBehaviour
     public void AddHPPercent(float perc)
     {
         bonusHP += perc;
+        AdditionalActionOnUpgrade();
     }
 
     public void ResetHP()
     {
         bonusHP = 0f;
+        AdditionalActionOnUpgrade();
     }
 
     [HideInInspector] public float _bDMG = 0f;
@@ -41,11 +43,13 @@ public class HP_DMG_SPD : MonoBehaviour
     public void AddDMGPercent(float perc)
     {
         bonusDMG += perc;
+        AdditionalActionOnUpgrade();
     }
 
     public void ResetDMG()
     {
         bonusDMG = 0f;
+        AdditionalActionOnUpgrade();
     }
 
     [HideInInspector] public float _bSPD = 0f;
@@ -63,10 +67,14 @@ public class HP_DMG_SPD : MonoBehaviour
     public void AddSPDPercent(float perc)
     {
         bonusSPD += perc;
+        AdditionalActionOnUpgrade();
     }
 
     public void ResetSPD()
     {
         bonusSPD = 0f;
+        AdditionalActionOnUpgrade();
     }
+
+    public virtual void AdditionalActionOnUpgrade() { }
 }

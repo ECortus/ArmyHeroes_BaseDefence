@@ -12,6 +12,6 @@ public class HealthBarUI : BarUI
 
     void Update()
     {
-        transform.rotation = Camera.main.transform.rotation;
+        transform.rotation = GameManager.Instance.Camera.rotation;
     }
 }

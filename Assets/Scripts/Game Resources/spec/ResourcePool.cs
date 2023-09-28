@@ -37,6 +37,13 @@ public class ResourcePool : MonoBehaviour
 
         return rc;
     }
+    
+    private List<ResourceBall> 
+        ActiveExpPool = new List<ResourceBall>(), 
+        ActiveGoldPool = new List<ResourceBall>(), 
+        ActiveHealKitPool = new List<ResourceBall>(), 
+        ActiveMagnitPool = new List<ResourceBall>(), 
+        ActiveDynamitPool = new List<ResourceBall>();
 
     private List<ResourceBall> 
         ExpPool = new List<ResourceBall>(), 
@@ -83,6 +90,7 @@ public class ResourcePool : MonoBehaviour
     {
         ResourceBall rec = null;
         List<ResourceBall> list = new List<ResourceBall>();
+        List<ResourceBall> activeList = new List<ResourceBall>();
 
         int limit = 0;
 
@@ -91,28 +99,33 @@ public class ResourcePool : MonoBehaviour
             case ResourceType.Exp:
                 list = ExpPool;
                 limit = EachResourceLimit[0];
+                activeList = ActiveExpPool;
                 break;
             case ResourceType.Gold:
                 list = GoldPool;
                 limit = EachResourceLimit[1];
+                activeList = ActiveGoldPool;
                 break;
             case ResourceType.HealKit:
                 list = HealKitPool;
                 limit = EachResourceLimit[2];
+                activeList = ActiveHealKitPool;
                 break;
             case ResourceType.Magnit:
                 list = MagnitPool;
                 limit = EachResourceLimit[3];
+                activeList = ActiveMagnitPool;
                 break;
             case ResourceType.Dynamit:
                 list = DynamitPool;
                 limit = EachResourceLimit[4];
+                activeList = ActiveDynamitPool;
                 break;
             default:
                 break;
         }
 
-        if(list.Count > 0 && list.Count <= limit)
+        if(list.Count > 0 && activeList.Count < limit)
         {
             ResourceBall rc;
             
@@ -140,6 +153,54 @@ public class ResourcePool : MonoBehaviour
         }
 
         return rec;
+    }
+    
+    public void AddActiveRecource(ResourceType type, ResourceBall rc)
+    {
+        switch(type)
+        {
+            case ResourceType.Exp:
+                ActiveExpPool.Add(rc);
+                break;
+            case ResourceType.Gold:
+                ActiveGoldPool.Add(rc);
+                break;
+            case ResourceType.HealKit:
+                ActiveHealKitPool.Add(rc);
+                break;
+            case ResourceType.Magnit:
+                ActiveMagnitPool.Add(rc);
+                break;
+            case ResourceType.Dynamit:
+                ActiveDynamitPool.Add(rc);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    public void RemoveActiveRecource(ResourceType type, ResourceBall rc)
+    {
+        switch(type)
+        {
+            case ResourceType.Exp:
+                ActiveExpPool.Remove(rc);
+                break;
+            case ResourceType.Gold:
+                ActiveGoldPool.Remove(rc);
+                break;
+            case ResourceType.HealKit:
+                ActiveHealKitPool.Remove(rc);
+                break;
+            case ResourceType.Magnit:
+                ActiveMagnitPool.Remove(rc);
+                break;
+            case ResourceType.Dynamit:
+                ActiveDynamitPool.Remove(rc);
+                break;
+            default:
+                break;
+        }
     }
 
     public void AddRecource(ResourceType type, ResourceBall rc)
@@ -173,6 +234,34 @@ public class ResourcePool : MonoBehaviour
         HealKitPool.Clear();
         MagnitPool.Clear();
         DynamitPool.Clear();
+    }
+
+    void Update()
+    {
+        for (int i = 0; i < ActiveGoldPool.Count; i++)
+        {
+            Rotate(ActiveGoldPool[i].transform);
+        }
+        
+        for (int i = 0; i < ActiveDynamitPool.Count; i++)
+        {
+            Rotate(ActiveGoldPool[i].transform);
+        }
+        
+        for (int i = 0; i < ActiveMagnitPool.Count; i++)
+        {
+            Rotate(ActiveGoldPool[i].transform);
+        }
+        
+        for (int i = 0; i < ActiveHealKitPool.Count; i++)
+        {
+            Rotate(ActiveGoldPool[i].transform);
+        }
+    }
+
+    void Rotate(Transform rot)
+    {
+        rot.rotation = Quaternion.Euler(rot.eulerAngles + new Vector3(0f, 105f * Time.deltaTime, 0f));
     }
 }
 

@@ -154,7 +154,7 @@ public class Ammo : MonoBehaviour
                 OnHit(col.gameObject.GetComponent<Detection>());
                 break;
             default:
-                Off();
+                /*Off();*/
                 break;
         }
     }

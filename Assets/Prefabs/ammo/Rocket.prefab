@@ -250,7 +250,7 @@ MonoBehaviour:
   maxDistance: 100
   Specifics: 1
   standartHitEffect: {fileID: 6804724085014414636}
-  blowRadius: 5
+  blowRadius: 8
 --- !u!1 &2120885142172115862
 GameObject:
   m_ObjectHideFlags: 0

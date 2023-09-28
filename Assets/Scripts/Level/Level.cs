@@ -10,6 +10,7 @@ public class Level : MonoBehaviour
     public void Off() => gameObject.SetActive(false);
     public void Eliminate() => Destroy(gameObject);
 
+    public FirstResourceOnStart ResourceOnStart;
     public GoldRewardPerWaveChest Chest;
     public EnemiesGenerator Generator;
     public LevelWavesInfo WavesInfo;
@@ -27,6 +28,7 @@ public class Level : MonoBehaviour
         if (LevelManager.Instance.GetIndex() > 0)
         {
             Generator.Launch();
+            ResourceOnStart.Spawn();
         }
     }
 
@@ -62,5 +64,7 @@ public class Level : MonoBehaviour
         Gold.Minus(9999999);
         Crystal.Minus(9999999);
         Experience.Minus(9999999);
+
+        ResourceOnStart.HaveToSpawn = true;
     }
 } 

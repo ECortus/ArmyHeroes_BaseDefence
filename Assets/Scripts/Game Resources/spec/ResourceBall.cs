@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class ResourceBall : MonoBehaviour
 {
+    public ResourceType Type;
+    
     public float resourceAmount { get; set; }
-    [SerializeField] private float distanceToPlayer, speed;
+    
+    [Space]
+    [SerializeField] private float distanceToPlayer;
+    [SerializeField] private float speed;
 
     [Space]
     [SerializeField] private Rigidbody rb;
@@ -26,10 +31,13 @@ public class ResourceBall : MonoBehaviour
         gameObject.SetActive(true);
 
         time = spawnDelay;
+        
+        ResourcePool.Instance.AddActiveRecource(Type, this);
     }
 
     public virtual void Off()
     {
+        ResourcePool.Instance.RemoveActiveRecource(Type, this);
         gameObject.SetActive(false);
     }
 
