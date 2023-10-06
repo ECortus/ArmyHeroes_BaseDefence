@@ -155,7 +155,7 @@ public class RangeAttackPlayer : PlayerNearestDetector
         weapon.rotation = Quaternion.RotateTowards(
             weapon.rotation,
             Quaternion.LookRotation(to),
-            Time.deltaTime * 245f
+            Time.deltaTime * 175f
         );
     }
 }

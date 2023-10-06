@@ -49,6 +49,7 @@ public class Tutorial : MonoBehaviour
         yield return new WaitUntil(() => EnemiesPool.Instance.AllDied);
 
         Generator.WaveIndex++;
+        GeneratorUI.Instance.ResetSlider();
         
         LevelManager.Instance.ActualLevel.Chest.On();
         /*Arrow.SetTarget(chest);*/
@@ -78,7 +79,7 @@ public class Tutorial : MonoBehaviour
         
         Arrow.Off();
         
-        LevelManager.Instance.PlusLevelIndex();
-        LevelManager.Instance.ActualLevel.ResetLevel();
+        /*LevelManager.Instance.PlusLevelIndex();
+        LevelManager.Instance.ActualLevel.ResetLevel();*/
     }
 }

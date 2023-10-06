@@ -46,7 +46,7 @@ public class DoctorDetector : AllDetector
 
     void Update()
     {
-        if(controller.Died)
+        if (!controller.Active || controller.Died)
         {
             Stop();
             StopHeal();

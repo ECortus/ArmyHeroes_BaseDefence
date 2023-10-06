@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoShooting: 0
-  _Damage: 5
+  _Damage: 15
   _Delay: 0.4
   Muzzle: {fileID: 6086241409021373949}
   Ammo: {fileID: -4908016652517735666, guid: 39b5cfb214d947e4aa5c982cbaf727dc, type: 3}
@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoShooting: 0
-  _Damage: 5
+  _Damage: 15
   _Delay: 0.4
   Muzzle: {fileID: 6086241409515987105}
   Ammo: {fileID: -4908016652517735666, guid: 39b5cfb214d947e4aa5c982cbaf727dc, type: 3}

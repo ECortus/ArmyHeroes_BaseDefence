@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcacb184e4a19ab4d9251a333905962a, type: 3}
   m_Name: UltMines
   m_EditorClassIdentifier: 
-  defCost: 125
+  defCost: 50
   costDownPerLvlOnPercent: 5
   defDuration: 40
   durationUpPerLvl: 50

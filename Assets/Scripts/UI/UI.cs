@@ -11,6 +11,8 @@ public class UI : MonoBehaviour
     [SerializeField] private OpenCloseObjectLevelUI End, Lose;
     [SerializeField] private LoadLobbyManager loadLobbyManager;
 
+    [Space] [SerializeField] private GameObject pauseObject;
+
     void Awake()
     {
         Instance = this;
@@ -39,5 +41,17 @@ public class UI : MonoBehaviour
     public void LoseLevel()
     {
         Lose.Open();
+    }
+
+    public void PauseOn()
+    {
+        Time.timeScale = 0f;
+        pauseObject.SetActive(true);
+    }
+
+    public void PauseOff()
+    {
+        Time.timeScale = 1f;
+        pauseObject.SetActive(false);
     }
 }

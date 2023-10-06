@@ -165,8 +165,11 @@ public class ProduceHitOfSpecificAmmo : MonoBehaviour
     public void TurnOnImpulse(float force)
     {
         /*Effects[4].gameObject.SetActive(true);*/
-        Effects[4].Play();
         
-        enemy.ForceBack(force);
+        if (detection.Type.HasFlag(DetectType.Enemy))
+        {
+            Effects[4].Play();
+            enemy.ForceBack(force);
+        }
     }
 }

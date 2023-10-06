@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 643d312c84d4bee4b8858e787c7f6286, type: 3}
   m_Name: UltEconomy
   m_EditorClassIdentifier: 
-  defCost: 150
+  defCost: 200
   costDownPerLvlOnPercent: 5
   defDuration: 10
   durationUpPerLvl: 50

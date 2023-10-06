@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a64d16543f339743a71211d0836dc2b, type: 3}
   m_Name: UltOrbHit
   m_EditorClassIdentifier: 
-  defCost: 75
+  defCost: 100
   costDownPerLvlOnPercent: 5
   defDuration: 40
   durationUpPerLvl: 50
-  damage: 100
+  damage: 300
   damageUpPerLVL: 50
   Range: 8
-  ShootCount: 5
+  ShootCount: 4

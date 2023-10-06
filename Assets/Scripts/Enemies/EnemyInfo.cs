@@ -17,6 +17,8 @@ public class EnemyInfo : Detection
         base.Death();
 
         EndLevelStats.Instance.PlusKillingCount();
+        GeneratorUI.Instance.UpdateSlider(1);
+        
         await UniTask.Delay(3000);
 
         gameObject.SetActive(false);

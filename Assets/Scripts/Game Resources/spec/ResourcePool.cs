@@ -245,17 +245,17 @@ public class ResourcePool : MonoBehaviour
         
         for (int i = 0; i < ActiveDynamitPool.Count; i++)
         {
-            Rotate(ActiveGoldPool[i].transform);
+            Rotate(ActiveDynamitPool[i].transform);
         }
         
         for (int i = 0; i < ActiveMagnitPool.Count; i++)
         {
-            Rotate(ActiveGoldPool[i].transform);
+            Rotate(ActiveMagnitPool[i].transform);
         }
         
         for (int i = 0; i < ActiveHealKitPool.Count; i++)
         {
-            Rotate(ActiveGoldPool[i].transform);
+            Rotate(ActiveHealKitPool[i].transform);
         }
     }
 

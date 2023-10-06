@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShootingUpgrades : MonoBehaviour
 {
-    public SpecificType Specifics = SpecificType.Simple;
+    [HideInInspector] public SpecificType Specifics = SpecificType.Simple;
     public void AddSpecific(SpecificType type)
     {
         if(!Specifics.HasFlag(type))
@@ -23,7 +23,9 @@ public class ShootingUpgrades : MonoBehaviour
     [HideInInspector] public float DecreaseSC = 1f;
     public void AddDecreaseSC(float sc)
     {
-        DecreaseSC *= 1f - (sc > 1f ? sc / 100f : sc) * DecreaseSC;
+        if (DecreaseSC <= 0f) ResetDecreaseSC();
+        
+        DecreaseSC *= 1f - (sc / 100f * DecreaseSC);
     }
     public void ResetDecreaseSC()
     {
@@ -33,6 +35,8 @@ public class ShootingUpgrades : MonoBehaviour
     [HideInInspector] public int AmmoPerShotMultiple = 1;
     public void AddAmmoPerShotMultiple(int sc)
     {
+        if (AmmoPerShotMultiple < 1) ResetAmmoPerShotMultiple();
+        
         AmmoPerShotMultiple *= sc;
     }
     public void ResetAmmoPerShotMultiple()

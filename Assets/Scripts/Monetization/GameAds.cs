@@ -25,6 +25,11 @@ public static class GameAds
         NoAdsObjectBuyed = true;
     }
     
+    public static void DeactivateNoAds()
+    {
+        NoAdsObjectBuyed = false;
+    }
+    
     public static bool Subcribed 
     {
         get

@@ -28,11 +28,19 @@ public class UltaActivatorUI : MonoBehaviour
         button.onClick.AddListener(OnButtonClick);
     }
 
+    public void OnButtonClickAd()
+    {
+        //ad
+        
+        UltaActivator.Instance.Activate();
+        Reload();
+    }
+
     public void OnButtonClick()
     {
         Crystal.Minus(Cost);
         UltaActivator.Instance.Activate();
-
+        
         Reload();
     }
 

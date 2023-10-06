@@ -52,6 +52,8 @@ public class EnemiesGenerator : MonoBehaviour
 
     IEnumerator Working()
     {
+        /*GeneratorUI.Instance.ResetSlider();*/
+        
         Wave wave;
         Enemy enemy = null;
         Vector3 position = Vector3.zero;
@@ -65,6 +67,8 @@ public class EnemiesGenerator : MonoBehaviour
             yield return new WaitUntil(() => EnemiesPool.Instance.AllDied);
             
             WaveIndex++;
+            GeneratorUI.Instance.ResetSlider();
+            
             PlayAllHappy();
             
             if (w + 1 < WavesCount)
@@ -91,6 +95,8 @@ public class EnemiesGenerator : MonoBehaviour
 
     public IEnumerator PullOutWave(Wave wave)
     {
+        GeneratorUI.Instance.ResetSlider();
+        
         Enemy enemy = null;
         Vector3 position = Vector3.zero;
         

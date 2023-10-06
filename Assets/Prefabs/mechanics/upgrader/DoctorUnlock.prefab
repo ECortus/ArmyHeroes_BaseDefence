@@ -560,7 +560,7 @@ MonoBehaviour:
   MinProgress: 0
   MaxProgress: 3
   DefaultCost: 87
-  UpCostPerProgress: 48
+  UpCostPerProgress: 76
   amountSlider: {fileID: 8015833221647940405}
   amountText: {fileID: 5327018500446467502}
   human: {fileID: 0}

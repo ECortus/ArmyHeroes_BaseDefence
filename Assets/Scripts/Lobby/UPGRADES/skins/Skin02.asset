@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Skin02
   m_EditorClassIdentifier: 
   Index: 2
-  Cost: 150
-  HPBonus: 25
-  DMGBonus: 200
+  Cost: 300
+  HPBonus: 50
+  DMGBonus: 75

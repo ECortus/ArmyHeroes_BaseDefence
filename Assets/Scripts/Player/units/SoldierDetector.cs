@@ -49,18 +49,27 @@ public class SoldierDetector : NearestDetector
     [SerializeField] private float GoDelay = 10f;
 
     private Transform[] GoDots => LevelManager.Instance.ActualLevel.SoldiersGoDots;
-    float time = 10f;
+    float time = 2f;
 
     void Update()
     {
-        if (data != null || !EnableGo || !isOn) return;
+        if (!controller.Active || controller.Died)
+        {
+            Reset();
+            return;
+        }
+        
+        if (data != null || !EnableGo || !isOn)
+        {
+            CancelGo();
+        }
         
         time -= Time.deltaTime;
 
         if(time <= 0f)
         {
             Go();
-            time = 9999f;
+            time = 99999f;
         }
     }
 
@@ -77,10 +86,16 @@ public class SoldierDetector : NearestDetector
 
         Vector3 point = GoDots[Random.Range(0, GoDots.Length)].position;
         
-        GoToPoint(point);
+        GoToPoint(GoDots[Random.Range(0, GoDots.Length)]);
     }
 
-    public async void GoToPoint(Vector3 point)
+    void CancelGo()
+    {
+        if(gameObject.activeSelf && controller.Active && !controller.Died) On();
+        time = GoDelay;
+    }
+
+    public async void GoToPoint(Transform dot)
     {
         Stop();
 
@@ -90,11 +105,11 @@ public class SoldierDetector : NearestDetector
 
         shooting.Disable();
 
-        controller.SetDestination(point);
+        controller.SetTarget(dot);
+        controller.takeControl = false;
 
-        await UniTask.WaitUntil(() => controller.NearPoint(point, 2f));
-        On();
-
-        time = GoDelay;
+        await UniTask.WaitUntil(() => controller.NearPoint(controller.target.position, 2f) /*|| isOn || !gameObject.activeSelf*/);
+        
+        CancelGo();
     } 
 }

@@ -52,7 +52,7 @@ public class PikemanDetector : AllDetector
 
     void Update()
     {
-        if(detection.Died)
+        if (!controller.Active || controller.Died)
         {
             Reset();
             return;

@@ -51,9 +51,9 @@ public class Ammo : MonoBehaviour
 
         spawnPos = spawn;
         transform.position = spawn;
-        transform.rotation = rot;
+        if(rot.eulerAngles != Vector3.zero) transform.rotation = rot;
 
-        trial?.Clear();
+        if(trial != null) trial.Clear();
     }
 
     public virtual async void Off(Transform pos = null)
@@ -71,7 +71,7 @@ public class Ammo : MonoBehaviour
             transform.position = pos.position;
         }
 
-        await UniTask.Delay(2000);
+        await UniTask.Delay(2000, DelayType.UnscaledDeltaTime);
 
         gameObject.SetActive(false);
     }   
@@ -132,16 +132,16 @@ public class Ammo : MonoBehaviour
 
     void EffectOnHit(Detection det)
     {
-        /*foreach(SpecificAmmoArray array in SpecificInfos)
+        foreach(SpecificAmmoArray array in SpecificInfos)
         {
             if(Specifics.HasFlag(array.Type))
             {
-                array.OnEffect.Stop();
-                array.HitEffect.Play();
+                /*array.OnEffect.Stop();
+                array.HitEffect.Play();*/
 
                 array.OnHit.Action(det);
             }
-        }*/
+        }
     }
     
     void OnCollisionEnter(Collision col)
@@ -154,7 +154,7 @@ public class Ammo : MonoBehaviour
                 OnHit(col.gameObject.GetComponent<Detection>());
                 break;
             default:
-                /*Off();*/
+                Off();
                 break;
         }
     }

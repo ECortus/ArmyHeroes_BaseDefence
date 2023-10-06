@@ -17,7 +17,7 @@ public class InterstationalTimer : MonoBehaviour
     {
         if (time > 0f)
         {
-            time -= Time.deltaTime;
+            time -= Time.unscaledTime;
         }
     }
 

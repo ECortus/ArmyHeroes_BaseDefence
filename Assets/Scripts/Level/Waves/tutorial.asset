@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7675e40dea7ffaf4cb1a2ce169223166, type: 3}
+  m_Name: tutorial
+  m_EditorClassIdentifier: 
+  Waves:
+  - Slots:
+    - Calls:
+      - enemy: {fileID: 1767988619501561688, guid: 6859ec4489fd44e458eff26bd9abcc9b,
+          type: 3}
+        Count: 1
+  - Slots:
+    - Calls:
+      - enemy: {fileID: 1767988619501561688, guid: 6859ec4489fd44e458eff26bd9abcc9b,
+          type: 3}
+        Count: 2
+    - Calls:
+      - enemy: {fileID: 1767988619501561688, guid: 6859ec4489fd44e458eff26bd9abcc9b,
+          type: 3}
+        Count: 2
+  DelayBetweenCalls: 0
+  DelayBetweenSlots: 0
+  TokenReward: 25

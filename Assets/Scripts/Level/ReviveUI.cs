@@ -22,6 +22,7 @@ public class ReviveUI : MonoBehaviour
 
     public void On()
     {
+        nothanks.Close();
         objUI.Open();
         time = delayTime;
 

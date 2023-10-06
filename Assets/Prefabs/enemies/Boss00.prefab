@@ -138,7 +138,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
+  m_ObstacleAvoidanceType: 2
 --- !u!54 &1767988619501561687
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 0}
   detection: {fileID: 4421525919233014343}
-  priorityTypes: 33
+  priorityTypes: 1
   detectTypes: 383
   range: 12
   CheckCollisionWithTarget: 1
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _HP: 0
-  InputHP: 500
+  InputHP: 4000
   HPvDMGvSPD: {fileID: 0}
   bar: {fileID: 5966862262489640033}
   ResurrectEvent:
@@ -380,7 +380,7 @@ MonoBehaviour:
         m_CallState: 2
   EmojiesController: {fileID: 0}
   Type: 1024
-  Damage: 15
+  Damage: 35
 --- !u!114 &-4141904928821083044
 MonoBehaviour:
   m_ObjectHideFlags: 0

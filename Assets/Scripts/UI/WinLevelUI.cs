@@ -20,8 +20,11 @@ public class WinLevelUI : OpenCloseObjectLevelUI
     {
         GameManager.Instance.SetActive(false);
 
-        if (Statistics.LevelIndex - 1 <= 0)
+        if (Statistics.LevelIndex < 1)
         {
+            LevelManager.Instance.PlusLevelIndex();
+            LevelManager.Instance.ActualLevel.ResetLevel();
+            
             loadLobby.LoadLobby();
         }
         else

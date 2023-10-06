@@ -8,7 +8,7 @@ public class UpDamage : NewProgressBonus
     public override void Apply()
     {
         float amount = ApplyCount == 0 ? 15f : 10f;
-        PlayerUpgrades.Instance.AddDMGPercent(amount);
+        PlayerUpgrades.Instance.AddDMGPercent(amount / 2f);
     }
 
     public override void Cancel()

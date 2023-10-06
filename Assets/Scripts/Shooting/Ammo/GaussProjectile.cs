@@ -25,6 +25,7 @@ public class GaussProjectile : Ammo
 
     public override void Off(Transform pos = null)
     {
+        projectile.Stop();
         if(destroy != null)
         {
             destroy.Play();

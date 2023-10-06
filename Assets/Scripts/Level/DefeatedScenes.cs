@@ -33,7 +33,7 @@ public class DefeatedScenes : MonoBehaviour
         helicarrierDeathCamera.transform.position = new Vector3(
             helicarrierDeathCamera.position.x, 
             helicarrierDeathCamera.position.y, 
-            helicarrierDeathCamera.position.z + 1f
+            helicarrierDeathCamera.position.z - 3f
         );
         CameraController.Instance.SetTarget(helicarrierDeathCamera);
         
@@ -41,7 +41,7 @@ public class DefeatedScenes : MonoBehaviour
         
         mainHeli.SetActive(false);
         brokenHeli.SetActive(true);
-        await UniTask.Delay(1000);
+        await UniTask.Delay(1000, DelayType.UnscaledDeltaTime);
 
         ReviveUI.Instance.On();
     }

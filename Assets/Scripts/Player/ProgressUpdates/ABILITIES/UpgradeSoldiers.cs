@@ -50,8 +50,8 @@ public class UpgradeSoldiers : NewProgressBonus
                 soldier.HPvDMGvSPD.ResetHP();
                 soldier.HPvDMGvSPD.ResetDMG();
 
-                soldier.HPvDMGvSPD.AddHPPercent(PlusHP);
-                soldier.HPvDMGvSPD.AddDMGPercent(PlusDMG);
+                soldier.HPvDMGvSPD.AddHPPercent(PlusHP / 2f);
+                soldier.HPvDMGvSPD.AddDMGPercent(PlusDMG / 2f);
             }
         }
     }

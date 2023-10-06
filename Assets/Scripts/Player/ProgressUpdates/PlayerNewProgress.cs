@@ -74,8 +74,6 @@ public class PlayerNewProgress : MonoBehaviour
 
     public void GetAll3XAbilities()
     {
-        ///ad
-        
         foreach(NewProgressBonus npb in Bonuses)
         {
             npb.Add();

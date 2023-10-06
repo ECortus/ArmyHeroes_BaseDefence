@@ -5,6 +5,7 @@ using UnityEngine;
 public class BaseDetector : MonoBehaviour, IAdditionalCondition
 {
     [Header("DEBUG: ")]
+    public bool DetectorOn = false;
     public Detection data;
 
     [Header("Par-s: ")]
@@ -30,6 +31,7 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
     {
         if(coroutine == null)
         {
+            DetectorOn = true;
             coroutine = StartCoroutine(Working());
         }
     }
@@ -38,6 +40,8 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
     {
         if(coroutine != null)
         {
+            DetectorOn = false;
+            
             StopCoroutine(coroutine);
             coroutine = null;
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerNearestDetector : BaseDetector
 {
     public bool Addit_Data_Condition(Detection addit) => AdditionalCondition(addit)
-        && Vector3.Angle(transform.forward, (addit.transform.position - transform.position).normalized) <= 115f;
+        && Vector3.Angle(transform.forward, (addit.transform.position - transform.position).normalized) <= 85f;
     
     public Detection addit_data;
 
@@ -20,7 +20,7 @@ public class PlayerNearestDetector : BaseDetector
         {
             if(det == data) continue;
 
-            if (Vector3.Angle(transform.forward, (det.transform.position - transform.position).normalized) <= 115f)
+            if (Vector3.Angle(transform.forward, (det.transform.position - transform.position).normalized) <= 85f)
             {
                 addit_data = det;
                 break;

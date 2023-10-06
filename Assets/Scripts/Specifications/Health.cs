@@ -69,7 +69,7 @@ public class Health : MonoBehaviour
     {
         if(HP <= 0f) return;
         
-        EmojiesController?.PlayWounded();
+        if(EmojiesController != null) EmojiesController.PlayWounded();
 
         HP -= mnt;
         if(HP <= 0f)
@@ -81,15 +81,15 @@ public class Health : MonoBehaviour
 
     public virtual void Resurrect()
     {
-        Heal(9999f);
+        Heal(999999f);
 
-        bar?.gameObject.SetActive(true);
+        if(bar != null) bar.gameObject.SetActive(true);
         ResurrectEvent?.Invoke();
     }
 
     public virtual void Death()
     {
-        bar?.gameObject.SetActive(false);
+        if(bar != null) bar.gameObject.SetActive(false);
         DeathEvent?.Invoke();
     }
 }

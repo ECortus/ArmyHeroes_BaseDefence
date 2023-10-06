@@ -813,7 +813,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9049027756795176250}
-  - component: {fileID: 5964591192887456222}
   m_Layer: 16
   m_Name: L_arm
   m_TagString: Untagged
@@ -839,26 +838,6 @@ Transform:
   - {fileID: 6998678042234473358}
   m_Father: {fileID: 8378733434861444230}
   m_LocalEulerAnglesHint: {x: 81.62013, y: -71.669846, z: -82.754776}
---- !u!114 &5964591192887456222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1623934480578491387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a233bbeb356ef7143b3b6282c5aa7e1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AutoShooting: 0
-  _Damage: 35
-  _Delay: 0.75
-  Muzzle: {fileID: 6998678042234473358}
-  Ammo: {fileID: 2564384199728776450, guid: 790df3d591c65b74ca817921d8589395, type: 3}
-  MultipleOn: 0
-  Handler: {fileID: 8211847869333851644}
-  AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &1943938007929220292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1460,11 +1439,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoShooting: 0
-  _Damage: 10
-  _Delay: 0.3
+  _Damage: 100
+  _Delay: 0.75
   Muzzle: {fileID: 4903056389025838358}
-  Ammo: {fileID: -4908016652517735666, guid: 39b5cfb214d947e4aa5c982cbaf727dc, type: 3}
-  MultipleOn: 1
+  Ammo: {fileID: 2564384199728776450, guid: 790df3d591c65b74ca817921d8589395, type: 3}
+  MultipleOn: 0
   Handler: {fileID: 8211847869333851644}
   AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &2957884491219263119
@@ -2796,11 +2775,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AutoShooting: 0
-  _Damage: 25
+  _Damage: 100
   _Delay: 0.75
   Muzzle: {fileID: 7755360209905518291}
   Ammo: {fileID: 2564384199728776450, guid: 790df3d591c65b74ca817921d8589395, type: 3}
-  MultipleOn: 1
+  MultipleOn: 0
   Handler: {fileID: 8211847869333851644}
   AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &6029293947259640402
@@ -2962,7 +2941,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4804994343602627442}
-  - component: {fileID: 7557529164925969165}
   m_Layer: 16
   m_Name: R_arm
   m_TagString: Untagged
@@ -2988,26 +2966,6 @@ Transform:
   - {fileID: 3886801223537615491}
   m_Father: {fileID: 1220022774819108759}
   m_LocalEulerAnglesHint: {x: -8.218294, y: 57.25684, z: 89.03092}
---- !u!114 &7557529164925969165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6372261924906845655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a233bbeb356ef7143b3b6282c5aa7e1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AutoShooting: 0
-  _Damage: 35
-  _Delay: 0.75
-  Muzzle: {fileID: 3886801223537615491}
-  Ammo: {fileID: 2564384199728776450, guid: 790df3d591c65b74ca817921d8589395, type: 3}
-  MultipleOn: 0
-  Handler: {fileID: 8211847869333851644}
-  AdditionalEffectOnShooting: {fileID: 0}
 --- !u!1 &6460179933688388939
 GameObject:
   m_ObjectHideFlags: 0
@@ -4287,7 +4245,7 @@ PrefabInstance:
     - target: {fileID: 6867729906844543440, guid: eac41af978752084d9a4fc79da78605e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6867729906844543440, guid: eac41af978752084d9a4fc79da78605e,
         type: 3}
@@ -4412,7 +4370,7 @@ PrefabInstance:
     - target: {fileID: 6867729907385045969, guid: eac41af978752084d9a4fc79da78605e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

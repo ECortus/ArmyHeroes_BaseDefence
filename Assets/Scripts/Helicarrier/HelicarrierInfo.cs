@@ -15,13 +15,15 @@ public class HelicarrierInfo : Detection
         Resurrect();
     }
 
-    private Coroutine playerMechCoroutine;
+    private bool playerMechCoroutineOned;
 
     public override void GetHit(float mnt)
     {
+        if (PlayerMech.gameObject.activeSelf) return;
+        
         base.GetHit(mnt);
 
-        if (HP / MaxHP <= 0.5f)
+        if (HP / MaxHP <= 0.5f && !Died && !playerMechCoroutineOned)
         {
             StartMech();
         }
@@ -29,7 +31,8 @@ public class HelicarrierInfo : Detection
 
     public void StartMech()
     {
-        playerMechCoroutine ??= StartCoroutine(Mech());
+        playerMechCoroutineOned = true;
+        StartCoroutine(Mech());
     }
 
     IEnumerator Mech()

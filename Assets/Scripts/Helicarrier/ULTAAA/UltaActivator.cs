@@ -27,6 +27,14 @@ public class UltaActivator : MonoBehaviour
         }
     }
 
+    public void ActivateByIndex(int index)
+    {
+        Index = index;
+        UpdateAllActivators();
+        
+        activatorUIs[Index].OnButtonClickAd();
+    }
+
     public void Activate()
     {
         turnLeft.interactable = false;

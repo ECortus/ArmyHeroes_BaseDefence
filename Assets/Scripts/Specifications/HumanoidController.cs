@@ -112,11 +112,15 @@ public class HumanoidController : Target
         {
             SetDestination(target.position);
         }
+        else
+        {
+            Agent.isStopped = true;
+        }
     }
 
     public void SetDestination(Vector3 point)
     {
-        /*if(Agent.destination != point)*/
+        if(Agent.destination != point)
         {
             Agent.SetDestination(point);
         }
@@ -156,8 +160,11 @@ public class HumanoidController : Target
 
     void ZeroRBVelocities()
     {
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
+        if (!rb.isKinematic)
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
     }
 
     void ZeroAgentVelocity()

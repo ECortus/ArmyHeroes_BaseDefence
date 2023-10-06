@@ -57,6 +57,7 @@ public class Gun : MonoBehaviour
             float del = _Delay;
             if(ups != null)
             {
+                /*Debug.Log($"Decrease value: {ups.DecreaseSC}");*/
                 del *= ups.DecreaseSC;
             }
             return del;

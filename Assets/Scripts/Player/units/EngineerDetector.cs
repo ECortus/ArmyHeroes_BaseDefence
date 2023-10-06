@@ -43,7 +43,7 @@ public class EngineerDetector : AllDetector
 
     void Update()
     {
-        if(controller.Died)
+        if (!controller.Active || controller.Died)
         {
             Reset();
             return;

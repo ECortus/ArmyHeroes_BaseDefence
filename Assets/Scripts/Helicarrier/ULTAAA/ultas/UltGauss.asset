@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21ab4e8b7b37ecb4b88a62dbe9be1c29, type: 3}
   m_Name: UltGauss
   m_EditorClassIdentifier: 
-  defCost: 100
+  defCost: 75
   costDownPerLvlOnPercent: 5
   defDuration: 35
   durationUpPerLvl: 50
-  damage: 125
+  damage: 200
   damageUpPerLVL: 25
