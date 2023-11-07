@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc54616db4c17c41aae4c2b12e26b3c, type: 3}
   m_Name: PoisonSpecific
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 1.85
   time: 3

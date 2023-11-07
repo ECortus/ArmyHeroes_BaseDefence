@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 
 public class Ammo : MonoBehaviour
 {
@@ -73,7 +76,7 @@ public class Ammo : MonoBehaviour
 
         await UniTask.Delay(2000, DelayType.UnscaledDeltaTime);
 
-        gameObject.SetActive(false);
+        if(this != null) gameObject.SetActive(false);
     }   
 
     Vector3 spawnPos;
@@ -157,6 +160,11 @@ public class Ammo : MonoBehaviour
                 Off();
                 break;
         }
+    }
+
+    private void OnDestroy()
+    {
+        
     }
 }
 

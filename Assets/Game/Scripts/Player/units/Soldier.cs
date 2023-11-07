@@ -49,7 +49,7 @@ public class Soldier : HumanoidController
             dir.y = 0f;
             
             targetRotation = Quaternion.LookRotation(dir);
-            weapon.rotation = Quaternion.RotateTowards(weapon.rotation, targetRotation, Time.deltaTime * Agent.angularSpeed * 1.25f);
+            weapon.rotation = Quaternion.RotateTowards(weapon.rotation, targetRotation, Time.deltaTime * 135f);
         }
     }
 }

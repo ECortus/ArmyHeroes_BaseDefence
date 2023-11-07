@@ -22,8 +22,10 @@ public class SoldierDetector : NearestDetector
         controller.ResetDestination();
 
         controller.takeControl = false;
-
+        
         shooting.Disable();
+        
+        CancelGo(false);
     }
 
     protected override void Change()
@@ -45,7 +47,7 @@ public class SoldierDetector : NearestDetector
         }
     }
 
-    [Space] [SerializeField] private bool EnableGo = true;
+    [Space]
     [SerializeField] private float GoDelay = 10f;
 
     private Transform[] GoDots => LevelManager.Instance.ActualLevel.SoldiersGoDots;
@@ -59,11 +61,6 @@ public class SoldierDetector : NearestDetector
             return;
         }
         
-        if (data != null || !EnableGo || !isOn)
-        {
-            CancelGo();
-        }
-        
         time -= Time.deltaTime;
 
         if(time <= 0f)
@@ -73,6 +70,8 @@ public class SoldierDetector : NearestDetector
         }
     }
 
+    private Coroutine goCoroutine;
+
     public void Go()
     {
         GoToRandomPoint();
@@ -80,22 +79,24 @@ public class SoldierDetector : NearestDetector
 
     public void GoToRandomPoint()
     {
-        /*Vector3 point = transform.position;
-        point += Random.insideUnitSphere.normalized * Random.Range(1f, 5f);
-        point.y = transform.position.y;*/
-
         Vector3 point = GoDots[Random.Range(0, GoDots.Length)].position;
-        
-        GoToPoint(GoDots[Random.Range(0, GoDots.Length)]);
+        goCoroutine ??= StartCoroutine(GoToPoint(GoDots[Random.Range(0, GoDots.Length)]));
     }
 
-    void CancelGo()
+    public void CancelGo(bool on = true)
     {
-        if(gameObject.activeSelf && controller.Active && !controller.Died) On();
+        if(on) On();
+
+        if (goCoroutine != null)
+        {
+            StopCoroutine(goCoroutine);
+            goCoroutine = null;
+        }
+        
         time = GoDelay;
     }
 
-    public async void GoToPoint(Transform dot)
+    IEnumerator GoToPoint(Transform dot)
     {
         Stop();
 
@@ -108,8 +109,9 @@ public class SoldierDetector : NearestDetector
         controller.SetTarget(dot);
         controller.takeControl = false;
 
-        await UniTask.WaitUntil(() => controller.NearPoint(controller.target.position, 2f) /*|| isOn || !gameObject.activeSelf*/);
+        yield return new WaitUntil(() =>
+            controller.NearPoint(controller.target.position, 2f) || !DetectorOn);
         
         CancelGo();
-    } 
+    }
 }

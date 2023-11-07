@@ -21,6 +21,8 @@ public class GeneratorUI : MonoBehaviour
 
     public void ResetSlider()
     {
+        if (gen.WaveIndex >= LevelManager.Instance.ActualLevel.WavesInfo.Waves.Length) return;
+        
         int max = 0;
 
         Slot[] wave = LevelManager.Instance.ActualLevel.WavesInfo.Waves[gen.WaveIndex].Slots;

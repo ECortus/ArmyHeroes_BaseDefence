@@ -9,8 +9,10 @@ public class DoctorHealSlider : BarUI
 
     public void On()
     {
-        transform.parent = parentGrid;
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+        transform.SetParent(parentGrid);
+        
+        transform.localPosition = new Vector3(transform.position.x, transform.position.y, 0);
+        transform.localEulerAngles = Vector3.zero;
         
         gameObject.SetActive(true);
         Refresh();

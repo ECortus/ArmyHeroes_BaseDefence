@@ -31,7 +31,7 @@ public class PlayerSceneRotating : MonoBehaviour
                 sign = 1;
             }
 
-            transform.eulerAngles = new Vector3(0f, angle, 0f);
+            toRotate.eulerAngles = new Vector3(0f, angle, 0f);
         }
     }
 }

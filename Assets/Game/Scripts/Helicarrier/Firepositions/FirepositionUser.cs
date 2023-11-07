@@ -47,6 +47,7 @@ public class FirepositionUser : MonoBehaviour
 
     public void Call(Transform position)
     {
+        Debug.Log(gameObject.name + " been called");
         Called = true;
 
         detection.Depool();

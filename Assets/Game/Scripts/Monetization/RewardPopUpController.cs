@@ -1,18 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class RewardPopUpController : MonoBehaviour
 {
+    public static RewardPopUpController Instance { get; set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     [SerializeField] private PopUpAction[] actions;
     [SerializeField] private GameObject bg;
     [SerializeField] private Animator anim;
     
     [Space]
     [SerializeField] private float delay = 30f;
+
+    [Space] [SerializeField] private PopUpAction MechAction;
     
     private float time = 0f;
 
@@ -42,10 +53,14 @@ public class RewardPopUpController : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    int ShowRandom()
+    void ShowRandom()
+    {
+         Show(Random.Range(0, actions.Length));
+    }
+
+    void Show(int index)
     {
         bg.SetActive(true);
-        int index = Random.Range(0, actions.Length);
 
         for (int i = 0; i < actions.Length; i++)
         {
@@ -53,7 +68,23 @@ public class RewardPopUpController : MonoBehaviour
         }
         
         actions[index].gameObject.SetActive(true);
-        return index;
+    }
+    
+
+    public void ShowMechPopUp()
+    {
+        bg.SetActive(true);
+
+        for (int i = 0; i < actions.Length; i++)
+        {
+            actions[i].gameObject.SetActive(false);
+        }
+        
+        MechAction.gameObject.SetActive(true);
+        
+        anim.SetTrigger("Show");
+
+        Time.timeScale = 0f;
     }
 
     public void OnButtonClick(PopUpAction action)
@@ -80,6 +111,7 @@ public class RewardPopUpController : MonoBehaviour
         {
             actions[i].gameObject.SetActive(false);
         }
+        MechAction.gameObject.SetActive(false);
         
         time = delay;
     }

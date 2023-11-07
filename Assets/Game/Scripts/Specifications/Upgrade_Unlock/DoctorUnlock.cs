@@ -8,8 +8,8 @@ public class DoctorUnlock : UpgraderZone
     [SerializeField] private HumanoidController human;
     [SerializeField] private List<Transform> spawnDots = new List<Transform>();
 
-    [Space] [SerializeField] private GameObject unbuilded;
-    [SerializeField] private Animation builded;
+    /*[Space] [SerializeField] private GameObject unbuilded;
+    [SerializeField] private Animation builded;*/
 
     protected override bool ConditionToAllowInter 
     { 
@@ -67,7 +67,7 @@ public class DoctorUnlock : UpgraderZone
 
     void ChangeBuilding()
     {
-        if (Progress > 0)
+        /*if (Progress > 0)
         {
             unbuilded.SetActive(false);
             builded.Play();
@@ -76,6 +76,6 @@ public class DoctorUnlock : UpgraderZone
         {
             unbuilded.SetActive(true);
             builded.transform.localScale = Vector3.zero;
-        }
+        }*/
     }
 }

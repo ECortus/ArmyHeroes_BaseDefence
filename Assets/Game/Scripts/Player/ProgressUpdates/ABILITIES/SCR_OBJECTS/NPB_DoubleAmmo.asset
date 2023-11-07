@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82a6f6d22e0165548a523ad40f1e7603, type: 3}
   m_Name: NPB_DoubleAmmo
   m_EditorClassIdentifier: 
-  MaxUsedCount: 2
+  MaxUsedCount: 1
+  ApplyCount: 0

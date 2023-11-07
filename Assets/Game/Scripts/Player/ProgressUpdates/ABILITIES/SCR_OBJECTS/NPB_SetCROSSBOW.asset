@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: NPB_SetCROSSBOW
   m_EditorClassIdentifier: 
   MaxUsedCount: 1
-  Index: 5
+  ApplyCount: 0
+  Index: 999

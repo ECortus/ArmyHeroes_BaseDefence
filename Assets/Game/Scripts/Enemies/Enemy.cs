@@ -13,7 +13,6 @@ public class Enemy : HumanoidController
     [Space]
     public EnemyType Type = EnemyType.Default;
     [HideInInspector] public Transform MainTarget, AdditionalTarget;
-    
     [SerializeField] private MeleeAttacker melee;
 
     public void SetMainTarget(Transform mt)

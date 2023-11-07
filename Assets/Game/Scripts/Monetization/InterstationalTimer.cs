@@ -8,6 +8,8 @@ public class InterstationalTimer : MonoBehaviour
     [SerializeField] private float delay = 30f;
     private float time = 0f;
 
+    [Space] [SerializeField] private RateUs rateUs;
+
     void Start()
     {
         time = delay;
@@ -15,7 +17,7 @@ public class InterstationalTimer : MonoBehaviour
     
     void Update()
     {
-        if (time > 0f)
+        if (time > 0f && !GameAds.NoAds && Statistics.LevelIndex > 0)
         {
             time -= Time.unscaledTime;
         }
@@ -23,6 +25,8 @@ public class InterstationalTimer : MonoBehaviour
 
     public void TryShowInterstationalAd()
     {
+        rateUs.TryOpen();
+        
         if (time < 0f && !GameAds.NoAds)
         {
             ///show

@@ -19,10 +19,13 @@ public class FirepositionsOperator : MonoBehaviour
             
             foreach(FirepositionUser sr in Users)
             {
-                if(!sr.Called)
+                if (sr != null)
                 {
-                    fp.CallUser(sr);
-                    break;
+                    if(!sr.Called)
+                    {
+                        fp.CallUser(sr);
+                        break;
+                    }
                 }
             }
         }
@@ -38,6 +41,8 @@ public class FirepositionsOperator : MonoBehaviour
 
     public bool PoolUser(FirepositionUser user)
     {
+        if (user == null) return false;
+        
         if(!Users.Contains(user))
         {
             Users.Add(user);

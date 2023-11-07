@@ -14,11 +14,16 @@ public class LoadingScreen : BarUI
     {
         screenObject.SetActive(true);
 
+        progressValue = 0f;
+        Refresh();
+        
         StartCoroutine(Loading(load));
     }
 
     IEnumerator Loading(ILoading load)
     {
+        yield return new WaitUntil(() => Time.timeScale == 1f);
+        
         AsyncOperation loading = load.LoadFunction();
 
         while(!loading.isDone)

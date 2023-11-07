@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: NPB_SetROCKETLAUNCHER
   m_EditorClassIdentifier: 
   MaxUsedCount: 1
-  Index: 6
+  ApplyCount: 0
+  Index: 5

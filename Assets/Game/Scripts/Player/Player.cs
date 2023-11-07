@@ -26,7 +26,6 @@ public class Player : Target
     }
 
     public static readonly int _Speed = Animator.StringToHash("Speed");
-    public static readonly int _Shooting = Animator.StringToHash("Shooting");
     public static readonly int _Death = Animator.StringToHash("Death");
 
     private FloatingJoystick joyStick => GameManager.Instance.Joystick;
@@ -34,8 +33,7 @@ public class Player : Target
     [SerializeField] private Animator Animator;
     [SerializeField] private NavMeshAgent Agent;
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private GunHandler shooting;
-    [SerializeField] private BaseDetector detector;
+    [SerializeField] private RangeAttackPlayer detector;
     [SerializeField] private Detection detection;
 
     [HideInInspector] public Vector3 Direction;
@@ -120,7 +118,7 @@ public class Player : Target
     void UpdateAnimator()
     {
         Animator.SetFloat(_Speed, Direction.magnitude);
-        Animator.SetFloat(_Shooting, shooting.GunsCount);
+        Animator.SetBool("HaveTarget", detector.data != null || detector.addit_data != null);
         Animator.SetBool(_Death, Died);
     }
 

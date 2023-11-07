@@ -60,6 +60,11 @@ public class DoctorDetector : AllDetector
         }
         else
         {
+            if (isOn)
+            {
+                On();
+            }
+            
             controller.takeControl = true;
             StopHeal();
         }

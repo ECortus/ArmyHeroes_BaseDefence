@@ -26,7 +26,7 @@ public class FirepositionUpgrader : UpgraderZone
     {
         base.Complete();
 
-        if(Progress > -1)
+        if(Progress > -1 && !Activate)
         {
             ActivateFP();
         }
@@ -46,13 +46,17 @@ public class FirepositionUpgrader : UpgraderZone
         }
     }
 
+    private bool Activate = false;
+
     void ActivateFP()
     {
         fireposition.Builded = false;
 
         firepositionObject.SetActive(true);
-        fireposition.GetHit(999f);
+        fireposition.GetHit(99999f);
 
         fireposition.Pool();
+
+        Activate = true;
     }
 }

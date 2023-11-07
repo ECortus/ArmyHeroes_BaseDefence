@@ -54,18 +54,20 @@ public class BossSpecialAttacker : MonoBehaviour
     void Update()
     {
         if (!GameManager.Instance.isActive) return;
+
+        if (!controller.Agent.isOnNavMesh) return;
         
         time -= Time.deltaTime;
         if (time < 0f && attack == null)
         {
-            if (randomNum > 50)
+            /*if (randomNum > 50)*/
             {
                 StartLongAttack();
             }
-            else
+            /*else
             {
                 StartRunAttack();
-            }
+            }*/
         }
     }
 
@@ -117,21 +119,20 @@ public class BossSpecialAttacker : MonoBehaviour
         float time = attackAnim.GetClip(longAttackAnimName).length;
 
         controller.takeControl = true;
+        
         longHitBox.On();
         attackAnim.Play(longAttackAnimName);
         
-        yield return new WaitForSeconds(time / 2f);
-        time /= 2f;
-        
-        longEffect.Play();
+        yield return new WaitForSeconds(time - 0.25f);
+        time = 0.25f;
+
+        ParticlePool.Instance.Insert(ParticleType.LongAttack, longEffect, longHitBox.transform.position, longHitBox.transform.rotation);
         
         while (time > 0f)
         {
             time -= Time.deltaTime;
             yield return null;
         }
-        
-        longEffect.Stop();
         
         attackAnim.Stop();
         longHitBox.Off();
@@ -142,7 +143,6 @@ public class BossSpecialAttacker : MonoBehaviour
 
     IEnumerator RunAttack()
     {
-        Debug.Log("run attack!!!");
         float time = runTime;
         
         runHitBox.On();

@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PlayerNearestDetector : BaseDetector
 {
+    public float Angle => 170f;
+    
     public bool Addit_Data_Condition(Detection addit) => AdditionalCondition(addit)
-        && Vector3.Angle(transform.forward, (addit.transform.position - transform.position).normalized) <= 85f;
+        && Vector3.Angle(transform.forward, (addit.transform.position - transform.position).normalized) <= Angle / 2f;
     
     public Detection addit_data;
 
@@ -20,7 +23,7 @@ public class PlayerNearestDetector : BaseDetector
         {
             if(det == data) continue;
 
-            if (Vector3.Angle(transform.forward, (det.transform.position - transform.position).normalized) <= 85f)
+            if (Vector3.Angle(transform.forward, (det.transform.position - transform.position).normalized) <= Angle / 2f)
             {
                 addit_data = det;
                 break;
@@ -56,6 +59,11 @@ public class PlayerNearestDetector : BaseDetector
                 {
                     if (!Addit_Data_Condition(addit_data) || Vector3.Distance(addit_data.transform.position, transform.position) > range)
                     {
+                        addit_data = null;
+                    }
+                    else if (!Addit_Data_Condition(data))
+                    {
+                        data = addit_data;
                         addit_data = null;
                     }
                 }

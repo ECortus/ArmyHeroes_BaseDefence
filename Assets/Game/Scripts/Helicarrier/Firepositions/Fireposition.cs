@@ -114,6 +114,7 @@ public class Fireposition : Detection
         calledUser = null;
 
         EnableAction();
+        RefreshModel();
     }
 
     public void PutOutUser()
@@ -127,6 +128,7 @@ public class Fireposition : Detection
 
         user = null;
         DisableAction();
+        RefreshModel();
     }
 
     protected virtual void EnableAction() { }

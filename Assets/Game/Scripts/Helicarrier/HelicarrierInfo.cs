@@ -9,13 +9,21 @@ public class HelicarrierInfo : Detection
     [Space]
     [SerializeField] private PlayerMech PlayerMech;
     [SerializeField] private float mechDelay = 30f;
+    [SerializeField] private float delayToShowPopUpAgain = 60f;
+    private float delayTime = 60f;
+
+    private Coroutine _coroutine;
     
     void Start()
     {
         Resurrect();
+        delayTime = delayToShowPopUpAgain * 2f;
     }
 
-    private bool playerMechCoroutineOned;
+    void Update()
+    {
+        delayTime -= Time.deltaTime;
+    }
 
     public override void GetHit(float mnt)
     {
@@ -23,16 +31,16 @@ public class HelicarrierInfo : Detection
         
         base.GetHit(mnt);
 
-        if (HP / MaxHP <= 0.5f && !Died && !playerMechCoroutineOned)
+        if (HP / MaxHP <= 0.5f && !Died && delayTime <= 0f && _coroutine == null)
         {
-            StartMech();
+            RewardPopUpController.Instance.ShowMechPopUp();
+            delayTime = delayToShowPopUpAgain;
         }
     }
 
     public void StartMech()
     {
-        playerMechCoroutineOned = true;
-        StartCoroutine(Mech());
+        _coroutine = StartCoroutine(Mech());
     }
 
     IEnumerator Mech()
@@ -52,5 +60,9 @@ public class HelicarrierInfo : Detection
         PlayerMech.Off();
         Player.On(PlayerMech.Transform.position);
         CameraController.Instance.SetTarget(Player.Transform);
+        
+        delayTime = delayToShowPopUpAgain;
+
+        _coroutine = null;
     }
 }

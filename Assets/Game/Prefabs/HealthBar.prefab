@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 6867729906880444341}
   - component: {fileID: 6867729906880444346}
   - component: {fileID: 6867729906880444347}
+  - component: {fileID: 2343622761099989900}
   m_Layer: 8
   m_Name: HealthBar
   m_TagString: Untagged
@@ -179,6 +180,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 6867729906880444346}
+  rot: {fileID: 2343622761099989900}
+--- !u!1818360609 &2343622761099989900
+RotationConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6867729906880444340}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_Active: 1
+  m_IsLocked: 1
+  m_Sources: []
 --- !u!1 &6867729907385045968
 GameObject:
   m_ObjectHideFlags: 0

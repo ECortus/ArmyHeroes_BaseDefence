@@ -7,11 +7,12 @@ public class ParticlePool : MonoBehaviour
     public static ParticlePool Instance;
     void Awake() => Instance = this;
 
-    private List<ParticleSystem> 
+    private List<ParticleSystem>
         DynamitEffectPool = new List<ParticleSystem>(),
-        ElectricHitEffectPool = new List<ParticleSystem>();
+        ElectricHitEffectPool = new List<ParticleSystem>(),
+        LongAttackEffectPool = new List<ParticleSystem>();
 
-    public GameObject Insert(ParticleType type, ParticleSystem obj, Vector3 pos)
+    public GameObject Insert(ParticleType type, ParticleSystem obj, Vector3 pos, Quaternion rot = new Quaternion())
     {
         List<ParticleSystem> list = new List<ParticleSystem>();
 
@@ -22,6 +23,9 @@ public class ParticlePool : MonoBehaviour
                 break;
             case ParticleType.ElectricHit:
                 list = ElectricHitEffectPool;
+                break;
+            case ParticleType.LongAttack:
+                list = LongAttackEffectPool;
                 break;
             default:
                 break;
@@ -34,12 +38,13 @@ public class ParticlePool : MonoBehaviour
             if(!ps.isPlaying) 
             {
                 ps.transform.position = pos;
+                if(rot != new Quaternion()) ps.transform.rotation = rot;
                 ps.Play();
                 return ps.gameObject;
             }
         }
 
-        ParticleSystem scr = Instantiate(obj, pos, Quaternion.Euler(Vector3.zero));
+        ParticleSystem scr = Instantiate(obj, pos, rot);
         scr.Play();
         list.Add(scr);
 
@@ -50,6 +55,9 @@ public class ParticlePool : MonoBehaviour
                 break;
             case ParticleType.ElectricHit:
                 ElectricHitEffectPool = list;
+                break;
+            case ParticleType.LongAttack:
+                LongAttackEffectPool = list;
                 break;
             default:
                 break;
@@ -62,5 +70,5 @@ public class ParticlePool : MonoBehaviour
 [System.Serializable]
 public enum ParticleType
 {
-    Default, Dynamit, ElectricHit
+    Default, Dynamit, ElectricHit, LongAttack
 }

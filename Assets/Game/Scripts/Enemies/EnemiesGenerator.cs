@@ -122,7 +122,7 @@ public class EnemiesGenerator : MonoBehaviour
 
         foreach(var VARIABLE in allies)
         {
-            VARIABLE.EmojiesController.PlayHappy();
+            if(!VARIABLE.Died && VARIABLE.Active) VARIABLE.EmojiesController.PlayHappy();
         }
     }
 

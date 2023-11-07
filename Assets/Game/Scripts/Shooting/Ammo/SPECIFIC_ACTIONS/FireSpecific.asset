@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4953afd9f5e5a6e448daaedb7e06ea48, type: 3}
   m_Name: FireSpecific
   m_EditorClassIdentifier: 
-  damage: 7
+  damage: 1.35
   time: 4

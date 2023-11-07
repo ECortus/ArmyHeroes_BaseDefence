@@ -40,17 +40,17 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
     {
         if(coroutine != null)
         {
-            DetectorOn = false;
-            
             StopCoroutine(coroutine);
             coroutine = null;
         }
     }
 
-    public void Off()
+    public virtual void Off()
     {
         Stop();
         Reset();
+        
+        DetectorOn = false;
     }
 
     protected virtual IEnumerator Working()

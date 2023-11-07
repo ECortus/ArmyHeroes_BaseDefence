@@ -17,6 +17,6 @@ public class PlayerGunHandlerLobby : MonoBehaviour
 
     void UpdateAnimator()
     {
-        Animator.SetFloat(_Shooting, gunHandler.GunsCount);
+        /*Animator.SetFloat(_Shooting, gunHandler.GunsCount);*/
     }
 }

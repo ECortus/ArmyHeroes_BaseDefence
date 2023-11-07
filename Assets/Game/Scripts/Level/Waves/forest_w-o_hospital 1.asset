@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7675e40dea7ffaf4cb1a2ce169223166, type: 3}
+  m_Name: forest_w-o_hospital 1
+  m_EditorClassIdentifier: 
+  Waves:
+  - Slots:
+    - Calls:
+      - enemy: {fileID: 1767988619501561688, guid: 54bd0c1e940bf3a47ae7211cca7b92fd,
+          type: 3}
+        Count: 4
+  - Slots:
+    - Calls:
+      - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
+          type: 3}
+        Count: 5
+      - enemy: {fileID: 1767988619501561688, guid: 58a54a8c6ee07e44c850a91f5eb53e65,
+          type: 3}
+        Count: 2
+    - Calls:
+      - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
+          type: 3}
+        Count: 5
+      - enemy: {fileID: 1767988619501561688, guid: ccfc153fad9f9554ea62e25db1623cab,
+          type: 3}
+        Count: 5
+  DelayBetweenCalls: 1
+  DelayBetweenSlots: 2.5
+  TokenReward: 250

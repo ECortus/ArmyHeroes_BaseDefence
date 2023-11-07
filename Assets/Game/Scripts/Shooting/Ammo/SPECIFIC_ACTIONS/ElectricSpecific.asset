@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e1d29d76523d8418bd445b601a04a5, type: 3}
   m_Name: ElectricSpecific
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 2.5
   maxTargetsCount: 4
   maxDistanceBetweenTargets: 5
