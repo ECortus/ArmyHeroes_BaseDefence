@@ -47,6 +47,12 @@ public class Drone : Target
         SetTarget(Helicarrier.Instance.Transform);
         toSpawn = true;
         speed = moveSpeed * 2f;
+
+        if (!GameManager.Instance.isActive)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         
         await UniTask.WaitUntil(() => (movePoint - transform.position).magnitude < 2f);
 

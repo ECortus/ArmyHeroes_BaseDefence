@@ -21,11 +21,13 @@ public class UpgraderZone : MonoBehaviour
     protected virtual void Complete() 
     {
         Progress++;
+        RequireAmount = Cost;
+        
         Refresh();
     }
 
-    public string SaveName => PreName + "_Upgrade_level_" + Statistics.LevelIndex;
-    public string AmountName => PreName + "_RequireAmount_level_" + Statistics.LevelIndex;
+    public string SaveName => PreName + gameObject.name + "_Upgrade_level_" + Statistics.LevelIndex;
+    public string AmountName => PreName + gameObject.name + "_RequireAmount_level_" + Statistics.LevelIndex;
     public int Cost => (int)((DefaultCost + UpCostPerProgress * (Progress - MinProgress)) * BuildingUpgradesLVLs.CostMod);
 
     [Header("Info zone:")]
@@ -62,6 +64,7 @@ public class UpgraderZone : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        if(RequireAmount == 0) RequireAmount = Cost;
         Refresh();
     }
 
@@ -75,7 +78,6 @@ public class UpgraderZone : MonoBehaviour
     {
         if(Progress < MaxProgress)
         {
-            if(RequireAmount == 0) RequireAmount = Cost;
             RefreshOutInfo();
         }
         else
@@ -102,7 +104,7 @@ public class UpgraderZone : MonoBehaviour
 
     void StartReduce()
     {
-        if(coroutine == null)
+        if(coroutine == null && Statistics.Gold > 0)
         {
             coroutine = StartCoroutine(ReduceRequiredAmount());
             CoinThrow.Instance.On(transform);
@@ -126,7 +128,7 @@ public class UpgraderZone : MonoBehaviour
         int iter = 0;
         yield return null;
 
-        while(true)
+        while(Statistics.Gold > 0)
         {
             if(!ConditionToAllowInter) break;
 

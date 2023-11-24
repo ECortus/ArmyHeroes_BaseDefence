@@ -71,7 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   BallAmount: 30
-  ResourcePerBall: 1
+  ResourcePerBall: 2
   anim: {fileID: 4888253660014734147}
   particle: {fileID: 3339160552616897439}
   spawnpart: {fileID: 1642983810932718575}

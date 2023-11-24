@@ -7,7 +7,7 @@ public class HealthRegeneration : NewProgressBonus
 {
     public override void Apply()
     {
-        PlayerInfo.Instance.AddRegenPercent(0.05f);
+        PlayerInfo.Instance.AddRegenPercent(0.025f);
     }
 
     public override void Cancel()

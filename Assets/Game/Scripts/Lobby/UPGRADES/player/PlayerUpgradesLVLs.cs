@@ -7,7 +7,7 @@ public static class PlayerUpgradesLVLs
     public readonly static float DMGPercentUP = 0.05f;
     public readonly static float SPDPercentUP = 0.025f;
     public readonly static float SCPercentDecrease = 0.05f;
-    public readonly static float RegenPercentPerSecond = 0.01f;
+    public readonly static float RegenPercentPerSecond = 0.015f;
 
     public static int DMGLVL
     {
@@ -67,5 +67,5 @@ public static class PlayerUpgradesLVLs
         }
     }
     public static void UpRegen() => RegenLVL++;
-    public static float RegenMod => RegenLVL * RegenPercentPerSecond;
+    public static float RegenMod => RegenPercentPerSecond * RegenLVL;
 }

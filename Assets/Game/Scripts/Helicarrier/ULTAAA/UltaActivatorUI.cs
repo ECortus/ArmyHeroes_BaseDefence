@@ -13,7 +13,7 @@ public class UltaActivatorUI : MonoBehaviour
     private float Duration => ulta.Duration;
 
     [Space]
-    [SerializeField] private Button button;
+    public Button button;
     [SerializeField] private TextMeshProUGUI gemCounter;
 
     [Space]
@@ -32,28 +32,34 @@ public class UltaActivatorUI : MonoBehaviour
     {
         //ad
         
-        UltaActivator.Instance.Activate();
-        Reload();
-    }
-
-    public void OnButtonClick()
-    {
-        Crystal.Minus(Cost);
+        UltaActivator.Instance.SetUlta(ulta);
         UltaActivator.Instance.Activate();
         
         Reload();
     }
 
+    public void OnButtonClick()
+    {
+        if (Statistics.Crystal >= Cost)
+        {
+            Crystal.Minus(Cost);
+            UltaActivator.Instance.SetUlta(ulta);
+            UltaActivator.Instance.Activate();
+        
+            Reload();
+        }
+    }
+
     public void Updating()
     {
-        if(!Choised)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-        }
+        // if(!Choised)
+        // {
+        //     gameObject.SetActive(false);
+        // }
+        // else
+        // {
+        //     gameObject.SetActive(true);
+        // }
 
         if(Statistics.Crystal < Cost)
         {
@@ -64,7 +70,7 @@ public class UltaActivatorUI : MonoBehaviour
             button.interactable = true;
         }
 
-        gemCounter.text = $"{Cost}";
+        SetTextCost(true);
     }
 
     public void Reload()
@@ -75,10 +81,10 @@ public class UltaActivatorUI : MonoBehaviour
     IEnumerator Pause()
     {
         float time = Duration;
-        button.interactable = false;
-
-        gemCounter.text = $"---";
-
+        // button.interactable = false;
+        UltaActivator.Instance.SetInteractableToAll(false);
+        UltaActivator.Instance.SetTextToAll(false);
+        
         timer.SetActive(true);
 
         while(time > 0f)
@@ -91,8 +97,16 @@ public class UltaActivatorUI : MonoBehaviour
 
         timer.SetActive(false);
         coroutine = null;
+        
+        UltaActivator.Instance.SetInteractableToAll(true);
+        UltaActivator.Instance.SetTextToAll(true);
 
         Updating();
         UltaActivator.Instance.Deactivate();
+    }
+
+    public void SetTextCost(bool state)
+    {
+        gemCounter.text = state ? $"{Cost}" : "---";
     }
 }

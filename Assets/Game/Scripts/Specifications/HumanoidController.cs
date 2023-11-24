@@ -112,18 +112,23 @@ public class HumanoidController : Target
         {
             SetDestination(target.position);
         }
-        else
-        {
-            Agent.isStopped = true;
-        }
     }
+
+    private Transform previousTarget;
+    private float setDestinationPause = -1f;
 
     public void SetDestination(Vector3 point)
     {
-        /*if(Agent.destination != point)*/
+        setDestinationPause -= Time.deltaTime;
+        
+        if(setDestinationPause < 0 || (previousTarget && previousTarget != target) 
+            || (target != Helicarrier.Instance.Transform && target.position != Agent.destination))
         {
             Agent.SetDestination(point);
+            setDestinationPause = 4f;
         }
+
+        previousTarget = target;
     }
 
     public void ResetDestination()

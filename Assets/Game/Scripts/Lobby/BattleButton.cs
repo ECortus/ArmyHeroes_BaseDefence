@@ -7,8 +7,8 @@ public class BattleButton : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI waveCounter;
 
-    [Space]
-    [SerializeField] private LevelWavesInfo[] infos;
+    [Space] [SerializeField] private LevelsListObject list;
+    private LevelWavesInfo[] infos => list.Infos;
 
     private int levelIndex { get { return Statistics.LevelIndex; } set { Statistics.LevelIndex = value; } }
     public int GetIndex() => levelIndex % infos.Length;
@@ -23,6 +23,6 @@ public class BattleButton : MonoBehaviour
 
     public void Refresh()
     {
-        waveCounter.text = $"{Mathf.Clamp(waveIndex, 0, waveCount - 1)}/{waveCount}";
+        waveCounter.text = $"{Mathf.Clamp(waveIndex + 1, 0, waveCount - 1)}/{waveCount}";
     }
 }

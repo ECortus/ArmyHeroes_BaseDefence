@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 
-public class PlayerNearestDetector : BaseDetector
+public abstract class PlayerNearestDetector : BaseDetector
 {
     public float Angle => 170f;
     

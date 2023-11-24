@@ -73,8 +73,11 @@ public class EnemiesGenerator : MonoBehaviour
             
             if (w + 1 < WavesCount)
             {
-                LevelManager.Instance.ActualLevel.Chest.On();
+                // LevelManager.Instance.ActualLevel.Chest.On();
+                LevelManager.Instance.ActualLevel.PlusGoldForWave();
             }
+            
+            WavePassWindow.Instance.On();
         }
 
         /* UI.Instance.EndLevel(); */
@@ -96,6 +99,8 @@ public class EnemiesGenerator : MonoBehaviour
     public IEnumerator PullOutWave(Wave wave)
     {
         GeneratorUI.Instance.ResetSlider();
+
+        SetRandomSector();
         
         Enemy enemy = null;
         Vector3 position = Vector3.zero;
@@ -163,12 +168,53 @@ public class EnemiesGenerator : MonoBehaviour
         }
     }
 
+    private int Sector;
+    private int sectors = 4;
+    private void SetRandomSector() => Sector = Random.Range(0, sectors);
+
     private Vector3 RandomPointOnCircleEdge(float radius)
     {
-        var vector2 = Random.insideUnitCircle.normalized * radius;
-        return new Vector3(vector2.x, 0, vector2.y);
-    }
+        // var vector2 = Random.insideUnitCircle.normalized * radius;
+        // Vector3 oppos = Vector3.right;
+        // Vector2 opposite = new Vector2(oppos.x,  oppos.z);
+        //
+        // if (SideMod == 0)
+        // {
+        //     if (SignedAngleBetween(opposite, vector2) > 180f)
+        //     {
+        //         vector2 = -vector2;
+        //     }
+        // }
+        // else
+        // {
+        //     if (SignedAngleBetween(opposite, vector2) < 180f)
+        //     {
+        //         vector2 = -vector2;
+        //     }
+        // }
+        //
+        // return new Vector3(vector2.x, 0, vector2.y);
 
+        float part = 360f / (sectors + 1);
+        float angle = Random.Range(part * Sector, part * (Sector + 1));
+
+        Vector3 dir = DirectionFromAngle(45f, angle);
+
+        return dir * radius;
+    }
+    
+    float SignedAngleBetween(Vector2 a, Vector2 b)
+    {
+        float angle = Vector2.SignedAngle(a,b);
+        return angle;
+    }
+    
+    private Vector3 DirectionFromAngle(float eulerY, float angleInDegrees)
+    {
+        angleInDegrees += eulerY;
+        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+    }
+    
     void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;

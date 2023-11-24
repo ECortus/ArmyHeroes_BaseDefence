@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseDetector : MonoBehaviour, IAdditionalCondition
+public abstract class BaseDetector : MonoBehaviour, IAdditionalCondition
 {
     [Header("DEBUG: ")]
     public bool DetectorOn = false;
@@ -23,7 +23,7 @@ public class BaseDetector : MonoBehaviour, IAdditionalCondition
     public bool CheckCollisionWithTarget = false;
     [HideInInspector] public bool InColWithTargetMask = false;
 
-    public virtual bool AdditionalCondition(Detection dt) => true;
+    public abstract bool AdditionalCondition(Detection dt);
 
     Coroutine coroutine;
 

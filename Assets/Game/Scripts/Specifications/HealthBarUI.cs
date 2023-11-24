@@ -14,6 +14,11 @@ public class HealthBarUI : BarUI
 
     void OnEnable()
     {
+        if (!rot && !TryGetComponent(out rot))
+        {
+            rot = gameObject.AddComponent<RotationConstraint>();
+        }
+        
         ConstraintSource source = new ConstraintSource();
         source.sourceTransform = Camera.main.transform;
         source.weight = 1;

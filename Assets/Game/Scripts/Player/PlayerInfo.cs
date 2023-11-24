@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Zenject;
 
 public class PlayerInfo : Detection
 {
     public static PlayerInfo Instance { get; set; }
-    void Awake() => Instance = this;
+    [Inject] void Awake() => Instance = this;
 
     [Header("Player info: ")]
     [SerializeField] private GunHandler gunHandler;
@@ -123,7 +124,7 @@ public class PlayerInfo : Detection
     {
         while(true)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(60f);
             Heal(MaxHP * percentPerSecond);
         }
     }

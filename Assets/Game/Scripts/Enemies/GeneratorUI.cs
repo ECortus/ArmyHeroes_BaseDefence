@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Zenject;
 
 public class GeneratorUI : MonoBehaviour
 {
     public static GeneratorUI Instance { get; set; }
-    void Awake() => Instance = this;
+    [Inject] void Awake() => Instance = this;
 
     private EnemiesGenerator gen => LevelManager.Instance.ActualLevel.Generator;
     

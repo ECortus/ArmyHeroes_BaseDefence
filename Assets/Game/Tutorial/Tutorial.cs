@@ -51,10 +51,11 @@ public class Tutorial : MonoBehaviour
         Generator.WaveIndex++;
         GeneratorUI.Instance.ResetSlider();
         
-        LevelManager.Instance.ActualLevel.Chest.On();
-        /*Arrow.SetTarget(chest);*/
-        yield return new WaitUntil(() => !LevelManager.Instance.ActualLevel.Chest.gameObject.activeSelf);
+        // LevelManager.Instance.ActualLevel.Chest.On();
+        // /*Arrow.SetTarget(chest);*/
+        // yield return new WaitUntil(() => !LevelManager.Instance.ActualLevel.Chest.gameObject.activeSelf);
         
+        LevelManager.Instance.ActualLevel.PlusGoldForWave();
         soldierUnlock.gameObject.SetActive(true);
         
         Arrow.On();

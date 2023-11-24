@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AllDetector : BaseDetector
+public abstract class AllDetector : BaseDetector
 {
     private Detection[] Detected;
 

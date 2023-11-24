@@ -36,6 +36,9 @@ public class Player : Target
     [SerializeField] private RangeAttackPlayer detector;
     [SerializeField] private Detection detection;
 
+    [Space]
+    [SerializeField] private Transform spawnIfToHigh;
+
     [HideInInspector] public Vector3 Direction;
     
     public bool Active => detection.Active;
@@ -55,6 +58,8 @@ public class Player : Target
             TeleportToPoint(pos);
             transform.rotation = rot;
         }
+        
+        ResetRotateDir();
 
         /* gameObject.SetActive(true);
         detection.Pool();
@@ -77,6 +82,12 @@ public class Player : Target
 
     void Update()
     {
+        if (transform.position.y > 1.5f)
+        {
+            TeleportToPoint(spawnIfToHigh.position);
+            return;
+        }
+        
         if(Active && GameManager.Instance.isActive)
         {
             if(Agent.isActiveAndEnabled)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,10 +44,21 @@ public class HelicarrierInfo : Detection
         _coroutine = StartCoroutine(Mech());
     }
 
+    [Space] 
+    [SerializeField] private float minDistanceToSpawnMech = 8;
+
     IEnumerator Mech()
     {
         Player.Off();
-        PlayerMech.On(Player.Transform.position);
+
+        Vector3 spawnPos = Player.Transform.position;
+        if (Vector3.Distance(transform.position, spawnPos) < minDistanceToSpawnMech)
+        {
+            Vector3 dir = (spawnPos - transform.position).normalized;
+            spawnPos = transform.position + dir * minDistanceToSpawnMech + Vector3.up;
+        }
+        
+        PlayerMech.On(spawnPos);
         CameraController.Instance.SetTarget(PlayerMech.Transform);
         
         float time = mechDelay;
@@ -64,5 +76,11 @@ public class HelicarrierInfo : Detection
         delayTime = delayToShowPopUpAgain;
 
         _coroutine = null;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(transform.position, minDistanceToSpawnMech);
     }
 }

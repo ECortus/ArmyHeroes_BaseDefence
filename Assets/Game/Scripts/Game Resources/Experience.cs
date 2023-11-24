@@ -17,7 +17,7 @@ public static class Experience
             PlayerInfo.Instance.GetNewProgress();
         }
 
-        ExperienceUI.Instance.Refresh();
+        ExperienceUI.Instance?.Refresh();
     }
     
     public static void Minus(float count)
@@ -25,6 +25,6 @@ public static class Experience
         experience -= count;
         if(experience < 0) experience = 0;
 
-        ExperienceUI.Instance.Refresh();
+        ExperienceUI.Instance?.Refresh();
     }
 }

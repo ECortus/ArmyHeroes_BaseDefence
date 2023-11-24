@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Zenject;
 
 public class PlayerNewProgress : MonoBehaviour
 {
     public static PlayerNewProgress Instance { get; set; }
-    void Awake() => Instance = this;
+    [Inject] void Awake() => Instance = this;
 
     public bool Active => menu.activeSelf;
 

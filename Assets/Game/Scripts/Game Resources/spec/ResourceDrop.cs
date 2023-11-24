@@ -10,6 +10,8 @@ public class ResourceDrop : MonoBehaviour
 
     public float ResourcePerBallMod { get; set; }
 
+    public float AllAmount => BallAmount * ResourcePerBall * ResourcePerBallMod;
+
     public void Drop()
     {
         DropAmount((int)BallAmount);

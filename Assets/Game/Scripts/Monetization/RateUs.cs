@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,12 @@ public class RateUs : MonoBehaviour
             PlayerPrefs.Save();
         }
     }
-    
+
+    private void OnDestroy()
+    {
+        trying = 0;
+    }
+
     public void TryOpen()
     {
         trying++;

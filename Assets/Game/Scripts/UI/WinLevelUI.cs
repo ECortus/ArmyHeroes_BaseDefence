@@ -16,7 +16,7 @@ public class WinLevelUI : OpenCloseObjectLevelUI
 
     float Y = 0f;
 
-    public override void Open()
+    public override async void Open()
     {
         GameManager.Instance.SetActive(false);
 

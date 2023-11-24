@@ -75,6 +75,8 @@ public class Roulette : MonoBehaviour
 
     public void On()
     {
+        if (TokenRequire < Statistics.Token) return;
+        
         if(coroutine == null)
         {
             rouletteButton.interactable = false;

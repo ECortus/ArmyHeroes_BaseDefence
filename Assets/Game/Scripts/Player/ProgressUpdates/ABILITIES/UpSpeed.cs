@@ -7,7 +7,7 @@ public class UpSpeed : NewProgressBonus
 {
     public override void Apply()
     {
-        PlayerUpgrades.Instance.AddSPDPercent(5f);
+        PlayerUpgrades.Instance.AddSPDPercent(50f);
     }
 
     public override void Cancel()

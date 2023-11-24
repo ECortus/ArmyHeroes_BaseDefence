@@ -96,6 +96,7 @@ public class RangeAttackPlayer : PlayerNearestDetector
     void RotateWeapons()
     {
         Vector3 direction, shoulderDirection;
+        
         Transform firstWeapon = Weapons.First, secondWeapon = Weapons.Second, 
             firstSh = Shoulders.First, secondSh = Shoulders.Second;
 
@@ -112,6 +113,13 @@ public class RangeAttackPlayer : PlayerNearestDetector
                     firstSh = Shoulders.Second;
                     secondSh = Shoulders.First;
                 }
+                else
+                {
+                    firstWeapon = Weapons.First;
+                    secondWeapon = Weapons.Second;
+                    firstSh = Shoulders.First;
+                    secondSh = Shoulders.Second;
+                }
             }
             else
             {
@@ -123,6 +131,7 @@ public class RangeAttackPlayer : PlayerNearestDetector
 
             CorrectRotate((data.transform.position - transform.position).normalized, ref shoulderDirection);
 
+            firstDir = shoulderDirection;
             RotateTransformTowards(firstSh, shoulderDirection);
             RotateWeaponTowards(firstWeapon, direction);
 
@@ -143,6 +152,7 @@ public class RangeAttackPlayer : PlayerNearestDetector
                 CorrectRotate((data.transform.position - transform.position).normalized, ref shoulderDirection);
             }
 
+            secondDir = shoulderDirection;
             RotateTransformTowards(secondSh, shoulderDirection);
             RotateWeaponTowards(secondWeapon, direction);
         }
@@ -164,13 +174,23 @@ public class RangeAttackPlayer : PlayerNearestDetector
     {
         get
         {
-            Vector3 center = transform.position;
-            Vector3 right = center + transform.right * 2f;
-            Vector3 left = center - transform.right * 2f;
+            // Vector3 center = transform.position;
+            // Vector3 right = center + transform.right * 2f;
+            // Vector3 left = center - transform.right * 2f;
+            //
+            // Vector3 pos = data.transform.position;
+            //
+            // if (Vector3.Distance(pos, right) > Vector3.Distance(pos, left))
+            // {
+            //     return true;
+            // }
+            
+            Vector3 dirToData = (data.transform.position - transform.position).normalized;
+            Vector3 dirToAdditionalData = (data.transform.position - transform.position).normalized;
 
-            Vector3 pos = data.transform.position;
+            Vector3 right = transform.right;
 
-            if (Vector3.Distance(pos, right) > Vector3.Distance(pos, left))
+            if (Vector3.Dot(dirToData, right) >= Vector3.Dot(dirToAdditionalData, right))
             {
                 return true;
             }
@@ -194,12 +214,16 @@ public class RangeAttackPlayer : PlayerNearestDetector
         Vector3 first = data.transform.position;
         Vector3 second = addit_data.transform.position;
 
-        Vector3 middle = first + (first - second).normalized * Vector3.Distance(first, second) / 2f;
-        middle += transform.right * 2f;
+        // Vector3 middle = first + (first - second).normalized * Vector3.Distance(first, second) / 2f;
+        // middle += transform.right * 2f;
+
+        Vector3 middle = first * 0.5f + second * 0.5f;
 
         Vector3 to = transform.position;
+        Vector3 dir = (middle - to).normalized;
 
-        return (middle - to).normalized;
+        dir.y = 0;
+        return dir;
     }
 
     private void RotateTransformTowards(Transform trans, Vector3 to)
@@ -213,5 +237,16 @@ public class RangeAttackPlayer : PlayerNearestDetector
         to.y = 0f;
         weapon.rotation = Quaternion.RotateTowards(weapon.rotation, Quaternion.LookRotation(to), 135f * Time.deltaTime);
     }
+
+    private Vector3 firstDir, secondDir;
+
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.red;
+    //     if(data && addit_data) Gizmos.DrawLine(transform.position, transform.position + MiddleRotateDir() * 999f);
+    //     Gizmos.color = Color.green;
+    //     if(firstDir != Vector3.zero) Gizmos.DrawLine(transform.position, transform.position + firstDir * 999f);
+    //     if(secondDir != Vector3.zero) Gizmos.DrawLine(transform.position, transform.position + secondDir * 999f);
+    // }
 }
 

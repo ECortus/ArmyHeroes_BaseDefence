@@ -11,9 +11,9 @@ public class Level : MonoBehaviour
     public void Eliminate() => Destroy(gameObject);
 
     public FirstResourceOnStart ResourceOnStart;
-    public GoldRewardPerWaveChest Chest;
+    // public GoldRewardPerWaveChest Chest;
     public EnemiesGenerator Generator;
-    public LevelWavesInfo WavesInfo;
+    public LevelWavesInfo WavesInfo => LevelManager.Instance.infosList.Infos[LevelManager.Instance.GetIndex()];
 
     [Space] public DoctorPatientTimers PatientTimers;
     public Transform HealPoint, HealTimersGridParent;
@@ -21,6 +21,9 @@ public class Level : MonoBehaviour
     [Space] public Transform[] SoldiersGoDots;
 
     [Space] [SerializeField] private UpgraderZone[] upgraderZones;
+
+    [Space] public int GoldRewardPerWave = 100;
+    public void PlusGoldForWave() => Gold.Plus(Mathf.RoundToInt(GoldRewardPerWave * (1 + WaveRewardLVLs.WCRMod)));
 
     public void StartLevel()
     {

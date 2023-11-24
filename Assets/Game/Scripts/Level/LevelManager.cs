@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
 {
     [Inject] public static LevelManager Instance { get; set; }
 
+    public LevelsListObject infosList;
     [SerializeField] private List<Level> Levels = new List<Level>();
 
     private int _Index { get { return Statistics.LevelIndex; } set { Statistics.LevelIndex = value; } }

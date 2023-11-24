@@ -11,7 +11,11 @@ public class UltaActivator : MonoBehaviour
     public List<Ulta> AllUltas;
     [SerializeField] private List<UltaActivatorUI> activatorUIs;
 
-    public Ulta Ulta => AllUltas[Index];
+    // public Ulta Ulta => AllUltas[Index];
+    // int Index = 0;
+    
+    public Ulta Ulta { get; private set; }
+    public void SetUlta(Ulta ulta) => Ulta = ulta;
     int Index = 0;
 
     void Start()
@@ -24,6 +28,22 @@ public class UltaActivator : MonoBehaviour
         foreach(UltaActivatorUI act in activatorUIs)
         {
             act.Updating();
+        }
+    }
+
+    public void SetInteractableToAll(bool state)
+    {
+        foreach(UltaActivatorUI act in activatorUIs)
+        {
+            act.button.interactable = state;
+        }
+    }
+    
+    public void SetTextToAll(bool state)
+    {
+        foreach(UltaActivatorUI act in activatorUIs)
+        {
+            act.SetTextCost(state);
         }
     }
 
@@ -45,10 +65,13 @@ public class UltaActivator : MonoBehaviour
 
     public void Deactivate()
     {
-        turnLeft.interactable = true;
-        turnRight.interactable = true;
+        if (Ulta)
+        {
+            turnLeft.interactable = true;
+            turnRight.interactable = true;
 
-        Ulta.Deactivate();
+            Ulta.Deactivate();
+        }
     }
 
     [Space]

@@ -20,8 +20,12 @@ public class Helicarrier : Target
 
     public async void Exit()
     {
+        GameManager.Instance.SetActive(false);
+        
         Player.Instance.gameObject.SetActive(false);
         CameraController.Instance.SetTarget(exitCamera);
+        
+        UltaActivator.Instance.Deactivate();
         await exitFromHeli.Enter();
 
         goAnim.Play("HeliGo");

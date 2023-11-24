@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NearestDetector : BaseDetector
+public abstract class NearestDetector : BaseDetector
 {
     Detection previous;
     float distanceToData;
