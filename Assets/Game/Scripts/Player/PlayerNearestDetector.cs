@@ -5,10 +5,10 @@ using UnityEngine;
 
 public abstract class PlayerNearestDetector : BaseDetector
 {
-    public float Angle => 170f;
+    public float Angle;
     
     public bool Addit_Data_Condition(Detection addit) => AdditionalCondition(addit)
-        && Vector3.Angle(transform.forward, (addit.transform.position - transform.position).normalized) <= Angle / 2f;
+        && Vector3.Angle((data.transform.position - transform.position).normalized, (addit.transform.position - transform.position).normalized) <= Angle / 2f;
     
     public Detection addit_data;
 
@@ -39,6 +39,15 @@ public abstract class PlayerNearestDetector : BaseDetector
 
             if(data == null)
             {
+                if (addit_data && AdditionalCondition(addit_data))
+                {
+                    data = addit_data;
+                    addit_data = null;
+                    
+                    Set();
+                    continue;
+                }
+                
                 if (detection.AllAround(priorityTypes, detectTypes, range, range, this, out Detections))
                 {
                     data = Detections[0];
@@ -53,26 +62,32 @@ public abstract class PlayerNearestDetector : BaseDetector
                 }
             }
 
-            if(data != null)
+            if(data)
             {
-                if (addit_data != null)
+                if (addit_data)
                 {
                     if (!Addit_Data_Condition(addit_data) || Vector3.Distance(addit_data.transform.position, transform.position) > range)
                     {
-                        addit_data = null;
-                    }
-                    else if (!Addit_Data_Condition(data))
-                    {
-                        data = addit_data;
                         addit_data = null;
                     }
                 }
                 
                 distanceToData = Vector3.Distance(data.transform.position, transform.position);
 
-                if(!AdditionalCondition(data) || distanceToData > range)
+                if((!addit_data && !AdditionalCondition(data)) || 
+                   (addit_data && !AdditionalCondition(data) && AdditionalCondition(addit_data)) 
+                   || distanceToData > range)
                 {
                     InColWithTargetMask = false;
+
+                    if (addit_data && AdditionalCondition(addit_data))
+                    {
+                        data = addit_data;
+                        addit_data = null;
+                    
+                        Set();
+                        continue;
+                    }
 
                     Reset();
                     continue;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MAXHelper;
 
 public class LoadingScreen : BarUI
 {
@@ -22,10 +23,11 @@ public class LoadingScreen : BarUI
 
     IEnumerator Loading(ILoading load)
     {
+        yield return new WaitUntil(() => AdsManager.Ready());
+        
         yield return new WaitUntil(() => Time.timeScale == 1f);
         
         AsyncOperation loading = load.LoadFunction();
-
         while(!loading.isDone)
         {
             progressValue = Mathf.Clamp01(loading.progress * 0.9f);

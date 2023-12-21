@@ -73,12 +73,16 @@ public class PlayerNewProgress : MonoBehaviour
         Off();
     }
 
-    public void GetAll3XAbilities()
+    public async void GetAll3XAbilities()
     {
-        foreach(NewProgressBonus npb in Bonuses)
+        if (await GameAdsController.Instance.ShowRewardAd())
         {
-            npb.Add();
+            foreach(NewProgressBonus npb in Bonuses)
+            {
+                npb.Add();
+            }
         }
+        
         Off();
     }
 

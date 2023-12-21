@@ -124,11 +124,15 @@ public class Roulette : MonoBehaviour
 
     public void ApplyTwo()
     {
-        Buttons[ChoisedIndex].Apply();
-        Buttons[ChoisedIndex].Apply();
+        bool watched = true;
 
-        RollCount++;
-
+        if (watched)
+        {
+            Buttons[ChoisedIndex].Apply();
+        }
+        
+        Buttons[ChoisedIndex].Apply();
+        // RollCount++;
         OffChoisedInfo();
     }
 

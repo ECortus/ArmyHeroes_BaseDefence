@@ -8,6 +8,13 @@ public class RateUs : MonoBehaviour
     [SerializeField] private RateUsUI ui;
     [SerializeField] private int tryingToOpen = 3;
 
+    private float time;
+
+    private void Update()
+    {
+        time -= Time.deltaTime;
+    }
+
     private int trying
     {
         get
@@ -28,10 +35,15 @@ public class RateUs : MonoBehaviour
 
     public void TryOpen()
     {
-        trying++;
-        if (trying == tryingToOpen)
+        if (time < 0f)
         {
-            ui.Open();
+            trying++;
+            time = 30f;
+            
+            if (trying == tryingToOpen)
+            {
+                ui.Open();
+            }
         }
     }
 }

@@ -136,11 +136,8 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
-  bundleVersion: 0.16b
-  preloadedAssets:
-  - {fileID: 1063183311873162513, guid: 5bea3123b33731e48860ba6623deede6, type: 2}
-  - {fileID: 11400000, guid: 0d7b2fec64c467e429a3722c8d68edf9, type: 2}
-  - {fileID: 11400000, guid: ad9d94d369081b34aa82dc087b33d52f, type: 2}
+  bundleVersion: "1.02\u0441"
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -161,17 +158,17 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.RH.ArmyHeroesBaseDefence
+    Android: top.military.war.troops
     Standalone: com.R-H.Army-Heroes--Base-Defence
   buildNumber:
     Standalone: 0
     VisionOS: 0
     iPhone: 0
     tvOS: 0
-  overrideDefaultApplicationIdentifier: 0
+  overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 22
-  AndroidTargetSdkVersion: 34
+  AndroidTargetSdkVersion: 33
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   stripEngineCode: 1
@@ -585,7 +582,6 @@ PlayerSettings:
   switchScreenResolutionBehavior: 2
   switchUseCPUProfiler: 0
   switchEnableFileSystemTrace: 0
-  switchUseGOLDLinker: 0
   switchLTOSetting: 0
   switchApplicationID: 0x01004b9000490000
   switchNSODependencies: 

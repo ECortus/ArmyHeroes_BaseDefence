@@ -5,32 +5,39 @@ using UnityEngine;
 
 public class InterstationalTimer : MonoBehaviour
 {
+    public static InterstationalTimer Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     [SerializeField] private float delay = 30f;
-    private float time = 0f;
+    public static float Time { get; set; }
 
     [Space] [SerializeField] private RateUs rateUs;
 
     void Start()
     {
-        time = delay;
+        Time = delay;
     }
     
     void Update()
     {
-        if (time > 0f && !GameAds.NoAds && Statistics.LevelIndex > 0)
+        if (Time > 0f && !GameAdsController.NoAds && Statistics.LevelIndex > 0)
         {
-            time -= Time.unscaledTime;
+            Time -= UnityEngine.Time.unscaledTime;
         }
     }
 
     public void TryShowInterstationalAd()
     {
-        rateUs.TryOpen();
+        if(rateUs) rateUs.TryOpen();
         
-        if (time < 0f && !GameAds.NoAds)
+        if (Time < 0f && !GameAdsController.NoAds)
         {
-            ///show
-            time = delay;
+            GameAdsController.Instance.ShowInterstationalAd();
+            Time = delay;
         }
     }
 }

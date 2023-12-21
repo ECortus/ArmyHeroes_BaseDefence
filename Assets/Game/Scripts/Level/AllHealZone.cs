@@ -29,11 +29,19 @@ public class AllHealZone : BarUI
 
             if (time >= delay)
             {
-                LevelManager.Instance.ActualLevel.PatientTimers.HealAll();
+                TryHealAll();
                 
                 time = 0f;
                 Refresh();
             }
+        }
+    }
+
+    async void TryHealAll()
+    {
+        if (await GameAdsController.Instance.ShowRewardAd())
+        {
+            LevelManager.Instance.ActualLevel.PatientTimers.HealAll();
         }
     }
     

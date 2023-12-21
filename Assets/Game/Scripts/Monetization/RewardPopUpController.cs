@@ -34,7 +34,7 @@ public class RewardPopUpController : MonoBehaviour
     
     void Update()
     {
-        if (time > 0f && !GameAds.NoAds && GameManager.Instance.isActive && Statistics.LevelIndex > 0 && Time.timeScale > 0)
+        if (time > 0f && !GameAdsController.NoAds && GameManager.Instance.isActive && Statistics.LevelIndex > 0 && Time.timeScale > 0)
         {
             time -= Time.deltaTime;
 
@@ -87,14 +87,18 @@ public class RewardPopUpController : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    public void OnButtonClick(PopUpAction action)
+    public async void OnButtonClick(PopUpAction action)
     {
         for (int i = 0; i < actions.Length; i++)
         {
             actions[i].gameObject.SetActive(false);
         }
         
-        action.Do();
+        if (await GameAdsController.Instance.ShowRewardAd())
+        {
+            action.Do();
+        }
+        
         ClosePopUp();
     }
 

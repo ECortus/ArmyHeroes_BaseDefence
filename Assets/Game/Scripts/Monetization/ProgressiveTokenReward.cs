@@ -85,13 +85,16 @@ public class ProgressiveTokenReward : MonoBehaviour
         Active = true;
     }
 
-    public void RewardButtonClick()
+    public async void RewardButtonClick()
     {
         int mult = ProgressiveMultiplier;
 
-        for (int i = 0; i < mult; i++)
+        if (await GameAdsController.Instance.ShowRewardAd())
         {
-            EndLevelStats.Instance.GiveReward();
+            for (int i = 0; i < mult; i++)
+            {
+                EndLevelStats.Instance.GiveReward();
+            }
         }
 
         ClickedLevelIndex = CurrentLevelIndex;

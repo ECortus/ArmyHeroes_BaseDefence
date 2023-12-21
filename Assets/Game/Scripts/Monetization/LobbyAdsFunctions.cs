@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,33 +9,36 @@ public class LobbyAdsFunctions : MonoBehaviour
 
     void OnEnable()
     {
+        if (GameAdsController.NoAds)
+        {
+            GameAdsController.Instance.ActivateNoAds();
+            noAdsObject.SetActive(false);
+            
+            return;
+        }
+        
+        GameAdsController.OnGameAdsUpdate += RefreshButtons;
         RefreshButtons();
     }
-    
+
+    private void OnDestroy()
+    {
+        GameAdsController.OnGameAdsUpdate -= RefreshButtons;
+    }
+
     public void RefreshButtons()
     {
-        if(GameAds.Subcribed) subObject.SetActive(false);
-        else subObject.SetActive(true);
-        
-        if(GameAds.NoAdsObjectBuyed) noAdsObject.SetActive(false);
-        else noAdsObject.SetActive(true);
+        // subObject.SetActive(!GameAdsController.Subscribed);
+        noAdsObject.SetActive(!GameAdsController.NoAdsObjectBuyed);
     }
     
     public void BuyNoAds()
     {
-        GameAds.ActivateNoAds();
-        RefreshButtons();
+        GameAdsController.Instance.ActivateNoAds();
     }
 
     public void BuySub()
     {
-        GameAds.ActivateSub();
-        RefreshButtons();
-    }
-
-    public void CancelSub()
-    {
-        GameAds.DeactivateSub();
-        RefreshButtons();
+        GameAdsController.Instance.ActivateSub();
     }
 }

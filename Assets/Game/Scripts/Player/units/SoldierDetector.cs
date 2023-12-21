@@ -94,6 +94,7 @@ public class SoldierDetector : NearestDetector
         }
         
         time = GoDelay;
+        if(data) Set();
     }
 
     IEnumerator GoToPoint(Transform dot)

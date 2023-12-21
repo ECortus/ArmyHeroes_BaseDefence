@@ -104,27 +104,56 @@ public class RangeAttackPlayer : PlayerNearestDetector
         {
             if (addit_data != null)
             {
-                controller.SetRotateDir(MiddleRotateDir());
-                
-                if (!DataBelongToFirst)
+                if(!Addit_Data_Condition(addit_data))
                 {
-                    firstWeapon = Weapons.Second;
-                    secondWeapon = Weapons.First;
-                    firstSh = Shoulders.Second;
-                    secondSh = Shoulders.First;
+                    if (data == null) data = addit_data;
+                    addit_data = null;
+                    
+                    controller.ResetRotateDir();
+                
+                    direction = (data.transform.position - secondWeapon.position).normalized;
+                    shoulderDirection = (data.transform.position - secondSh.position).normalized;
+
+                    CorrectRotate((data.transform.position - transform.position).normalized, ref shoulderDirection);
                 }
                 else
                 {
-                    firstWeapon = Weapons.First;
-                    secondWeapon = Weapons.Second;
-                    firstSh = Shoulders.First;
-                    secondSh = Shoulders.Second;
+                    if (!DataBelongToFirst)
+                    {
+                        firstWeapon = Weapons.Second;
+                        secondWeapon = Weapons.First;
+                        firstSh = Shoulders.Second;
+                        secondSh = Shoulders.First;
+                    }
+                    else
+                    {
+                        firstWeapon = Weapons.First;
+                        secondWeapon = Weapons.Second;
+                        firstSh = Shoulders.First;
+                        secondSh = Shoulders.Second;
+                    }
+                
+                    controller.SetRotateDir(MiddleRotateDir());
+                
+                    direction = (addit_data.transform.position - secondWeapon.position).normalized;
+                    shoulderDirection = (addit_data.transform.position - secondSh.position).normalized;
+
+                    CorrectRotate((addit_data.transform.position - transform.position).normalized, ref shoulderDirection);
                 }
             }
             else
             {
                 controller.ResetRotateDir();
+                
+                direction = (data.transform.position - secondWeapon.position).normalized;
+                shoulderDirection = (data.transform.position - secondSh.position).normalized;
+
+                CorrectRotate((data.transform.position - transform.position).normalized, ref shoulderDirection);
             }
+            
+            secondDir = shoulderDirection;
+            RotateTransformTowards(secondSh, shoulderDirection);
+            RotateWeaponTowards(secondWeapon, direction);
 
             direction = (data.transform.position - firstWeapon.position).normalized;
             shoulderDirection = (data.transform.position - firstSh.position).normalized;
@@ -134,27 +163,6 @@ public class RangeAttackPlayer : PlayerNearestDetector
             firstDir = shoulderDirection;
             RotateTransformTowards(firstSh, shoulderDirection);
             RotateWeaponTowards(firstWeapon, direction);
-
-            if (addit_data != null)
-            {
-                direction = (addit_data.transform.position - secondWeapon.position).normalized;
-                shoulderDirection = (addit_data.transform.position - secondSh.position).normalized;
-
-                CorrectRotate((addit_data.transform.position - transform.position).normalized, ref shoulderDirection);
-                
-                controller.SetRotateDir(MiddleRotateDir());
-            }
-            else
-            {
-                direction = (data.transform.position - secondWeapon.position).normalized;
-                shoulderDirection = (data.transform.position - secondSh.position).normalized;
-
-                CorrectRotate((data.transform.position - transform.position).normalized, ref shoulderDirection);
-            }
-
-            secondDir = shoulderDirection;
-            RotateTransformTowards(secondSh, shoulderDirection);
-            RotateWeaponTowards(secondWeapon, direction);
         }
         else
         {
@@ -235,18 +243,18 @@ public class RangeAttackPlayer : PlayerNearestDetector
     private void RotateWeaponTowards(Transform weapon, Vector3 to)
     {
         to.y = 0f;
-        weapon.rotation = Quaternion.RotateTowards(weapon.rotation, Quaternion.LookRotation(to), 135f * Time.deltaTime);
+        weapon.rotation = Quaternion.RotateTowards(weapon.rotation, Quaternion.LookRotation(to), 270f * Time.deltaTime);
     }
 
     private Vector3 firstDir, secondDir;
 
-    // void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.red;
-    //     if(data && addit_data) Gizmos.DrawLine(transform.position, transform.position + MiddleRotateDir() * 999f);
-    //     Gizmos.color = Color.green;
-    //     if(firstDir != Vector3.zero) Gizmos.DrawLine(transform.position, transform.position + firstDir * 999f);
-    //     if(secondDir != Vector3.zero) Gizmos.DrawLine(transform.position, transform.position + secondDir * 999f);
-    // }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        if(data && addit_data) Gizmos.DrawLine(transform.position, transform.position + MiddleRotateDir() * 999f);
+        Gizmos.color = Color.green;
+        if(firstDir != Vector3.zero) Gizmos.DrawLine(transform.position, transform.position + firstDir * 999f);
+        if(secondDir != Vector3.zero) Gizmos.DrawLine(transform.position, transform.position + secondDir * 999f);
+    }
 }
 

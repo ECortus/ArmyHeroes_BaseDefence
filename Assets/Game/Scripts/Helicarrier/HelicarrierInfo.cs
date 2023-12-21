@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class HelicarrierInfo : Detection
 {
+    public static HelicarrierInfo Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private Player Player => Player.Instance;
     
     [Space]

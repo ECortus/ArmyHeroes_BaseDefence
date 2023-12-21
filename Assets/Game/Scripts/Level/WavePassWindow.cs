@@ -112,9 +112,10 @@ public class WavePassWindow : MonoBehaviour
         slider.value = timeToNoThanks - time;
     }
 
-    public void OnAdButtonClick()
+    public async void OnAdButtonClick()
     {
-        LevelManager.Instance.ActualLevel.PlusGoldForWave();
+        if(await GameAdsController.Instance.ShowRewardAd()) LevelManager.Instance.ActualLevel.PlusGoldForWave();
+        
         Off();
     }
 }

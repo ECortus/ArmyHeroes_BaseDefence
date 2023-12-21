@@ -16,7 +16,7 @@ MonoBehaviour:
   bUseInters: 1
   bUseBanners: 1
   bShowMediationDebugger: 0
-  SDKKey: dsf3423543trtr343reetrtr
+  SDKKey: R5ZeDg0t8rV5BQ4h_72SUwzDKUOipd1Ju_H3yph9eKZV6NZBDqI_rLKZmyFWiyFWdOn4ITSHwMdob2TtWHuzio
   BannerID: testUnitID_B_android
   InterstitialID: testUnitID_I_android
   RewardedID: testUnitID_R_android

@@ -16,6 +16,10 @@ public class ReviveUI : MonoBehaviour
 
     [Space]
     [SerializeField] private float delayTime = 3f;
+
+    [Space] 
+    [SerializeField] private GiveDynamitOnRevive dynamit;
+    
     float time = 0f;
 
     bool Active = false;
@@ -38,6 +42,30 @@ public class ReviveUI : MonoBehaviour
         slider.gameObject.SetActive(false);
         nothanks.Open();
         Active = false;
+    }
+
+    public async void Revive()
+    {
+        if (await GameAdsController.Instance.ShowRewardAd())
+        {
+            PlayerInfo.Instance.Resurrect();
+            HelicarrierInfo.Instance.Resurrect();
+            dynamit.Put();
+        }
+        else
+        {
+            NoThanks();
+        }
+        
+        Off();
+    }
+
+    public void NoThanks()
+    {
+        InterstationalTimer.Instance.TryShowInterstationalAd();
+        
+        Off();
+        UI.Instance.LoseLevel();
     }
 
     public void Off()
